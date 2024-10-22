@@ -26,6 +26,7 @@
             <artifactId>org.eclipse.persistence.antlr</artifactId>
             <version>2.7.12</version>
         </dependency>
+        <!-- EclipseLink -->
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa</artifactId>
@@ -41,6 +42,12 @@
             <artifactId>org.eclipse.persistence.moxy</artifactId>
             <version>2.7.12</version>
         </dependency>
+        <!-- API de JPA -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>jakarta.persistence</artifactId>
@@ -52,6 +59,12 @@
             <version>2.7.12</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Conector MySQL -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.30</version>
+    </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
