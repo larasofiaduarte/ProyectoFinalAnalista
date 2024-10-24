@@ -10,6 +10,10 @@ public class ControladoraPersistencia {
     public List<Usuario> traerUsuarios() {
         return usuJpa.findUsuarioEntities();
     }
+
+    public void guardar(Usuario nuevoUsuario) {
+        usuJpa.create(nuevoUsuario);
+    }
     
     
     

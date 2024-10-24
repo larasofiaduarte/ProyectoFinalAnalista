@@ -20,20 +20,22 @@ import javax.swing.JButton;
 import javax.swing.border.Border;
 
 public class Styles {
-    public static final Color bgDark = new Color(43, 43, 45);  
+    public static final Color bgDark = new Color(43, 43, 45);  //Petrol grey, sidebar
     public static final Color bgDarkHover = new Color(76, 76, 79); 
-    public static final Color bgGreyLight = new Color(238, 238, 238);
-    public static final Color bgGreyDark = new Color(229, 229, 229);
-    public static final Color bgLight = new Color(250, 250, 250);
-    public static final Color fontLight = new Color(230, 230, 230);  
-    public static final Color fontLightHover = new Color(255, 255, 255); 
-    public static final Color fontGreyLight = new Color(178, 182, 190);
-    public static final Color fontGreyDark = new Color(88, 94, 106);
-    public static final Color accentLight = new Color(112, 82, 171);
-    public static final Color accentLightHover = new Color(145, 108, 217); 
-    public static final Color accentDark = new Color(102, 67, 51);  
-    public static final Color fontDark = new Color(43, 43, 45);
-    public static final Color accentNotif = new Color(243, 112, 136);
+    public static final Color bgGreyLight = new Color(238, 238, 238); //2nd lightest, for textfields
+    public static final Color bgGreyDark = new Color(229, 229, 229); //3rd lightest, for textfields
+    public static final Color bgLight = new Color(250, 250, 250); //Off White
+    
+    public static final Color fontLight = new Color(252, 252, 252);  //for dark bg, sidebar
+    public static final Color fontLightHover = new Color(200, 171, 255); //lilac
+    public static final Color fontGreyLight = new Color(148, 148, 148); //for disabled fields?
+    public static final Color fontGreyDark = new Color(85, 88, 92); //for textfield label
+    public static final Color fontDark = new Color(43, 43, 45); //Petrol grey
+    
+    public static final Color accentLight = new Color(112, 82, 171); //Dark Violet
+    public static final Color accentLightHover = new Color(145, 108, 217); //Lilac
+    public static final Color accentDark = new Color(112, 82, 171);  //Dark Violet
+    public static final Color accentNotif = new Color(243, 112, 136); //Pink
     
 
 
