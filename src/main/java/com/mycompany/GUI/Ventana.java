@@ -8,11 +8,17 @@ import com.mycompany.proyectofinal.Controladora;
 import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import static javax.swing.GroupLayout.Alignment.CENTER;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,10 +48,11 @@ public class Ventana extends javax.swing.JFrame {
         
         card = (CardLayout) mainPanel.getLayout();
         
-        card.show(mainPanel, "Login1");
+        //card.show(mainPanel, "Login1");
+        card.show(mainPanel, "mainScreen");
         
         /*PANEL LOGIN 1*/
-        btnLogin1.setBackground(Styles.accentLight);
+        btnLogin1.setBackground(Styles.accentDark);
         btnLogin1.setContentAreaFilled(false);
         btnLogin1.setBorderPainted(false);
         btnLogin1.setOpaque(true);
@@ -56,36 +63,93 @@ public class Ventana extends javax.swing.JFrame {
         label1.setFont(Styles.customFontMd);
         label2.setFont(Styles.customFontSm);
         
-        label.setForeground(Styles.fontLightHover);
-        label2.setForeground(Styles.fontLightHover);
-        label1.setForeground(Styles.fontLightHover);
+        label.setForeground(Styles.fontLight);
+        label2.setForeground(Styles.fontLight);
+        label1.setForeground(Styles.fontLight);
         
         
+        /*UI MAIN SCREEN GESTIONES (TABLAS)*/
+        //INVENTARIO
+        
+        JLabel lblInventario = new JLabel("Inventario");
+        // Set bounds for the label (x, y, width, height)
+        lblInventario.setBounds(80, 70, 200, 50);
+        cardInventario.add(lblInventario);
+        lblInventario.setFont(new Font("Dialog", Font.BOLD, 20));
+        lblInventario.setForeground(Styles.fontDark);
         
         
+        //EMPLEADOS
+        
+        JLabel lblEmpleados = new JLabel("Empleados");
+        // Set bounds for the label (x, y, width, height)
+        lblEmpleados.setBounds(80, 70, 200, 50);
+        cardEmpleados.add(lblEmpleados);
+        lblEmpleados.setFont(new Font("Dialog", Font.BOLD, 20));
+        lblEmpleados.setForeground(Styles.fontDark);
+        
+        //crear new tabla
+        //set boudns
+        //insert
         
         
+        JButton btnNuevoEmp = new JButton("Agregar");
+        btnNuevoEmp.setBounds(80, 670, 150, 40);
+        btnNuevoEmp.setBackground(Styles.accentDark);
+        btnNuevoEmp.setForeground(Styles.fontLight);
+        cardEmpleados.add(btnNuevoEmp);
+        btnNuevoEmp.setBackground(Styles.accentDark);
+        btnNuevoEmp.setContentAreaFilled(false);
+        btnNuevoEmp.setBorderPainted(false);
+        btnNuevoEmp.setOpaque(true);
+        btnNuevoEmp.setFont(new Font("Dialog", Font.BOLD, 14));
+        
+        btnNuevoEmp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnNuevoEmp.setBackground(Styles.accentLightHover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnNuevoEmp.setBackground(Styles.accentDark);
+            }
+        });
+        //abrir Form al clickear
+        
+        btnNuevoEmp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                AltaEmpleados form = new AltaEmpleados();
+                form.setVisible(true);
+                form.setLocationRelativeTo(null);
+            }
+        });
+        
+        
+        /*LOGO LOGIN*/
         
         JLabel lblLogo = new JLabel("HECTOR");
         lblLogo.setBounds(130, 190, 250, 70); 
         lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
         jLayeredPane2.add(lblLogo, JLayeredPane.PALETTE_LAYER);
         lblLogo.setFont(Styles.customFontXl);
-        lblLogo.setForeground(Styles.fontLightHover);
+        lblLogo.setForeground(Styles.fontLight);
         
         JLabel lblLogo2 = new JLabel("YAGUSZ");
         lblLogo2.setBounds(130, 235, 250, 70); 
         lblLogo2.setHorizontalAlignment(SwingConstants.CENTER);
         jLayeredPane2.add(lblLogo2, JLayeredPane.PALETTE_LAYER);
         lblLogo2.setFont(Styles.customFontXl);
-        lblLogo2.setForeground(Styles.fontLightHover);
+        lblLogo2.setForeground(Styles.fontLight);
         
         JLabel lblLogo3 = new JLabel(" P   E   L   U   Q   U   E   R   I   A");
         lblLogo3.setBounds(130, 270, 250, 70); 
         lblLogo3.setHorizontalAlignment(SwingConstants.CENTER);
         jLayeredPane2.add(lblLogo3, JLayeredPane.PALETTE_LAYER);
         lblLogo3.setFont(Styles.customFontMd);
-        lblLogo3.setForeground(Styles.fontLightHover);
+        lblLogo3.setForeground(Styles.fontLight);
         
         this.addComponentListener(new ComponentAdapter(){
             @Override
@@ -533,19 +597,8 @@ public class Ventana extends javax.swing.JFrame {
         panelMain.setPreferredSize(new java.awt.Dimension(800, 500));
         panelMain.setLayout(new java.awt.CardLayout());
 
-        cardInventario.setBackground(new java.awt.Color(255, 204, 255));
-
-        javax.swing.GroupLayout cardInventarioLayout = new javax.swing.GroupLayout(cardInventario);
-        cardInventario.setLayout(cardInventarioLayout);
-        cardInventarioLayout.setHorizontalGroup(
-            cardInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
-        cardInventarioLayout.setVerticalGroup(
-            cardInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
-
+        cardInventario.setBackground(new java.awt.Color(240, 240, 240));
+        cardInventario.setLayout(null);
         panelMain.add(cardInventario, "cardInventario");
 
         cardProveedores.setBackground(new java.awt.Color(240, 240, 240));
@@ -768,7 +821,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogin1MouseEntered
 
     private void btnLogin1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogin1MouseExited
-        btnLogin1.setBackground(Styles.accentLight);
+        btnLogin1.setBackground(Styles.accentDark);
     }//GEN-LAST:event_btnLogin1MouseExited
 /*LOGICA
     DE LOGIN*/
@@ -785,7 +838,7 @@ public class Ventana extends javax.swing.JFrame {
             card = (CardLayout)  this.mainPanel.getLayout();
             card.show(mainPanel,"mainScreen");
         }else{
-            JOptionPane.showMessageDialog(null, "Login", "Usuario o contraseña incorrectos.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "Login", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }//GEN-LAST:event_btnLogin1ActionPerformed
@@ -797,9 +850,7 @@ public class Ventana extends javax.swing.JFrame {
     private void txtUser1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUser1FocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUser1FocusLost
-    
-   
-    
+ 
     /**
      * @param args the command line arguments
      */
