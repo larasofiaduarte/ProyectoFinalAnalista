@@ -7,6 +7,7 @@ import java.util.List;
 public class Controladora {
     ControladoraPersistencia controlPersis = new ControladoraPersistencia();
     
+    //USUARIO
     //LOGICA DE VALIDAR USUARIO PARA LOGIN
     public boolean validarUsuario(String user, String pass){
         boolean estadoLogin = false;
@@ -29,12 +30,8 @@ public class Controladora {
         return estadoLogin;
     }
     
-    //LOGICA DE CREATE, ALTA DE USUARIO
-    
-    //pasar user, pass, nombre, apellido, tel, rol como params
-    //controlPersis.guardar
-
-    public void guardar(String user, String pass, String nombre, String apellido, String tel, String rol) {
+    //LOGICA DE ALTA DE USUARIO
+    public void guardar(String user, String pass, String nombre, String apellido, String tel, String rol, String dni) {
         // Crear una nueva instancia de Usuario
         Usuario nuevoUsuario = new Usuario();
         
@@ -45,9 +42,24 @@ public class Controladora {
         nuevoUsuario.setApellido(apellido);
         nuevoUsuario.setTelefono(tel);
         nuevoUsuario.setRol(rol);
+        nuevoUsuario.setDni(dni);
 
         // Llamar al método para guardar el usuario en la base de datos
         controlPersis.guardar(nuevoUsuario);
+    }
+    
+    
+    //CLIENTE
+    public void guardarCliente(String nombre, String apellido, String telefono, String genero){
+        Cliente nuevoCliente = new Cliente();
+        
+        nuevoCliente.setNombre(nombre);
+        nuevoCliente.setApellido(apellido);
+        nuevoCliente.setTelefono(telefono);
+        nuevoCliente.setGenero(genero);
+        
+        controlPersis.guardarCliente(nuevoCliente);
+        
     }
     
     

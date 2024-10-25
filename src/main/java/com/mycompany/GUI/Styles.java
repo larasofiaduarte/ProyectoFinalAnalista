@@ -6,6 +6,7 @@ package com.mycompany.GUI;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -18,12 +19,13 @@ import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 public class Styles {
     public static final Color bgDark = new Color(43, 43, 45);  //Petrol grey, sidebar
     public static final Color bgDarkHover = new Color(76, 76, 79); 
     public static final Color bgGreyLight = new Color(238, 238, 238); //2nd lightest, for textfields
-    public static final Color bgGreyDark = new Color(229, 229, 229); //3rd lightest, for textfields
+    public static final Color bgGreyDark = new Color(209, 209, 209); //3rd lightest, for textfields
     public static final Color bgLight = new Color(250, 250, 250); //Off White
     
     public static final Color fontLight = new Color(252, 252, 252);  //for dark bg, sidebar
@@ -37,12 +39,21 @@ public class Styles {
     public static final Color accentDark = new Color(112, 82, 171);  //Dark Violet
     public static final Color accentNotif = new Color(243, 112, 136); //Pink
     
-
+    public static final Color btnSec = new Color(255, 255, 255); //Pink
+    
+    //btn
+    public static final Dimension btnSize = new Dimension(150,35);
+    
+    //padding
+    public static final EmptyBorder padding = new EmptyBorder(50, 20, 0, 0);
 
     public static Font customFontMd;
     public static Font customFontSm;
     public static Font customFontXl;
     public static Font customFontL;
+    
+    public static Font fontTitle = new Font("Dialog", Font.BOLD, 20);
+    public static Font fontBtn = new Font("Dialog", Font.BOLD, 14);
 
     static {
         try {

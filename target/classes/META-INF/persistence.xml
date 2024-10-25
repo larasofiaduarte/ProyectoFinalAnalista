@@ -3,6 +3,7 @@
   <persistence-unit name="com.mycompany_ProyectoFinal_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.mycompany.proyectofinal.Usuario</class>
+    <class>com.mycompany.proyectofinal.Cliente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/peluqueria?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

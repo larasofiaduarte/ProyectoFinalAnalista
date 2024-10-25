@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Usuario implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
     @Column(name = "clave")
@@ -31,6 +31,15 @@ public class Usuario implements Serializable {
     private String apellido;
     private String telefono;
     private String rol;
+    private String dni;
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 
     public String getNombre() {
         return nombre;
