@@ -5,27 +5,18 @@
 package com.mycompany.GUI;
 
 import com.mycompany.proyectofinal.Controladora;
-import java.awt.CardLayout;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import com.mycompany.GUI.Button;
+import com.mycompany.GUI.TitlePanel;
+import com.mycompany.GUI.Tabla;
+
 import java.io.File;
 import java.io.IOException;
 import static javax.swing.GroupLayout.Alignment.CENTER;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.border.EmptyBorder;
 
 
 public class Ventana extends javax.swing.JFrame {
@@ -68,64 +59,236 @@ public class Ventana extends javax.swing.JFrame {
         label1.setForeground(Styles.fontLight);
         
         
-        /*UI MAIN SCREEN GESTIONES (TABLAS)*/
+        /*UI MAIN SCREEN GESTIONES*/
+        
+        //CLIENTES
+            
+            TitlePanel titleCli = new TitlePanel("Clientes");
+            cardClientes.add(titleCli, BorderLayout.NORTH);
+
+            //crear tabla
+            JPanel panelCenterCli = new JPanel(new BorderLayout()); //add flow layout center to this?
+            cardClientes.add(panelCenterCli, BorderLayout.CENTER);
+            
+            Tabla tableCli = new Tabla();
+            panelCenterCli.add(tableCli, BorderLayout.CENTER);
+
+            //btns panel
+            JPanel btnPanelCli = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            btnPanelCli.setBorder(new EmptyBorder(0, 0, 40, 0));
+            btnPanelCli.setBackground(Styles.bgLight);
+            //agregar panel a card
+            cardClientes.add(btnPanelCli, BorderLayout.SOUTH);
+
+            //crear btn
+            Button btnNuevoCli = new Button("Nuevo");
+            btnPanelCli.add(btnNuevoCli);
+            //btn mod
+            Button btnModCli = new Button("Editar");
+            btnPanelCli.add(btnModCli);
+            //btn eliminar
+            Button btnElimCli = new Button("Eliminar");
+            btnPanelCli.add(btnElimCli);
+            //logica abrir form al clickear btn
+            //abrir Form de alta
+            btnNuevoCli.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    AltaClientes form = new AltaClientes();
+                    form.setVisible(true);
+                    form.setLocationRelativeTo(null);
+                }
+            });
+            
+        //TURNOS
+            
+            TitlePanel titleTur = new TitlePanel("Turnos");
+            cardTurnos.add(titleTur, BorderLayout.NORTH);
+
+            //crear tabla
+            JPanel panelCenterTur = new JPanel(new BorderLayout()); //add flow layout center to this?
+            cardTurnos.add(panelCenterTur, BorderLayout.CENTER);
+            
+            Tabla tableTur = new Tabla();
+            panelCenterTur .add(tableTur, BorderLayout.CENTER);
+
+            //btns panel
+            JPanel btnPanelTur = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            btnPanelTur.setBorder(new EmptyBorder(0, 0, 40, 0));
+            btnPanelTur.setBackground(Styles.bgLight);
+            //agregar panel a card
+            cardTurnos.add(btnPanelTur, BorderLayout.SOUTH);
+
+            //crear btn
+            Button btnNuevoTur = new Button("Nuevo");
+            btnPanelTur.add(btnNuevoTur);
+            //btn mod
+            Button btnModTur = new Button("Editar");
+            btnPanelTur.add(btnModTur);
+            //btn eliminar
+            Button btnElimTur = new Button("Eliminar");
+            btnPanelTur.add(btnElimTur);
+            //logica abrir form al clickear btn
+            
+        //SERVICIOS
+            
+            TitlePanel titleSer = new TitlePanel("Servicios");
+            cardServicios.add(titleSer, BorderLayout.NORTH);
+
+            //crear tabla
+            JPanel panelCenterSer = new JPanel(new BorderLayout()); //add flow layout center to this?
+            cardServicios.add(panelCenterSer , BorderLayout.CENTER);
+            
+            Tabla tableSer = new Tabla();
+            panelCenterSer .add(tableSer, BorderLayout.CENTER);
+
+            //btns panel
+            JPanel btnPanelSer = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            btnPanelSer.setBorder(new EmptyBorder(0, 0, 40, 0));
+            btnPanelSer.setBackground(Styles.bgLight);
+            //agregar panel a card
+            cardServicios.add(btnPanelSer, BorderLayout.SOUTH);
+
+            //crear btn
+            Button btnNuevoSer = new Button("Nuevo");
+            btnPanelSer.add(btnNuevoSer);
+            //btn mod
+            Button btnModSer = new Button("Editar");
+            btnPanelSer.add(btnModSer);
+            //btn eliminar
+            Button btnElimSer = new Button("Eliminar");
+            btnPanelSer.add(btnElimSer);
+            //logica abrir form al clickear btn
+            
+        //CAJA 
+            TitlePanel titleCaja = new TitlePanel("Caja");
+            cardCaja.add(titleCaja, BorderLayout.NORTH);
+
+            //crear tabla
+            JPanel panelCenterCaja = new JPanel(new BorderLayout()); //add flow layout center to this?
+            cardCaja.add(panelCenterCaja , BorderLayout.CENTER);
+            
+            Tabla tableCaja = new Tabla();
+            panelCenterCaja .add(tableCaja, BorderLayout.CENTER);
+
+            //btns panel
+            JPanel btnPanelCaja = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            btnPanelCaja.setBorder(new EmptyBorder(0, 0, 40, 0));
+            btnPanelCaja.setBackground(Styles.bgLight);
+            //agregar panel a card
+            cardCaja.add(btnPanelCaja, BorderLayout.SOUTH);
+
+            //crear btn
+            Button btnNuevoCaja = new Button("Nuevo");
+            btnPanelCaja.add(btnNuevoCaja);
+            //btn mod
+            Button btnModCaja = new Button("Editar");
+            btnPanelCaja.add(btnModCaja);
+            //btn eliminar
+            Button btnElimCaja = new Button("Eliminar");
+            btnPanelCaja.add(btnElimCaja);
+            //logica abrir form al clickear btn
+            
+        //PROVEEDORES
+            TitlePanel titleProv = new TitlePanel("Proveedores");
+            cardProveedores.add(titleProv, BorderLayout.NORTH);
+
+            //crear tabla
+            JPanel panelCenterProv = new JPanel(new BorderLayout()); //add flow layout center to this?
+            cardProveedores.add(panelCenterProv, BorderLayout.CENTER);
+            
+            Tabla tableProv = new Tabla();
+            panelCenterProv .add(tableProv, BorderLayout.CENTER);
+
+            //btns panel
+            JPanel btnPanelProv = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            btnPanelProv.setBorder(new EmptyBorder(0, 0, 40, 0));
+            btnPanelProv.setBackground(Styles.bgLight);
+            //agregar panel a card
+            cardProveedores.add(btnPanelProv, BorderLayout.SOUTH);
+
+            //btn alta
+            Button btnNuevoProv = new Button("Nuevo");
+            btnPanelProv.add(btnNuevoProv);
+            //btn mod
+            Button btnModProv = new Button("Editar");
+            btnPanelProv.add(btnModProv);
+            //btn eliminar
+            Button btnElimProv = new Button("Eliminar");
+            btnPanelProv.add(btnElimProv);
+            //logica abrir form al clickear btn
+            
+            
         //INVENTARIO
-        
-        JLabel lblInventario = new JLabel("Inventario");
-        // Set bounds for the label (x, y, width, height)
-        lblInventario.setBounds(80, 70, 200, 50);
-        cardInventario.add(lblInventario);
-        lblInventario.setFont(new Font("Dialog", Font.BOLD, 20));
-        lblInventario.setForeground(Styles.fontDark);
-        
+            TitlePanel titleInv = new TitlePanel("Inventario");
+            cardInventario.add(titleInv, BorderLayout.NORTH);
+
+            //crear tabla
+            JPanel panelCenterInv = new JPanel(new BorderLayout()); //add flow layout center to this?
+            cardInventario.add(panelCenterInv , BorderLayout.CENTER);
+            
+            Tabla tableInv = new Tabla();
+            panelCenterInv .add(tableInv, BorderLayout.CENTER);
+
+            //btns panel
+            JPanel btnPanelInv = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            btnPanelInv.setBorder(new EmptyBorder(0, 0, 40, 0));
+            btnPanelInv.setBackground(Styles.bgLight);
+            //agregar panel a card
+            cardInventario.add(btnPanelInv, BorderLayout.SOUTH);
+
+            //btn alta
+            Button btnNuevoInv = new Button("Nuevo");
+            btnPanelInv.add(btnNuevoInv);
+            //btn mod
+            Button btnModInv = new Button("Editar");
+            btnPanelInv.add(btnModInv);
+            //btn eliminar
+            Button btnElimInv = new Button("Eliminar");
+            btnPanelInv.add(btnElimInv);
+            //logica abrir form al clickear btn
+            
         
         //EMPLEADOS
-        
-        JLabel lblEmpleados = new JLabel("Empleados");
-        // Set bounds for the label (x, y, width, height)
-        lblEmpleados.setBounds(80, 70, 200, 50);
-        cardEmpleados.add(lblEmpleados);
-        lblEmpleados.setFont(new Font("Dialog", Font.BOLD, 20));
-        lblEmpleados.setForeground(Styles.fontDark);
-        
-        //crear new tabla
-        //set boudns
-        //insert
-        
-        
-        JButton btnNuevoEmp = new JButton("Agregar");
-        btnNuevoEmp.setBounds(80, 670, 150, 40);
-        btnNuevoEmp.setBackground(Styles.accentDark);
-        btnNuevoEmp.setForeground(Styles.fontLight);
-        cardEmpleados.add(btnNuevoEmp);
-        btnNuevoEmp.setBackground(Styles.accentDark);
-        btnNuevoEmp.setContentAreaFilled(false);
-        btnNuevoEmp.setBorderPainted(false);
-        btnNuevoEmp.setOpaque(true);
-        btnNuevoEmp.setFont(new Font("Dialog", Font.BOLD, 14));
-        
-        btnNuevoEmp.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnNuevoEmp.setBackground(Styles.accentLightHover);
-            }
+            TitlePanel titleEmp= new TitlePanel("Empleados");
+            cardEmpleados.add(titleEmp, BorderLayout.NORTH);
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnNuevoEmp.setBackground(Styles.accentDark);
-            }
-        });
-        //abrir Form al clickear
+            //crear tabla
+            JPanel panelCentral = new JPanel(new BorderLayout()); //add flow layout center to this?
+            cardEmpleados.add(panelCentral, BorderLayout.CENTER);
+            
+            Tabla table = new Tabla();
+            panelCentral.add(table, BorderLayout.CENTER);
+
+            //btn alta
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            buttonPanel.setBorder(new EmptyBorder(0, 0, 40, 0));
+
+            cardEmpleados.add(buttonPanel, BorderLayout.SOUTH);
+            Button btnNuevoEmp = new Button("Nuevo");
+            buttonPanel.add(btnNuevoEmp);
+            buttonPanel.setBackground(Styles.bgLight);
+
+            //abrir Form de alta
+            btnNuevoEmp.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    AltaEmpleados form = new AltaEmpleados();
+                    form.setVisible(true);
+                    form.setLocationRelativeTo(null);
+                }
+            });
+
+            //btn modificar
+            Button btnModEmp = new Button("Editar");
+            buttonPanel.add(btnModEmp);
+
+            //btn eliminar
+            Button btnElimEmp = new Button("Eliminar");
+            buttonPanel.add(btnElimEmp);
         
-        btnNuevoEmp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                AltaEmpleados form = new AltaEmpleados();
-                form.setVisible(true);
-                form.setLocationRelativeTo(null);
-            }
-        });
         
         
         /*LOGO LOGIN*/
@@ -240,7 +403,7 @@ public class Ventana extends javax.swing.JFrame {
         Login1.setPreferredSize(new java.awt.Dimension(800, 500));
         Login1.setVerifyInputWhenFocusTarget(false);
 
-        jPanel3.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel3.setBackground(new java.awt.Color(250, 250, 250));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 238)));
         jPanel3.setName("jPanel2"); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(500, 400));
@@ -368,6 +531,8 @@ public class Ventana extends javax.swing.JFrame {
         );
 
         mainPanel.add(Login1, "login");
+
+        mainScreen.setBackground(new java.awt.Color(250, 250, 250));
 
         sideMenu.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -593,102 +758,36 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap(91, Short.MAX_VALUE))
         );
 
-        panelMain.setBackground(new java.awt.Color(255, 204, 255));
+        panelMain.setBackground(new java.awt.Color(250, 250, 250));
         panelMain.setPreferredSize(new java.awt.Dimension(800, 500));
         panelMain.setLayout(new java.awt.CardLayout());
 
-        cardInventario.setBackground(new java.awt.Color(240, 240, 240));
-        cardInventario.setLayout(null);
+        cardInventario.setBackground(new java.awt.Color(250, 250, 250));
+        cardInventario.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardInventario, "cardInventario");
 
-        cardProveedores.setBackground(new java.awt.Color(240, 240, 240));
-
-        javax.swing.GroupLayout cardProveedoresLayout = new javax.swing.GroupLayout(cardProveedores);
-        cardProveedores.setLayout(cardProveedoresLayout);
-        cardProveedoresLayout.setHorizontalGroup(
-            cardProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
-        cardProveedoresLayout.setVerticalGroup(
-            cardProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
-
+        cardProveedores.setBackground(new java.awt.Color(250, 250, 250));
+        cardProveedores.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardProveedores, "cardProveedores");
 
-        cardCaja.setBackground(new java.awt.Color(240, 240, 240));
-
-        javax.swing.GroupLayout cardCajaLayout = new javax.swing.GroupLayout(cardCaja);
-        cardCaja.setLayout(cardCajaLayout);
-        cardCajaLayout.setHorizontalGroup(
-            cardCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
-        cardCajaLayout.setVerticalGroup(
-            cardCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
-
+        cardCaja.setBackground(new java.awt.Color(250, 250, 250));
+        cardCaja.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardCaja, "cardCaja");
 
-        cardServicios.setBackground(new java.awt.Color(240, 240, 240));
-
-        javax.swing.GroupLayout cardServiciosLayout = new javax.swing.GroupLayout(cardServicios);
-        cardServicios.setLayout(cardServiciosLayout);
-        cardServiciosLayout.setHorizontalGroup(
-            cardServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
-        cardServiciosLayout.setVerticalGroup(
-            cardServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
-
+        cardServicios.setBackground(new java.awt.Color(250, 250, 250));
+        cardServicios.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardServicios, "cardServicios");
 
-        cardTurnos.setBackground(new java.awt.Color(240, 240, 240));
-
-        javax.swing.GroupLayout cardTurnosLayout = new javax.swing.GroupLayout(cardTurnos);
-        cardTurnos.setLayout(cardTurnosLayout);
-        cardTurnosLayout.setHorizontalGroup(
-            cardTurnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
-        cardTurnosLayout.setVerticalGroup(
-            cardTurnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
-
+        cardTurnos.setBackground(new java.awt.Color(250, 250, 250));
+        cardTurnos.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardTurnos, "cardTurnos");
 
-        cardClientes.setBackground(new java.awt.Color(240, 240, 240));
-
-        javax.swing.GroupLayout cardClientesLayout = new javax.swing.GroupLayout(cardClientes);
-        cardClientes.setLayout(cardClientesLayout);
-        cardClientesLayout.setHorizontalGroup(
-            cardClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
-        cardClientesLayout.setVerticalGroup(
-            cardClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
-
+        cardClientes.setBackground(new java.awt.Color(250, 250, 250));
+        cardClientes.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardClientes, "cardClientes");
 
-        cardEmpleados.setBackground(new java.awt.Color(240, 240, 240));
-
-        javax.swing.GroupLayout cardEmpleadosLayout = new javax.swing.GroupLayout(cardEmpleados);
-        cardEmpleados.setLayout(cardEmpleadosLayout);
-        cardEmpleadosLayout.setHorizontalGroup(
-            cardEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
-        cardEmpleadosLayout.setVerticalGroup(
-            cardEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
-
+        cardEmpleados.setBackground(new java.awt.Color(250, 250, 250));
+        cardEmpleados.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardEmpleados, "cardEmpleados");
 
         javax.swing.GroupLayout mainScreenLayout = new javax.swing.GroupLayout(mainScreen);
