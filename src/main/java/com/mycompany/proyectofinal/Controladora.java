@@ -63,4 +63,17 @@ public class Controladora {
     }
     
     
+    //PROVEEDOR
+    //ALTA
+    public void guardarProveedor(String nombre, String telefono, String email){
+        Proveedor nuevoProveedor = new Proveedor();
+        
+        nuevoProveedor.setNombre(nombre);
+        nuevoProveedor.setTelefono(telefono);
+        nuevoProveedor.setEmail(email);
+        
+        controlPersis.guardarProveedor(nuevoProveedor);
+    }
+    
+    
 }

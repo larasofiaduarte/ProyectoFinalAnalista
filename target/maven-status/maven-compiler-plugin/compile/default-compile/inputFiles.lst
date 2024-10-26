@@ -1,5 +1,6 @@
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\persistencia\ClienteJpaController.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\persistencia\exceptions\NonexistentEntityException.java
+C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\persistencia\ProveedorJpaController.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\exceptions\NonexistentEntityException.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\ButtonSec.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\AltaEmpleados.java
@@ -18,4 +19,6 @@ C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\my
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Cliente.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\exceptions\PreexistingEntityException.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Controladora.java
+C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\AltaProveedores.java
+C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Proveedor.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\Button.java

@@ -3,6 +3,8 @@ package com.mycompany.persistencia;
 
 import com.mycompany.proyectofinal.Usuario;
 import com.mycompany.proyectofinal.Cliente;
+import com.mycompany.proyectofinal.Proveedor;
+
 import java.util.List;
 
 public class ControladoraPersistencia {
@@ -22,6 +24,14 @@ public class ControladoraPersistencia {
     
     public void guardarCliente(Cliente nuevoCliente){
         cliJpa.create(nuevoCliente);
+    }
+    
+    
+    //PROVEEDOR
+    ProveedorJpaController provJpa = new ProveedorJpaController();
+    
+    public void guardarProveedor(Proveedor nuevoProveedor){
+        provJpa.create(nuevoProveedor);
     }
     
 }
