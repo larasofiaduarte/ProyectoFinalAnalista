@@ -218,6 +218,15 @@ public class Ventana extends javax.swing.JFrame {
             Button btnElimProv = new Button("Eliminar");
             btnPanelProv.add(btnElimProv);
             //logica abrir form al clickear btn
+            btnNuevoProv.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    AltaProveedores form = new AltaProveedores();
+                    form.setVisible(true);
+                    form.setLocationRelativeTo(null);
+                }
+            });
             
             
         //INVENTARIO

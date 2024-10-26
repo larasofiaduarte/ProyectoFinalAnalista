@@ -46,6 +46,10 @@ public class Styles {
     
     //padding
     public static final EmptyBorder padding = new EmptyBorder(50, 20, 0, 0);
+    public static final EmptyBorder paddingTop = new EmptyBorder(30, 0, 0, 0);
+    public static final EmptyBorder paddingBottom = new EmptyBorder(0, 0, 30, 0);
+
+
 
     public static Font customFontMd;
     public static Font customFontSm;
