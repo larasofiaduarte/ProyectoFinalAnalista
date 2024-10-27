@@ -22,10 +22,15 @@ public class ControladoraPersistencia {
     //CLIENTE
     ClienteJpaController cliJpa = new ClienteJpaController();
     
+    //CREATE
     public void guardarCliente(Cliente nuevoCliente){
         cliJpa.create(nuevoCliente);
     }
     
+    //READ
+    public List<Cliente> traerClientes() {
+       return cliJpa.findClienteEntities();
+    }
     
     //PROVEEDOR
     ProveedorJpaController provJpa = new ProveedorJpaController();
@@ -33,5 +38,7 @@ public class ControladoraPersistencia {
     public void guardarProveedor(Proveedor nuevoProveedor){
         provJpa.create(nuevoProveedor);
     }
+
+    
     
 }

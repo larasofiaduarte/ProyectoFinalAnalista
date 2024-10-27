@@ -2,6 +2,7 @@ com\mycompany\proyectofinal\Proveedor.class
 com\mycompany\GUI\exceptions\IllegalOrphanException.class
 com\mycompany\GUI\AltaEmpleados$1.class
 com\mycompany\GUI\exceptions\NonexistentEntityException.class
+com\mycompany\GUI\Ventana$25.class
 com\mycompany\GUI\Ventana$12.class
 com\mycompany\GUI\Ventana$22.class
 com\mycompany\GUI\ButtonSec$1.class
@@ -24,6 +25,7 @@ com\mycompany\GUI\Ventana$8.class
 com\mycompany\GUI\Ventana$16.class
 com\mycompany\GUI\Ventana$21.class
 com\mycompany\GUI\AltaEmpleados$7.class
+com\mycompany\GUI\Ventana$24.class
 com\mycompany\GUI\AltaClientes$1.class
 com\mycompany\GUI\Ventana$19.class
 com\mycompany\GUI\Ventana$4.class
@@ -43,6 +45,7 @@ com\mycompany\GUI\AltaClientes.class
 com\mycompany\persistencia\UsuarioJpaController.class
 com\mycompany\GUI\AltaEmpleados$3.class
 com\mycompany\GUI\Styles.class
+com\mycompany\GUI\Ventana$23.class
 com\mycompany\GUI\AltaClientes$3.class
 com\mycompany\GUI\Ventana$13.class
 com\mycompany\persistencia\ControladoraPersistencia.class
