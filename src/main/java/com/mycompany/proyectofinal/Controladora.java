@@ -3,6 +3,8 @@ package com.mycompany.proyectofinal;
 
 import com.mycompany.persistencia.ControladoraPersistencia;
 import java.util.List;
+import com.mycompany.proyectofinal.Cliente;
+import java.util.ArrayList;
 
 public class Controladora {
     ControladoraPersistencia controlPersis = new ControladoraPersistencia();
@@ -50,6 +52,7 @@ public class Controladora {
     
     
     //CLIENTE
+    //CREATE
     public void guardarCliente(String nombre, String apellido, String telefono, String genero){
         Cliente nuevoCliente = new Cliente();
         
@@ -60,6 +63,29 @@ public class Controladora {
         
         controlPersis.guardarCliente(nuevoCliente);
         
+    }
+    //READ
+    public List <Cliente> traerClientes(){
+        
+        
+        return controlPersis.traerClientes();
+        
+        
+        /*
+        List<Cliente> clientes = new ArrayList<>(); // Initialize the list
+
+        // Add Cliente objects to the list
+        
+        Cliente cliente1 = new Cliente();
+        cliente1.setNombre("Lara");
+        cliente1.setApellido("Duarte");
+        cliente1.setGenero("F");
+        cliente1.setTelefono("1234");
+        
+        clientes.add(cliente1);
+
+        return clientes;
+        */
     }
     
     

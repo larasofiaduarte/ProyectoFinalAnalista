@@ -16,7 +16,7 @@ public class Cliente implements Serializable {
     private String nombre;
     private String apellido;
     private String telefono;
-
+    private String genero;
     public int getId() {
         return id;
     }
@@ -56,6 +56,6 @@ public class Cliente implements Serializable {
     public void setGenero(String genero) {
         this.genero = genero;
     }
-    private String genero;
+    
     
 }

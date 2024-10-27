@@ -9,9 +9,9 @@ public class Tabla extends JPanel {
     
     private JTable table;
 
-    public Tabla() {
+    public Tabla(DefaultTableModel model) {
         // Create a JTable with a DefaultTableModel (empty)
-        table = new JTable(new DefaultTableModel());
+        table = new JTable(model);
        
         
         // Add the table to a scroll pane

@@ -8,15 +8,18 @@ import com.mycompany.proyectofinal.Controladora;
 import com.mycompany.GUI.Button;
 import com.mycompany.GUI.TitlePanel;
 import com.mycompany.GUI.Tabla;
+import com.mycompany.proyectofinal.Cliente;
 
 import java.io.File;
 import java.io.IOException;
-import static javax.swing.GroupLayout.Alignment.CENTER;
+import javax.swing.GroupLayout.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.*;
+import java.util.List;
 
 
 public class Ventana extends javax.swing.JFrame {
@@ -66,12 +69,11 @@ public class Ventana extends javax.swing.JFrame {
             TitlePanel titleCli = new TitlePanel("Clientes");
             cardClientes.add(titleCli, BorderLayout.NORTH);
 
-            //crear tabla
-            JPanel panelCenterCli = new JPanel(new BorderLayout()); //add flow layout center to this?
+            //crear panel contenedor para la tabla
+            JPanel panelCenterCli = new JPanel(new BorderLayout()); 
             cardClientes.add(panelCenterCli, BorderLayout.CENTER);
             
-            Tabla tableCli = new Tabla();
-            panelCenterCli.add(tableCli, BorderLayout.CENTER);
+          
 
             //btns panel
             JPanel btnPanelCli = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -101,6 +103,17 @@ public class Ventana extends javax.swing.JFrame {
                 }
             });
             
+            //CREAR TABLA
+            //LOAD TABLE UPON LOADING PANEL
+            cardClientes.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentShown(ComponentEvent e) {
+                    cargarTablaClientes(panelCenterCli);
+                }
+            });
+            
+            
+            
         //TURNOS
             
             TitlePanel titleTur = new TitlePanel("Turnos");
@@ -110,8 +123,8 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCenterTur = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardTurnos.add(panelCenterTur, BorderLayout.CENTER);
             
-            Tabla tableTur = new Tabla();
-            panelCenterTur .add(tableTur, BorderLayout.CENTER);
+            //Tabla tableTur = new Tabla();
+            //panelCenterTur .add(tableTur, BorderLayout.CENTER);
 
             //btns panel
             JPanel btnPanelTur = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -140,8 +153,8 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCenterSer = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardServicios.add(panelCenterSer , BorderLayout.CENTER);
             
-            Tabla tableSer = new Tabla();
-            panelCenterSer .add(tableSer, BorderLayout.CENTER);
+            //Tabla tableSer = new Tabla();
+            //panelCenterSer .add(tableSer, BorderLayout.CENTER);
 
             //btns panel
             JPanel btnPanelSer = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -169,8 +182,8 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCenterCaja = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardCaja.add(panelCenterCaja , BorderLayout.CENTER);
             
-            Tabla tableCaja = new Tabla();
-            panelCenterCaja .add(tableCaja, BorderLayout.CENTER);
+            //Tabla tableCaja = new Tabla();
+            //panelCenterCaja .add(tableCaja, BorderLayout.CENTER);
 
             //btns panel
             JPanel btnPanelCaja = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -198,8 +211,8 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCenterProv = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardProveedores.add(panelCenterProv, BorderLayout.CENTER);
             
-            Tabla tableProv = new Tabla();
-            panelCenterProv .add(tableProv, BorderLayout.CENTER);
+            //Tabla tableProv = new Tabla();
+            //panelCenterProv .add(tableProv, BorderLayout.CENTER);
 
             //btns panel
             JPanel btnPanelProv = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -237,8 +250,8 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCenterInv = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardInventario.add(panelCenterInv , BorderLayout.CENTER);
             
-            Tabla tableInv = new Tabla();
-            panelCenterInv .add(tableInv, BorderLayout.CENTER);
+            //Tabla tableInv = new Tabla();
+            //panelCenterInv .add(tableInv, BorderLayout.CENTER);
 
             //btns panel
             JPanel btnPanelInv = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -267,8 +280,8 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCentral = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardEmpleados.add(panelCentral, BorderLayout.CENTER);
             
-            Tabla table = new Tabla();
-            panelCentral.add(table, BorderLayout.CENTER);
+            //Tabla table = new Tabla();
+            //panelCentral.add(table, BorderLayout.CENTER);
 
             //btn alta
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -395,16 +408,21 @@ public class Ventana extends javax.swing.JFrame {
         label1 = new javax.swing.JLabel();
         label2 = new javax.swing.JLabel();
         panelMain = new javax.swing.JPanel();
+        cardTurnos = new javax.swing.JPanel();
+        cardClientes = new javax.swing.JPanel();
+        cardEmpleados = new javax.swing.JPanel();
         cardInventario = new javax.swing.JPanel();
         cardProveedores = new javax.swing.JPanel();
         cardCaja = new javax.swing.JPanel();
         cardServicios = new javax.swing.JPanel();
-        cardTurnos = new javax.swing.JPanel();
-        cardClientes = new javax.swing.JPanel();
-        cardEmpleados = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
@@ -771,6 +789,18 @@ public class Ventana extends javax.swing.JFrame {
         panelMain.setPreferredSize(new java.awt.Dimension(800, 500));
         panelMain.setLayout(new java.awt.CardLayout());
 
+        cardTurnos.setBackground(new java.awt.Color(250, 250, 250));
+        cardTurnos.setLayout(new java.awt.BorderLayout());
+        panelMain.add(cardTurnos, "cardTurnos");
+
+        cardClientes.setBackground(new java.awt.Color(250, 250, 250));
+        cardClientes.setLayout(new java.awt.BorderLayout());
+        panelMain.add(cardClientes, "cardClientes");
+
+        cardEmpleados.setBackground(new java.awt.Color(250, 250, 250));
+        cardEmpleados.setLayout(new java.awt.BorderLayout());
+        panelMain.add(cardEmpleados, "cardEmpleados");
+
         cardInventario.setBackground(new java.awt.Color(250, 250, 250));
         cardInventario.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardInventario, "cardInventario");
@@ -786,18 +816,6 @@ public class Ventana extends javax.swing.JFrame {
         cardServicios.setBackground(new java.awt.Color(250, 250, 250));
         cardServicios.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardServicios, "cardServicios");
-
-        cardTurnos.setBackground(new java.awt.Color(250, 250, 250));
-        cardTurnos.setLayout(new java.awt.BorderLayout());
-        panelMain.add(cardTurnos, "cardTurnos");
-
-        cardClientes.setBackground(new java.awt.Color(250, 250, 250));
-        cardClientes.setLayout(new java.awt.BorderLayout());
-        panelMain.add(cardClientes, "cardClientes");
-
-        cardEmpleados.setBackground(new java.awt.Color(250, 250, 250));
-        cardEmpleados.setLayout(new java.awt.BorderLayout());
-        panelMain.add(cardEmpleados, "cardEmpleados");
 
         javax.swing.GroupLayout mainScreenLayout = new javax.swing.GroupLayout(mainScreen);
         mainScreen.setLayout(mainScreenLayout);
@@ -958,6 +976,10 @@ public class Ventana extends javax.swing.JFrame {
     private void txtUser1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUser1FocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUser1FocusLost
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //
+    }//GEN-LAST:event_formWindowOpened
  
     /**
      * @param args the command line arguments
@@ -1027,4 +1049,36 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword2;
     private javax.swing.JTextField txtUser1;
     // End of variables declaration//GEN-END:variables
+//CARGAR TABLAS
+    private void cargarTablaClientes(JPanel panel) {
+        DefaultTableModel modeloClientes = new DefaultTableModel(){
+            public boolean isCellEditable(int row, int col){
+                return false;
+            };
+        };
+        
+        String titulos[] = {"Nombre", "Apellido", "Telefono", "Género"};
+        modeloClientes.setColumnIdentifiers(titulos);
+        
+        Tabla tabla = new Tabla(modeloClientes);
+        
+        panel.add(tabla,BorderLayout.CENTER);
+        panel.revalidate();
+        panel.repaint();
+        
+        List <Cliente> listaClientes = control.traerClientes();
+        
+        if (listaClientes != null){
+            for (Cliente cli : listaClientes){
+                Object[] objeto = {cli.getNombre(), cli.getApellido(), cli.getTelefono(), cli.getGenero()};
+            
+                modeloClientes.addRow(objeto);
+            }
+        }
+        
+    }
+    
+    
+    
+    
 }
