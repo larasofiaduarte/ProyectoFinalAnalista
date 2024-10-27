@@ -1,11 +1,14 @@
 
 package com.mycompany.persistencia;
 
+import com.mycompany.GUI.exceptions.NonexistentEntityException;
 import com.mycompany.proyectofinal.Usuario;
 import com.mycompany.proyectofinal.Cliente;
 import com.mycompany.proyectofinal.Proveedor;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControladoraPersistencia {
     //USUARIO
@@ -32,12 +35,19 @@ public class ControladoraPersistencia {
        return cliJpa.findClienteEntities();
     }
     
+    //DELETE
+    public void borrarCliente(int numCliente) {
+        
+            cliJpa.destroy(numCliente);
+    }
     //PROVEEDOR
     ProveedorJpaController provJpa = new ProveedorJpaController();
     
     public void guardarProveedor(Proveedor nuevoProveedor){
         provJpa.create(nuevoProveedor);
     }
+
+    
 
     
     

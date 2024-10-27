@@ -104,7 +104,7 @@ public class ClienteJpaController implements Serializable {
     }
     
     // Delete
-    public void destroy(Long id) {
+    public void destroy(int id) {
         EntityManager em = null;
         EntityTransaction transaction = null;
 
