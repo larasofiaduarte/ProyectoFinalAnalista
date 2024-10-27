@@ -27,9 +27,15 @@ public class Ventana extends javax.swing.JFrame {
     CardLayout card;
     Controladora control;
     
+    private Tabla tablaClientes2;
+    private DefaultTableModel modeloClientes2;
+    
     /**
      * Creates new form Ventana
      */
+    
+    
+    
     public Ventana() {
         initComponents();
         this.setVisible(true);
@@ -46,6 +52,7 @@ public class Ventana extends javax.swing.JFrame {
         card.show(mainPanel, "mainScreen");
         
         /*PANEL LOGIN 1*/
+/*
         btnLogin1.setBackground(Styles.accentDark);
         btnLogin1.setContentAreaFilled(false);
         btnLogin1.setBorderPainted(false);
@@ -65,6 +72,7 @@ public class Ventana extends javax.swing.JFrame {
         /*UI MAIN SCREEN GESTIONES*/
         
         //CLIENTES
+        
             
             TitlePanel titleCli = new TitlePanel("Clientes");
             cardClientes.add(titleCli, BorderLayout.NORTH);
@@ -73,7 +81,7 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCenterCli = new JPanel(new BorderLayout()); 
             cardClientes.add(panelCenterCli, BorderLayout.CENTER);
             
-          
+            
 
             //btns panel
             JPanel btnPanelCli = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -91,6 +99,11 @@ public class Ventana extends javax.swing.JFrame {
             //btn eliminar
             Button btnElimCli = new Button("Eliminar");
             btnPanelCli.add(btnElimCli);
+            
+            Button btnUpdateCli = new Button("Actualizar");
+            btnPanelCli.add(btnUpdateCli);
+            
+            
             //logica abrir form al clickear btn
             //abrir Form de alta
             btnNuevoCli.addActionListener(new ActionListener() {
@@ -102,15 +115,37 @@ public class Ventana extends javax.swing.JFrame {
                     form.setLocationRelativeTo(null);
                 }
             });
+            //UPDATE
+            btnUpdateCli.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cargarTablaClientes(panelCenterCli);
+                }
+            });
             
             //CREAR TABLA
-            //LOAD TABLE UPON LOADING PANEL
+            
+            modeloClientes2 = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int col){return false;}
+            };
+            //INICIALIZAR TABLA
+            String titulos2[] = {"Nombre", "Apellido", "Telefono", "Genero"}; //modelo
+            modeloClientes2.setColumnIdentifiers(titulos2); 
+            
             cardClientes.addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentShown(ComponentEvent e) {
                     cargarTablaClientes(panelCenterCli);
                 }
             });
+            
+            tablaClientes2 = new Tabla(modeloClientes2);
+            panelCenterCli.add(tablaClientes2, BorderLayout.CENTER);
+            
+            //LOAD TABLE UPON LOADING PANEL
+            
+            
             
             
             
@@ -1051,6 +1086,24 @@ public class Ventana extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 //CARGAR TABLAS
     private void cargarTablaClientes(JPanel panel) {
+        modeloClientes2.setRowCount(0); // Clear existing data in the model
+
+        List<Cliente> listaClientes = control.traerClientes(); // Fetch updated client list
+        
+        if (listaClientes != null) {
+            for (Cliente cli : listaClientes) {
+                Object[] objeto = {cli.getNombre(), cli.getApellido(), cli.getTelefono(), cli.getGenero()};
+                modeloClientes2.addRow(objeto); // Add new data to the model
+            }
+        }
+
+        panel.revalidate(); // Refresh the panel to reflect changes
+        panel.repaint(); // Repaint the panel
+    }
+    
+    /*
+    private void cargarTablaClientes(JPanel panel) {
+        
         DefaultTableModel modeloClientes = new DefaultTableModel(){
             public boolean isCellEditable(int row, int col){
                 return false;
@@ -1074,11 +1127,12 @@ public class Ventana extends javax.swing.JFrame {
             
                 modeloClientes.addRow(objeto);
             }
-        }
-        
-    }
-    
-    
-    
-    
+        } 
+    }*/
+
 }
+    
+    
+    
+    
+
