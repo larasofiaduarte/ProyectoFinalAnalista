@@ -25,4 +25,8 @@ public class Tabla extends JPanel {
         // Optional: Set preferred size for the table panel
         setPreferredSize(new Dimension(400, 300));// Adjust size as needed
     }
+
+    public JTable getTable() {
+        return table;
+    }
 }

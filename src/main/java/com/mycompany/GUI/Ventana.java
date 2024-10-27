@@ -123,6 +123,10 @@ public class Ventana extends javax.swing.JFrame {
                 }
             });
             
+            
+            
+            
+            
             //CREAR TABLA
             
             modeloClientes2 = new DefaultTableModel(){
@@ -130,7 +134,7 @@ public class Ventana extends javax.swing.JFrame {
                 public boolean isCellEditable(int row, int col){return false;}
             };
             //INICIALIZAR TABLA
-            String titulos2[] = {"Nombre", "Apellido", "Telefono", "Genero"}; //modelo
+            String titulos2[] = {"ID","Nombre", "Apellido", "Telefono", "Genero"}; //modelo
             modeloClientes2.setColumnIdentifiers(titulos2); 
             
             cardClientes.addComponentListener(new ComponentAdapter() {
@@ -145,7 +149,29 @@ public class Ventana extends javax.swing.JFrame {
             
             //LOAD TABLE UPON LOADING PANEL
             
+            JTable tableClientes = tablaClientes2.getTable();
             
+            //ELIMINAR
+            btnElimCli.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloClientes2.getRowCount()>0){
+                        if (tableClientes.getSelectedRow()!=-1){
+                            int numCliente = Integer.parseInt(String.valueOf(tableClientes.getValueAt(tableClientes.getSelectedRow(),0)));
+                        
+                            control.borrarCliente(numCliente);
+                        
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Seleccione une la fila que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        };
+                    }else{
+                        JOptionPane.showMessageDialog(null, "La Tabla esta vacia.", "Tabla vacia", JOptionPane.INFORMATION_MESSAGE);
+                    };
+                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado.", JOptionPane.INFORMATION_MESSAGE);
+                }
+                
+                
+            });
             
             
             
@@ -1092,7 +1118,7 @@ public class Ventana extends javax.swing.JFrame {
         
         if (listaClientes != null) {
             for (Cliente cli : listaClientes) {
-                Object[] objeto = {cli.getNombre(), cli.getApellido(), cli.getTelefono(), cli.getGenero()};
+                Object[] objeto = {cli.getId(),cli.getNombre(), cli.getApellido(), cli.getTelefono(), cli.getGenero()};
                 modeloClientes2.addRow(objeto); // Add new data to the model
             }
         }

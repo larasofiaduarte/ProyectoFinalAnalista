@@ -69,25 +69,13 @@ public class Controladora {
         
         
         return controlPersis.traerClientes();
-        
-        
-        /*
-        List<Cliente> clientes = new ArrayList<>(); // Initialize the list
-
-        // Add Cliente objects to the list
-        
-        Cliente cliente1 = new Cliente();
-        cliente1.setNombre("Lara");
-        cliente1.setApellido("Duarte");
-        cliente1.setGenero("F");
-        cliente1.setTelefono("1234");
-        
-        clientes.add(cliente1);
-
-        return clientes;
-        */
+       
     }
     
+    
+    public void borrarCliente(int numCliente) {
+        controlPersis.borrarCliente(numCliente);
+    }
     
     //PROVEEDOR
     //ALTA
@@ -100,6 +88,8 @@ public class Controladora {
         
         controlPersis.guardarProveedor(nuevoProveedor);
     }
+
+    
     
     
 }
