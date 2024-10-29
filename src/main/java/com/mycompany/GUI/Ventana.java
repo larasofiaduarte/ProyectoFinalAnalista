@@ -9,6 +9,7 @@ import com.mycompany.GUI.Button;
 import com.mycompany.GUI.TitlePanel;
 import com.mycompany.GUI.Tabla;
 import com.mycompany.proyectofinal.Cliente;
+import com.mycompany.proyectofinal.Turno;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,9 @@ public class Ventana extends javax.swing.JFrame {
     Controladora control;
     
     private Tabla tablaClientes2;
+    private Tabla tablaTurnos;
     private DefaultTableModel modeloClientes2;
+    private DefaultTableModel modeloTurnos;
     
     /**
      * Creates new form Ventana
@@ -149,7 +152,7 @@ public class Ventana extends javax.swing.JFrame {
             
             //LOAD TABLE UPON LOADING PANEL
             
-            JTable tableClientes = tablaClientes2.getTable();
+            JTable tableClientes = tablaClientes2.getTable(); //useful para eliminar
             
             //ELIMINAR
             btnElimCli.addActionListener(new ActionListener() {
@@ -203,7 +206,53 @@ public class Ventana extends javax.swing.JFrame {
             //btn eliminar
             Button btnElimTur = new Button("Eliminar");
             btnPanelTur.add(btnElimTur);
+            
             //logica abrir form al clickear btn
+            btnNuevoTur.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    AltaTurnos form = new AltaTurnos();
+                    form.setVisible(true);
+                    form.setLocationRelativeTo(null);
+                }
+            });
+            
+            //UPDATE
+            btnUpdateCli.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cargarTablaClientes(panelCenterCli);
+                }
+            });
+            
+            
+            
+            
+            
+            //CREAR TABLA
+            
+            modeloTurnos = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int col){return false;}
+            };
+            //INICIALIZAR TABLA
+            
+            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha"}; //modelo
+            modeloTurnos.setColumnIdentifiers(titulosTur); 
+            
+            cardTurnos.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentShown(ComponentEvent e) {
+                    cargarTablaTurnos(panelCenterTur); //implementar funcion de carga
+                }
+            });
+            
+            tablaTurnos = new Tabla(modeloTurnos);
+            panelCenterTur.add(tablaTurnos, BorderLayout.CENTER);
+            
+            //LOAD TABLE UPON LOADING PANEL
+            
             
         //SERVICIOS
             
@@ -1127,34 +1176,22 @@ public class Ventana extends javax.swing.JFrame {
         panel.repaint(); // Repaint the panel
     }
     
-    /*
-    private void cargarTablaClientes(JPanel panel) {
+    private void cargarTablaTurnos(JPanel panel) {
+        modeloTurnos.setRowCount(0); // Clear existing data in the model
+
+        List<Turno> listaTurnos = control.traerTurnos(); // Fetch updated turno list
         
-        DefaultTableModel modeloClientes = new DefaultTableModel(){
-            public boolean isCellEditable(int row, int col){
-                return false;
-            };
-        };
-        
-        String titulos[] = {"Nombre", "Apellido", "Telefono", "Género"};
-        modeloClientes.setColumnIdentifiers(titulos);
-        
-        Tabla tabla = new Tabla(modeloClientes);
-        
-        panel.add(tabla,BorderLayout.CENTER);
-        panel.revalidate();
-        panel.repaint();
-        
-        List <Cliente> listaClientes = control.traerClientes();
-        
-        if (listaClientes != null){
-            for (Cliente cli : listaClientes){
-                Object[] objeto = {cli.getNombre(), cli.getApellido(), cli.getTelefono(), cli.getGenero()};
-            
-                modeloClientes.addRow(objeto);
+        if (listaTurnos != null) {
+            for (Turno tur : listaTurnos) {
+                Object[] objeto = {tur.getId(),tur.getIdCliente(), tur.getServicio(), tur.getFecha()};
+                modeloTurnos.addRow(objeto); // Add new data to the model
             }
-        } 
-    }*/
+        }
+
+        panel.revalidate(); // Refresh the panel to reflect changes
+        panel.repaint(); // Repaint the panel
+    }
+    
 
 }
     
