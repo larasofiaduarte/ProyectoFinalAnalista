@@ -4,6 +4,8 @@ package com.mycompany.proyectofinal;
 import com.mycompany.persistencia.ControladoraPersistencia;
 import java.util.List;
 import com.mycompany.proyectofinal.Cliente;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Controladora {
@@ -72,7 +74,7 @@ public class Controladora {
        
     }
     
-    
+    //DELETE
     public void borrarCliente(int numCliente) {
         controlPersis.borrarCliente(numCliente);
     }
@@ -88,7 +90,54 @@ public class Controladora {
         
         controlPersis.guardarProveedor(nuevoProveedor);
     }
+    
+    //PRODUCTO
+    //ALTA
+    public void guardarProducto(String nombre, String stock, String minimo, String idProveedor){
+        Producto nuevoProducto = new Producto();
+        
+        nuevoProducto.setNombre(nombre);
+        nuevoProducto.setStock(stock);
+        nuevoProducto.setMinimo(minimo);
+        nuevoProducto.setIdProveedor(idProveedor);
+        
+        controlPersis.guardarProducto(nuevoProducto);
+        
+    }
+    
+    //SERVICIO
+    //ALTA
+        public void guardarServicio(String nombre, String precio, String idEmpleado){
+        Servicio nuevoServicio = new Servicio();
+        
+        nuevoServicio.setNombre(nombre);
+        nuevoServicio.setPrecio(precio);
+        nuevoServicio.setIdEmpleado(idEmpleado);
+        
+        controlPersis.guardarServicio(nuevoServicio);
+        
+    }
+        
+    //TURNOS
+        //ALTA
+        public void guardarTurno(int cliente, String servicio, LocalDateTime fecha){
+        Turno nuevoTurno = new Turno();
+        
+        nuevoTurno.setIdCliente(cliente);
+        nuevoTurno.setServicio(servicio);
+        nuevoTurno.setFecha(fecha);
+        
+        controlPersis.guardarTurno(nuevoTurno);
+        
+    }
+        
+        //READ
+        public List <Turno> traerTurnos(){
 
+
+            return controlPersis.traerTurnos();
+
+        }
     
     
     
