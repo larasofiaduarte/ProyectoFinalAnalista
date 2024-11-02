@@ -43,9 +43,11 @@ public class Styles {
     
     //btn
     public static final Dimension btnSize = new Dimension(150,35);
+    public static final Dimension btnSize2 = new Dimension(250,35);
     
     //padding
     public static final EmptyBorder padding = new EmptyBorder(50, 20, 0, 0);
+    public static final EmptyBorder paddingFull = new EmptyBorder(50, 50, 50, 50);
     public static final EmptyBorder paddingTop = new EmptyBorder(30, 0, 0, 0);
     public static final EmptyBorder paddingBottom = new EmptyBorder(0, 0, 30, 0);
 

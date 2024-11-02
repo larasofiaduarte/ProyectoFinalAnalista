@@ -6,13 +6,17 @@ package com.mycompany.GUI;
 
 import com.mycompany.GUI.*;
 import com.mycompany.GUI.ButtonSec;
+import com.mycompany.proyectofinal.Cliente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import com.mycompany.proyectofinal.Controladora;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import javax.swing.JOptionPane;
 
 
 public class AltaTurnos extends javax.swing.JFrame {
@@ -33,7 +37,15 @@ public class AltaTurnos extends javax.swing.JFrame {
         ButtonSec btnCerrar = new ButtonSec("Cerrar");
         panelBtns.add(btnCerrar);
         
-        
+        txtCliente.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
         
         
         
@@ -59,52 +71,52 @@ public class AltaTurnos extends javax.swing.JFrame {
         
         
         btnAlta.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    
-                    int idCliente = Integer.parseInt(txtCliente.getText());//should this be object Client type??
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    // Get the client ID from the input field
+                    int idCliente = Integer.parseInt(txtCliente.getText()); 
+
+                    // Check if client exists in the database
+                    Cliente clienteEnt = control.findCliente(idCliente);
+                    if (clienteEnt == null) {
+                        JOptionPane.showMessageDialog(null, "Cliente no encontrado. Por favor, ingrese un ID de cliente válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return; // Exit the action if client does not exist
+                    }
+
+                    // Gather other details for the Turno
                     String servicio = (String) cboServicio.getSelectedItem();
-                    
                     String dia = (String) cboDia.getSelectedItem();
                     int mes = cboMes.getSelectedIndex() + 1;
                     String año = (String) cboAño.getSelectedItem();
                     String hora = (String) cboHora.getSelectedItem();
-                    
-                    String mesString  = String.valueOf(mes);
-                    if (mes<10){
-                        mesString = "0"+ String.valueOf(mes);
-                        txtCliente.setText(mesString);
-                    }
-                    
-                    
-                    String diaString  = String.valueOf(dia);
-                    if (cboDia.getSelectedIndex()+1<10){
-                        diaString = "0"+ String.valueOf(dia);
-                        lblCargaTurnos.setText(diaString);
-                    }
-                    
-                    String dateTimeString = "2024-10-10 08:00:00"; // Correct format
-                    
-                    
-                    // Define the DateTimeFormatter that matches your string format
+
+                    // Format month and day to always have two digits
+                    String mesString = mes < 10 ? "0" + mes : String.valueOf(mes);
+                    String diaString = cboDia.getSelectedIndex() + 1 < 10 ? "0" + dia : dia;
+
+                    // Build the date and time string
+                    String dateTimeString = año + "-" + mesString + "-" + diaString + " " + hora + ":00";
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                    try {
-                        // Parse the string into a LocalDateTime object
-                        LocalDateTime fechafinal = LocalDateTime.parse(dateTimeString, formatter);
-                        System.out.println("Parsed LocalDateTime: " + fechafinal);
-                        
-                        control.guardarTurno(idCliente, servicio, fechafinal);
-                    } catch (DateTimeParseException ex) {
-                        System.err.println("Error parsing date time: " + ex.getMessage());
-                    }
-                    
-                    //pasar string id cliente a int
-                    
-                    
-                    
-                    
+                    // Parse the string into a LocalDateTime object
+                    LocalDateTime fechafinal = LocalDateTime.parse(dateTimeString, formatter);
+
+                    // Save the Turno
+                    control.guardarTurno(idCliente, servicio, fechafinal, clienteEnt);
+                    JOptionPane.showMessageDialog(null, "Turno guardado correctamente.", "Turno guardado.", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID de cliente válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al procesar la fecha. Por favor, revise la entrada.", "Error de fecha", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Ocurrió un error al guardar el turno. Por favor, intente nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
                 }
+            }
         });
         
         
@@ -133,7 +145,6 @@ public class AltaTurnos extends javax.swing.JFrame {
         cboHora = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 500));
 
         jPanel1.setBackground(new java.awt.Color(250, 250, 250));
 
@@ -168,7 +179,7 @@ public class AltaTurnos extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("Cliente");
+        jLabel1.setText("ID Cliente");
 
         jLabel2.setText("Servicio");
 
@@ -178,7 +189,7 @@ public class AltaTurnos extends javax.swing.JFrame {
 
         txtCliente.setBackground(new java.awt.Color(242, 242, 242));
         txtCliente.setForeground(new java.awt.Color(102, 102, 102));
-        txtCliente.setText("ID Cliente");
+        txtCliente.setText("1");
         txtCliente.setBorder(null);
         txtCliente.setPreferredSize(new java.awt.Dimension(73, 30));
 

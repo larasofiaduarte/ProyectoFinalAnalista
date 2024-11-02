@@ -47,6 +47,7 @@ public class Ventana extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
+        
         control = new Controladora();
         
         card = (CardLayout) mainPanel.getLayout();
@@ -106,6 +107,9 @@ public class Ventana extends javax.swing.JFrame {
             Button btnUpdateCli = new Button("Actualizar");
             btnPanelCli.add(btnUpdateCli);
             
+            Button btnHistCli = new Button("Consultar Historial Cliente");
+            btnHistCli.setPreferredSize(Styles.btnSize2);
+            btnPanelCli.add(btnHistCli);
             
             //logica abrir form al clickear btn
             //abrir Form de alta
@@ -114,8 +118,20 @@ public class Ventana extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
 
                     AltaClientes form = new AltaClientes();
+                    
+                    // Add a window listener to listen for close events
+                    form.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            // This code will run after the form has closed
+                            // Call the function you want here
+                            cargarTablaClientes(panelCenterCli);
+                        }
+                    });
+                    
                     form.setVisible(true);
                     form.setLocationRelativeTo(null);
+                    
                 }
             });
             //UPDATE
@@ -123,6 +139,8 @@ public class Ventana extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     cargarTablaClientes(panelCenterCli);
+                    JOptionPane.showMessageDialog(null, "Tabla actualizada correctamente.", "Tabla actualizada.", JOptionPane.INFORMATION_MESSAGE);
+                    
                 }
             });
             
@@ -163,17 +181,43 @@ public class Ventana extends javax.swing.JFrame {
                             int numCliente = Integer.parseInt(String.valueOf(tableClientes.getValueAt(tableClientes.getSelectedRow(),0)));
                         
                             control.borrarCliente(numCliente);
+                            cargarTablaClientes(panelCenterCli);
                         
-                        }else{
-                            JOptionPane.showMessageDialog(null, "Seleccione une la fila que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
-                        };
-                    }else{
-                        JOptionPane.showMessageDialog(null, "La Tabla esta vacia.", "Tabla vacia", JOptionPane.INFORMATION_MESSAGE);
-                    };
-                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado.", JOptionPane.INFORMATION_MESSAGE);
-                }
-                
-                
+                        // Show success message only if a record is deleted
+                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
+            //CONSULTAR HISTORIAL CLIENTE
+            btnHistCli.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloClientes2.getRowCount()>0){
+                        if (tableClientes.getSelectedRow()!=-1){
+                            int numCliente = Integer.parseInt(String.valueOf(tableClientes.getValueAt(tableClientes.getSelectedRow(),0)));
+                        
+                            
+                            HistorialCliente form = new HistorialCliente();
+                            form.setVisible(true);
+                            form.setLocationRelativeTo(null);
+                            
+                            form.cargarTablaTurnos(numCliente);
+                            
+                        
+                        
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea consultar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
             });
             
             
@@ -187,8 +231,7 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCenterTur = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardTurnos.add(panelCenterTur, BorderLayout.CENTER);
             
-            //Tabla tableTur = new Tabla();
-            //panelCenterTur .add(tableTur, BorderLayout.CENTER);
+            
 
             //btns panel
             JPanel btnPanelTur = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -207,22 +250,38 @@ public class Ventana extends javax.swing.JFrame {
             Button btnElimTur = new Button("Eliminar");
             btnPanelTur.add(btnElimTur);
             
+            Button btnUpdateTur = new Button("Actualizar");
+            btnPanelTur.add(btnUpdateTur);
+            
             //logica abrir form al clickear btn
             btnNuevoTur.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
                     AltaTurnos form = new AltaTurnos();
+                    
+                    // Add a window listener to listen for close events
+                    form.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            // This code will run after the form has closed
+                            // Call the function you want here
+                            cargarTablaTurnos(panelCenterTur);
+                        }
+                    });
+                    
                     form.setVisible(true);
                     form.setLocationRelativeTo(null);
                 }
             });
             
             //UPDATE
-            btnUpdateCli.addActionListener(new ActionListener() {
+            btnUpdateTur.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    cargarTablaClientes(panelCenterCli);
+                    cargarTablaTurnos(panelCenterTur);
+                    //POPUP
+                    JOptionPane.showMessageDialog(null, "Tabla actualizada correctamente.", "Tabla actualizada.", JOptionPane.INFORMATION_MESSAGE);
                 }
             });
             
@@ -250,8 +309,31 @@ public class Ventana extends javax.swing.JFrame {
             
             tablaTurnos = new Tabla(modeloTurnos);
             panelCenterTur.add(tablaTurnos, BorderLayout.CENTER);
+            cargarTablaTurnos(panelCenterTur);
             
-            //LOAD TABLE UPON LOADING PANEL
+            //ELIMINAR
+            JTable tableTurnos = tablaTurnos.getTable();
+            btnElimTur.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloTurnos.getRowCount()>0){
+                        if (tableTurnos.getSelectedRow()!=-1){
+                            int numTurno = Integer.parseInt(String.valueOf(tableTurnos.getValueAt(tableTurnos.getSelectedRow(),0)));
+                        
+                            control.borrarTurno(numTurno);
+                            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado.", JOptionPane.INFORMATION_MESSAGE);
+                            cargarTablaTurnos(panelCenterTur);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        };
+                    }else{
+                        JOptionPane.showMessageDialog(null, "La Tabla esta vacia.", "Tabla vacia", JOptionPane.INFORMATION_MESSAGE);
+                    };
+                    
+                }
+                
+                
+            });
             
             
         //SERVICIOS
@@ -1181,9 +1263,19 @@ public class Ventana extends javax.swing.JFrame {
 
         List<Turno> listaTurnos = control.traerTurnos(); // Fetch updated turno list
         
+        
+        
         if (listaTurnos != null) {
             for (Turno tur : listaTurnos) {
-                Object[] objeto = {tur.getId(),tur.getIdCliente(), tur.getServicio(), tur.getFecha()};
+                Cliente cli= tur.getCliente();
+                String nombreCliente;
+                
+                if (cli != null) {
+                    nombreCliente = cli.getNombre() + " " + cli.getApellido();
+                } else {
+                    nombreCliente = "No asignado"; // Or any default message when cliente is null
+                }
+                Object[] objeto = {tur.getId(),nombreCliente, tur.getServicio(), tur.getFecha()};
                 modeloTurnos.addRow(objeto); // Add new data to the model
             }
         }

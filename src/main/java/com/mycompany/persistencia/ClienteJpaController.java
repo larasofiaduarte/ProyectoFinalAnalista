@@ -53,7 +53,7 @@ public class ClienteJpaController implements Serializable {
     }
     
     // Read
-    public Cliente findCliente(Long id) {
+    public Cliente findCliente(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Cliente.class, id);
