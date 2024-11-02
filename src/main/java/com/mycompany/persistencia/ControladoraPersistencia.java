@@ -37,6 +37,10 @@ public class ControladoraPersistencia {
         public List<Cliente> traerClientes() {
            return cliJpa.findClienteEntities();
         }
+        
+        public Cliente findCliente(int id){
+            return cliJpa.findCliente(id);
+        }
 
         //DELETE
         public void borrarCliente(int numCliente) {

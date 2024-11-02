@@ -21,6 +21,9 @@ public class Turno {
     private int id;
     private LocalDateTime fecha;
     private Integer idCliente;
+    @ManyToOne
+    @JoinColumn(name="Cliente")
+    private Cliente cliente;
     private String Servicio;
 
     public int getId() {
@@ -56,7 +59,13 @@ public class Turno {
     }
 
     
+    public void setCliente(Cliente cliente){
+        this.cliente = cliente;
+    }
     
+    public Cliente getCliente(){
+        return cliente;
+    }
     
     
 }

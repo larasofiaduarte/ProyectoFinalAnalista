@@ -74,10 +74,23 @@ public class Controladora {
        
     }
     
+        //by id
+    
+    public Cliente findCliente(int id){
+        return controlPersis.findCliente(id);
+    }
+    
+    
+    
+    
     //DELETE
     public void borrarCliente(int numCliente) {
         controlPersis.borrarCliente(numCliente);
     }
+    
+    
+    
+    
     
     //PROVEEDOR
     //ALTA
@@ -120,12 +133,13 @@ public class Controladora {
         
     //TURNOS
         //ALTA
-        public void guardarTurno(int cliente, String servicio, LocalDateTime fecha){
+        public void guardarTurno(int cliente, String servicio, LocalDateTime fecha, Cliente clientee){
         Turno nuevoTurno = new Turno();
         
         nuevoTurno.setIdCliente(cliente);
         nuevoTurno.setServicio(servicio);
         nuevoTurno.setFecha(fecha);
+        nuevoTurno.setCliente(clientee);
         
         controlPersis.guardarTurno(nuevoTurno);
         
@@ -138,7 +152,13 @@ public class Controladora {
             return controlPersis.traerTurnos();
 
         }
-    
+        
+        //DELETE
+        
+        public void borrarTurno(int id){
+            
+            controlPersis.borrarTurno(id);
+        }
     
     
 }
