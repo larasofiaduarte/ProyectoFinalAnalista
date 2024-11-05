@@ -4,6 +4,7 @@ package com.mycompany.GUI;
 import com.mycompany.proyectofinal.Controladora;
 import java.awt.Font;
 import com.mycompany.GUI.Styles;
+import javax.swing.JOptionPane;
 
 public class AltaEmpleados extends javax.swing.JFrame {
 
@@ -337,6 +338,8 @@ public class AltaEmpleados extends javax.swing.JFrame {
         String rol = (String) cboEmpRol.getSelectedItem();
         
         control.guardar(user, pass, nombre, apellido, tel, rol, dni);
+        JOptionPane.showMessageDialog(null, "Usuario creado correctamente.", "Usuario guardado.", JOptionPane.INFORMATION_MESSAGE);
+        dispose();
         
     }//GEN-LAST:event_btnAltaEmpActionPerformed
 

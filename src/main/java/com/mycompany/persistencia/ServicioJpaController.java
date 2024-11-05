@@ -52,7 +52,7 @@ public class ServicioJpaController implements Serializable {
     }
     
     // Read
-    public Servicio findServicio(Long id) {
+    public Servicio findServicio(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Servicio.class, id);

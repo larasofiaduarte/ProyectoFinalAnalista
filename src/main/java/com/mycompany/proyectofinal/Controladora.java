@@ -52,6 +52,41 @@ public class Controladora {
         controlPersis.guardar(nuevoUsuario);
     }
     
+    //READ USUARIOS
+    public List <Usuario> traerUsuarios(){
+        
+        
+        return controlPersis.traerUsuarios();
+       
+    }
+    //by id
+    
+
+    public Usuario findUsuario(int numEmpleado) {
+       
+        return controlPersis.findUsuario(numEmpleado);
+    }
+    
+    
+    //DELETE USUARIO
+    public void borrarUsuario(int numUsuario) {
+        controlPersis.borrarUsuario(numUsuario);
+    }
+    
+    //edit
+    public void modificarUsuario(Usuario usu, String user, String pass, String nombre, String apellido, String tel, String rol, String dni) {
+        
+        usu.setUsername(user);
+        usu.setPassword(pass);
+        usu.setNombre(nombre);
+        usu.setApellido(apellido);
+        usu.setDni(dni);
+        usu.setRol(rol);
+        usu.setTelefono(tel);
+        
+        controlPersis.modificarUsuario(usu);
+    }
+    
     
     //CLIENTE
     //CREATE
@@ -81,7 +116,17 @@ public class Controladora {
     }
     
     
-    
+    //UPDATE
+    public void modificarCliente(Cliente cli, String nombre, String apellido, String telefono, String genero) {
+        
+        cli.setApellido(apellido);
+        cli.setNombre(nombre);
+        cli.setGenero(genero);
+        cli.setTelefono(telefono);
+        
+        controlPersis.modificarCliente(cli);
+        
+    }
     
     //DELETE
     public void borrarCliente(int numCliente) {
@@ -120,16 +165,28 @@ public class Controladora {
     
     //SERVICIO
     //ALTA
-        public void guardarServicio(String nombre, String precio, String idEmpleado){
+        public void guardarServicio(String nombre, String precio, String empleado){
         Servicio nuevoServicio = new Servicio();
         
         nuevoServicio.setNombre(nombre);
         nuevoServicio.setPrecio(precio);
-        nuevoServicio.setIdEmpleado(idEmpleado);
+        nuevoServicio.setIdEmpleado(empleado);
         
         controlPersis.guardarServicio(nuevoServicio);
         
     }
+    //READ
+        public List <Servicio> traerServicios(){
+
+
+            return controlPersis.traerServicios();
+
+        }
+     //ELIMINAR
+        public void borrarServicio(int id){
+            
+            controlPersis.borrarServicio(id);
+        }
         
     //TURNOS
         //ALTA
@@ -152,6 +209,10 @@ public class Controladora {
             return controlPersis.traerTurnos();
 
         }
+        //by id
+        public Turno findTurno(int id){
+            return controlPersis.findTurno(id);
+        }
         
         //DELETE
         
@@ -159,6 +220,38 @@ public class Controladora {
             
             controlPersis.borrarTurno(id);
         }
+
+    public void modificarTurno(Turno tur, int idCliente, String servicio, LocalDateTime fechafinal, Cliente clienteEnt) {
+        
+        
+        tur.setIdCliente(idCliente);
+        tur.setServicio(servicio);
+        tur.setCliente(clienteEnt);
+        tur.setFecha(fechafinal);
+        
+        controlPersis.modificarTurno(tur);
+        
+    
+    }
+
+    public Servicio findServicio(int numServicio) {
+    
+            return controlPersis.findServicio(numServicio);
+    }
+
+    public void modificarServicio(Servicio ser, String nombre, String precio, String emp) {
+        
+        ser.setIdEmpleado(emp);
+        ser.setNombre(nombre);
+        ser.setPrecio(precio);
+        
+        controlPersis.modificarServicio(ser);
+    
+    }
+
+    
+
+    
     
     
 }

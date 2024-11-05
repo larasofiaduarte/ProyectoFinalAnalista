@@ -24,6 +24,13 @@ public class ControladoraPersistencia {
         public void guardar(Usuario nuevoUsuario) {
             usuJpa.create(nuevoUsuario);
         }
+        public void borrarUsuario(int numUsuario) {
+            usuJpa.destroy(numUsuario); 
+        }
+        
+        public Usuario findUsuario(int numEmpleado) {
+            return usuJpa.findUsuario(numEmpleado);
+        }
     
     //CLIENTE
     ClienteJpaController cliJpa = new ClienteJpaController();
@@ -37,7 +44,7 @@ public class ControladoraPersistencia {
         public List<Cliente> traerClientes() {
            return cliJpa.findClienteEntities();
         }
-        
+            //buscar x id
         public Cliente findCliente(int id){
             return cliJpa.findCliente(id);
         }
@@ -48,6 +55,12 @@ public class ControladoraPersistencia {
                 cliJpa.destroy(numCliente);
         }
         
+        //UPDATE
+        public void modificarCliente(Cliente cli) {
+          
+            cliJpa.edit(cli);
+            
+        }
         
     //PROVEEDOR
         
@@ -87,7 +100,7 @@ public class ControladoraPersistencia {
         }
 
         //READ
-        public List<Servicio> traerServicio() {
+        public List<Servicio> traerServicios() {
            return serJpa.findServicioEntities();
         }
 
@@ -110,13 +123,43 @@ public class ControladoraPersistencia {
         public List<Turno> traerTurnos() {
                 return turJpa.findTurnoEntities();
         }
-        
+        //by id
+        public Turno findTurno(int id) {
+            
+            return turJpa.findTurno(id);
+                
+        }
         
         //DELETE
         public void borrarTurno(int numTurnos) {
 
             turJpa.destroy(numTurnos);
         }
+        
+        //UPDATE/EDIT
+        public void modificarTurno(Turno tur) {
+
+            turJpa.edit(tur);
+        }
+
+    public void modificarUsuario(Usuario usu) {
+            usuJpa.edit(usu);
+    }
+
+    public Servicio findServicio(int numServicio) {
+        return serJpa.findServicio(numServicio);
+    }
+
+    public void modificarServicio(Servicio ser) {
+        serJpa.edit(ser);
+    }
+
+
+        
+
+    
+
+    
 
     
         

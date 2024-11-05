@@ -25,6 +25,7 @@ public class Turno {
     @JoinColumn(name="Cliente")
     private Cliente cliente;
     private String Servicio;
+    
 
     public int getId() {
         return id;

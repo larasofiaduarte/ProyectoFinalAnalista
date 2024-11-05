@@ -9,7 +9,9 @@ import com.mycompany.GUI.Button;
 import com.mycompany.GUI.TitlePanel;
 import com.mycompany.GUI.Tabla;
 import com.mycompany.proyectofinal.Cliente;
+import com.mycompany.proyectofinal.Servicio;
 import com.mycompany.proyectofinal.Turno;
+import com.mycompany.proyectofinal.Usuario;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,10 @@ public class Ventana extends javax.swing.JFrame {
     private Tabla tablaTurnos;
     private DefaultTableModel modeloClientes2;
     private DefaultTableModel modeloTurnos;
+    private Tabla tablaEmpleados;
+    private DefaultTableModel modeloEmpleados;
+    private Tabla tablaServicios;
+    private DefaultTableModel modeloServicios;
     
     /**
      * Creates new form Ventana
@@ -220,6 +226,41 @@ public class Ventana extends javax.swing.JFrame {
                 }   
             });
             
+            //MODIFICAR
+            btnModCli.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloClientes2.getRowCount()>0){
+                        if (tableClientes.getSelectedRow()!=-1){
+                            //LOGICA MODIFICAR
+                            int numCliente = Integer.parseInt(String.valueOf(tableClientes.getValueAt(tableClientes.getSelectedRow(),0)));
+                        
+                            //abrir form de modificacion
+                            ModifClientes form = new ModifClientes(numCliente);
+                            
+                            form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaClientes(panelCenterCli);
+                            }
+                    });
+                            
+                            form.setVisible(true);
+                            form.setLocationRelativeTo(null);
+                            
+                        
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
             
             
         //TURNOS
@@ -335,6 +376,43 @@ public class Ventana extends javax.swing.JFrame {
                 
             });
             
+            //MODIFICAR
+            btnModTur.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloTurnos.getRowCount()>0){
+                        if (tableTurnos.getSelectedRow()!=-1){
+                            //LOGICA MODIFICAR
+                            int numTurno = Integer.parseInt(String.valueOf(tableTurnos.getValueAt(tableTurnos.getSelectedRow(),0)));
+                        
+                            //abrir form de modificacion
+                            ModifTurnos form = new ModifTurnos(numTurno);
+                            
+                            form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaTurnos(panelCenterTur);
+                            }
+                            });
+                            
+                            form.setVisible(true);
+                            form.setLocationRelativeTo(null);
+                            
+                        
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
+            
+            
             
         //SERVICIOS
             
@@ -345,9 +423,7 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCenterSer = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardServicios.add(panelCenterSer , BorderLayout.CENTER);
             
-            //Tabla tableSer = new Tabla();
-            //panelCenterSer .add(tableSer, BorderLayout.CENTER);
-
+            
             //btns panel
             JPanel btnPanelSer = new JPanel(new FlowLayout(FlowLayout.CENTER));
             btnPanelSer.setBorder(new EmptyBorder(0, 0, 40, 0));
@@ -364,7 +440,105 @@ public class Ventana extends javax.swing.JFrame {
             //btn eliminar
             Button btnElimSer = new Button("Eliminar");
             btnPanelSer.add(btnElimSer);
+            
+            //TABLA
+            modeloServicios = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int col){return false;}
+            };
+            //INICIALIZAR TABLA
+            String titulosSer[] = {"ID","Nombre", "Precio", "Empleado"}; //modelo
+            modeloServicios.setColumnIdentifiers(titulosSer); 
+            
+            cardServicios.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentShown(ComponentEvent e) {
+                    cargarTablaServicios(panelCenterSer);
+                }
+            });
+            
+            tablaServicios = new Tabla(modeloServicios);
+            panelCenterSer.add(tablaServicios, BorderLayout.CENTER);
+            
+            JTable tableServicios = tablaServicios.getTable(); //useful para eliminar
+            
+            
             //logica abrir form al clickear btn
+            btnNuevoSer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    AltaServicios form = new AltaServicios();
+                    
+                    // Add a window listener to listen for close events
+                    form.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            cargarTablaServicios(panelCenterSer);
+                        }
+                    });
+                    
+                    form.setVisible(true);
+                    form.setLocationRelativeTo(null);
+                }
+            });
+            
+            //ELIMINAR
+            btnElimSer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloServicios.getRowCount()>0){
+                        if (tableServicios.getSelectedRow()!=-1){
+                            int numServicio = Integer.parseInt(String.valueOf(tableServicios.getValueAt(tableServicios.getSelectedRow(),0)));
+                        
+                            control.borrarServicio(numServicio);
+                            cargarTablaServicios(panelCenterSer);
+                        
+                        // Show success message only if a record is deleted
+                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
+            //MODIFICAR
+            btnModCli.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloServicios.getRowCount()>0){
+                        if (tableServicios.getSelectedRow()!=-1){
+                            //LOGICA MODIFICAR
+                            int numServicio = Integer.parseInt(String.valueOf(tableServicios.getValueAt(tableServicios.getSelectedRow(),0)));
+                        
+                            //abrir form de modificacion
+                            ModifServicio form = new ModifServicio(numServicio);
+                            
+                            form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaServicios(panelCenterSer);
+                            }
+                    });
+                            
+                            form.setVisible(true);
+                            form.setLocationRelativeTo(null);
+                            
+                        
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
             
         //CAJA 
             TitlePanel titleCaja = new TitlePanel("Caja");
@@ -465,6 +639,7 @@ public class Ventana extends javax.swing.JFrame {
             
         
         //EMPLEADOS
+        
             TitlePanel titleEmp= new TitlePanel("Empleados");
             cardEmpleados.add(titleEmp, BorderLayout.NORTH);
 
@@ -472,24 +647,35 @@ public class Ventana extends javax.swing.JFrame {
             JPanel panelCentral = new JPanel(new BorderLayout()); //add flow layout center to this?
             cardEmpleados.add(panelCentral, BorderLayout.CENTER);
             
-            //Tabla table = new Tabla();
-            //panelCentral.add(table, BorderLayout.CENTER);
 
             //btn alta
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             buttonPanel.setBorder(new EmptyBorder(0, 0, 40, 0));
 
             cardEmpleados.add(buttonPanel, BorderLayout.SOUTH);
+            buttonPanel.setBackground(Styles.bgLight);
+            
             Button btnNuevoEmp = new Button("Nuevo");
             buttonPanel.add(btnNuevoEmp);
-            buttonPanel.setBackground(Styles.bgLight);
-
+            
             //abrir Form de alta
             btnNuevoEmp.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
                     AltaEmpleados form = new AltaEmpleados();
+                    
+                    // Add a window listener to listen for close events
+                    form.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            // This code will run after the form has closed
+                            // Call the function you want here
+                            cargarTablaEmpleados(panelCentral);
+                        }
+                    });
+                    
+                    
                     form.setVisible(true);
                     form.setLocationRelativeTo(null);
                 }
@@ -502,6 +688,92 @@ public class Ventana extends javax.swing.JFrame {
             //btn eliminar
             Button btnElimEmp = new Button("Eliminar");
             buttonPanel.add(btnElimEmp);
+            
+            //CREAR TABLA
+            
+            modeloEmpleados = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int col){return false;}
+            };
+            
+            //INICIALIZAR TABLA
+            String titulosEmp[] = {"ID","Usuario","Nombre", "Apellido", "Telefono", "Rol"}; //modelo
+            modeloEmpleados.setColumnIdentifiers(titulosEmp); 
+            
+            cardEmpleados.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentShown(ComponentEvent e) {
+                    cargarTablaEmpleados(panelCentral);
+                }
+            });
+            
+            tablaEmpleados = new Tabla(modeloEmpleados);
+            panelCentral.add(tablaEmpleados, BorderLayout.CENTER);
+            
+            //LOAD TABLE UPON LOADING PANEL
+            
+            JTable tableEmpleados = tablaEmpleados.getTable(); //useful para eliminar
+            
+            
+            
+            
+            //ELIMINAR USUARIO
+            btnElimEmp.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloEmpleados.getRowCount()>0){
+                        if (tableEmpleados.getSelectedRow()!=-1){
+                            int numEmpleado = Integer.parseInt(String.valueOf(tableEmpleados.getValueAt(tableEmpleados.getSelectedRow(),0)));
+                        
+                            control.borrarUsuario(numEmpleado);
+                            cargarTablaEmpleados(panelCentral);
+                        
+                        // Show success message only if a record is deleted
+                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
+            
+            //MODIFICAR
+            btnModEmp.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloEmpleados.getRowCount()>0){
+                        if (tableEmpleados.getSelectedRow()!=-1){
+                            //LOGICA MODIFICAR
+                            int numEmpleado = Integer.parseInt(String.valueOf(tableEmpleados.getValueAt(tableEmpleados.getSelectedRow(),0)));
+                        
+                            //abrir form de modificacion
+                            ModifEmpleado form = new ModifEmpleado(numEmpleado);
+                            
+                            form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaEmpleados(panelCentral);
+                            }
+                    });
+                            
+                            form.setVisible(true);
+                            form.setLocationRelativeTo(null);
+                            
+                        
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
         
         
         
@@ -1241,50 +1513,107 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword2;
     private javax.swing.JTextField txtUser1;
     // End of variables declaration//GEN-END:variables
-//CARGAR TABLAS
-    private void cargarTablaClientes(JPanel panel) {
-        modeloClientes2.setRowCount(0); // Clear existing data in the model
 
-        List<Cliente> listaClientes = control.traerClientes(); // Fetch updated client list
-        
-        if (listaClientes != null) {
-            for (Cliente cli : listaClientes) {
-                Object[] objeto = {cli.getId(),cli.getNombre(), cli.getApellido(), cli.getTelefono(), cli.getGenero()};
-                modeloClientes2.addRow(objeto); // Add new data to the model
-            }
-        }
-
-        panel.revalidate(); // Refresh the panel to reflect changes
-        panel.repaint(); // Repaint the panel
-    }
     
-    private void cargarTablaTurnos(JPanel panel) {
-        modeloTurnos.setRowCount(0); // Clear existing data in the model
+    //UI
+    public void panelSetup(String titulo, JPanel card){
+        //titulo, panel norte
+        TitlePanel title = new TitlePanel(titulo);
+        card.add(title, BorderLayout.NORTH);
+        
+        //panel para la tabla
+        JPanel panelTabla = new JPanel(new BorderLayout());
+        
+        //panel de botones
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBorder(new EmptyBorder(0, 0, 40, 0));
+        card.add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.setBackground(Styles.bgLight);
+        
+        Button btn = new Button("Action");
+        
+    
+    }
 
-        List<Turno> listaTurnos = control.traerTurnos(); // Fetch updated turno list
-        
-        
-        
-        if (listaTurnos != null) {
-            for (Turno tur : listaTurnos) {
-                Cliente cli= tur.getCliente();
-                String nombreCliente;
-                
-                if (cli != null) {
-                    nombreCliente = cli.getNombre() + " " + cli.getApellido();
-                } else {
-                    nombreCliente = "No asignado"; // Or any default message when cliente is null
+
+
+    //CARGAR TABLAS
+        private void cargarTablaClientes(JPanel panel) {
+            modeloClientes2.setRowCount(0); // Clear existing data in the model
+
+            List<Cliente> listaClientes = control.traerClientes(); // Fetch updated client list
+
+            if (listaClientes != null) {
+                for (Cliente cli : listaClientes) {
+                    Object[] objeto = {cli.getId(),cli.getNombre(), cli.getApellido(), cli.getTelefono(), cli.getGenero()};
+                    modeloClientes2.addRow(objeto); // Add new data to the model
                 }
-                Object[] objeto = {tur.getId(),nombreCliente, tur.getServicio(), tur.getFecha()};
-                modeloTurnos.addRow(objeto); // Add new data to the model
             }
+
+            panel.revalidate(); // Refresh the panel to reflect changes
+            panel.repaint(); // Repaint the panel
         }
 
-        panel.revalidate(); // Refresh the panel to reflect changes
-        panel.repaint(); // Repaint the panel
-    }
-    
+        private void cargarTablaTurnos(JPanel panel) {
+            modeloTurnos.setRowCount(0); // Clear existing data in the model
 
+            List<Turno> listaTurnos = control.traerTurnos(); // Fetch updated turno list
+
+
+
+            if (listaTurnos != null) {
+                for (Turno tur : listaTurnos) {
+                    Cliente cli= tur.getCliente();
+                    String nombreCliente;
+
+                    if (cli != null) {
+                        nombreCliente = cli.getNombre() + " " + cli.getApellido();
+                    } else {
+                        nombreCliente = "No asignado"; // Or any default message when cliente is null
+                    }
+                    Object[] objeto = {tur.getId(),nombreCliente, tur.getServicio(), tur.getFecha()};
+                    modeloTurnos.addRow(objeto); // Add new data to the model
+                }
+            }
+
+            panel.revalidate(); // Refresh the panel to reflect changes
+            panel.repaint(); // Repaint the panel
+        }
+        
+        private void cargarTablaEmpleados(JPanel panel) {
+            modeloEmpleados.setRowCount(0); // Clear existing data in the model
+
+            List<Usuario> listaEmpleados = control.traerUsuarios(); // Fetch updated client list
+
+            if (listaEmpleados != null) {
+                for (Usuario emp : listaEmpleados) {
+                    Object[] objeto = {emp.getId(),emp.getUsername(), emp.getNombre(), emp.getApellido(), emp.getTelefono(), emp.getRol()};
+                    modeloEmpleados.addRow(objeto); // Add new data to the model
+                }
+            }
+
+            panel.revalidate(); // Refresh the panel to reflect changes
+            panel.repaint(); // Repaint the panel
+        }
+        
+        private void cargarTablaServicios(JPanel panel) {
+            modeloServicios.setRowCount(0); // Clear existing data in the model
+
+            List<Servicio> listaServicios = control.traerServicios(); // Fetch updated client list
+
+            if (listaServicios != null) {
+                for (Servicio ser : listaServicios) {
+                    Object[] objeto = {ser.getId(),ser.getNombre(), ser.getPrecio(), ser.getIdEmpleado()};
+                    modeloServicios.addRow(objeto); // Add new data to the model
+                }
+            }
+
+            panel.revalidate(); // Refresh the panel to reflect changes
+            panel.repaint(); // Repaint the panel
+        }
+        
+    
+//FIN
 }
     
     

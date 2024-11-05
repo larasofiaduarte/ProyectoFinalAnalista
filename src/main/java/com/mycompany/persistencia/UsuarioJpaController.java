@@ -52,7 +52,7 @@ public class UsuarioJpaController implements Serializable {
     }
 
     // Read
-    public Usuario findUsuario(Long id) {
+    public Usuario findUsuario(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Usuario.class, id);
@@ -103,7 +103,7 @@ public class UsuarioJpaController implements Serializable {
     }
 
     // Delete
-    public void destroy(Long id) {
+    public void destroy(int id) {
         EntityManager em = null;
         EntityTransaction transaction = null;
 

@@ -2,12 +2,15 @@ C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\my
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\persistencia\TurnoJpaController.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\HistorialCliente.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\exceptions\NonexistentEntityException.java
+C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\ModifClientes.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Turno.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Usuario.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\persistencia\exceptions\IllegalOrphanException.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\persistencia\UsuarioJpaController.java
+C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\ModifTurnos.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\persistencia\ServicioJpaController.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\persistencia\ControladoraPersistencia.java
+C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\AltaServicios.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\exceptions\PreexistingEntityException.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\Proveedor.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\AltaTurnos.java
@@ -21,6 +24,7 @@ C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\my
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\Styles.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\proyectofinal\ProyectoFinal.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\exceptions\IllegalOrphanException.java
+C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\ModifEmpleado.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\Ventana.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\AltaClientes.java
 C:\Users\duart\OneDrive\Desktop\ProyectoFinal\ProyectoFinal\src\main\java\com\mycompany\GUI\TitlePanel.java
