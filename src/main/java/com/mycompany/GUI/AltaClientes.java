@@ -5,6 +5,7 @@ import com.mycompany.GUI.ButtonSec;
 import com.mycompany.proyectofinal.Controladora;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.JOptionPane;
 
 
 public class AltaClientes extends javax.swing.JFrame {
@@ -55,6 +56,8 @@ public class AltaClientes extends javax.swing.JFrame {
                     }
                     
                     control.guardarCliente(nombre, apellido, tel, genero);
+                    JOptionPane.showMessageDialog(null, "Cliente guardado correctamente.", "Cliente guardado.", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
                 }
         });
         
@@ -172,10 +175,10 @@ public class AltaClientes extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelBtns, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(204, 204, 204)
                 .addComponent(lblCargaEmp)
-                .addGap(206, 206, 206))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
