@@ -20,11 +20,20 @@ public class Turno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDateTime fecha;
-    private Integer idCliente;
+    //private Integer idCliente;
     @ManyToOne
     @JoinColumn(name="Cliente")
     private Cliente cliente;
     private String Servicio;
+    private String estado;
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
     
 
     public int getId() {
@@ -43,13 +52,7 @@ public class Turno {
         this.fecha = fecha;
     }
 
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
+   
 
     public String getServicio() {
         return Servicio;

@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -122,6 +123,25 @@ public class UsuarioJpaController implements Serializable {
         } finally {
             if (em != null) {
                 em.close();
+            }
+        }
+    }
+    
+    
+    public boolean doesUsernameExist(String username) {
+        EntityManager em = emf.createEntityManager(); // Create the EntityManager from the EntityManagerFactory
+        try {
+            Query query = em.createQuery("SELECT COUNT(u) FROM Usuario u WHERE u.username = :username");
+            query.setParameter("username", username);
+
+            // If the count is greater than 0, the username exists
+            return ((Long) query.getSingleResult()) > 0;
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception for debugging
+            return false; // Return false if there's an error
+        } finally {
+            if (em != null) {
+                em.close(); // Ensure the EntityManager is closed properly
             }
         }
     }

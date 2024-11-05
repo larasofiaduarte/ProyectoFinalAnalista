@@ -58,8 +58,8 @@ public class Ventana extends javax.swing.JFrame {
         
         card = (CardLayout) mainPanel.getLayout();
         
-        //card.show(mainPanel, "Login1");
-        card.show(mainPanel, "mainScreen");
+        card.show(mainPanel, "Login1");
+        //card.show(mainPanel, "mainScreen");
         
         /*PANEL LOGIN 1*/
 /*
@@ -110,8 +110,8 @@ public class Ventana extends javax.swing.JFrame {
             Button btnElimCli = new Button("Eliminar");
             btnPanelCli.add(btnElimCli);
             
-            Button btnUpdateCli = new Button("Actualizar");
-            btnPanelCli.add(btnUpdateCli);
+            //Button btnUpdateCli = new Button("Actualizar");
+            //btnPanelCli.add(btnUpdateCli);
             
             Button btnHistCli = new Button("Consultar Historial Cliente");
             btnHistCli.setPreferredSize(Styles.btnSize2);
@@ -141,6 +141,7 @@ public class Ventana extends javax.swing.JFrame {
                 }
             });
             //UPDATE
+            /*
             btnUpdateCli.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -148,7 +149,7 @@ public class Ventana extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Tabla actualizada correctamente.", "Tabla actualizada.", JOptionPane.INFORMATION_MESSAGE);
                     
                 }
-            });
+            });*/
             
             
             
@@ -291,8 +292,8 @@ public class Ventana extends javax.swing.JFrame {
             Button btnElimTur = new Button("Eliminar");
             btnPanelTur.add(btnElimTur);
             
-            Button btnUpdateTur = new Button("Actualizar");
-            btnPanelTur.add(btnUpdateTur);
+            //Button btnUpdateTur = new Button("Actualizar");
+            //btnPanelTur.add(btnUpdateTur);
             
             //logica abrir form al clickear btn
             btnNuevoTur.addActionListener(new ActionListener() {
@@ -317,6 +318,7 @@ public class Ventana extends javax.swing.JFrame {
             });
             
             //UPDATE
+            /*
             btnUpdateTur.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -324,7 +326,7 @@ public class Ventana extends javax.swing.JFrame {
                     //POPUP
                     JOptionPane.showMessageDialog(null, "Tabla actualizada correctamente.", "Tabla actualizada.", JOptionPane.INFORMATION_MESSAGE);
                 }
-            });
+            });*/
             
             
             
@@ -338,7 +340,7 @@ public class Ventana extends javax.swing.JFrame {
             };
             //INICIALIZAR TABLA
             
-            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha"}; //modelo
+            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha", "Estado"}; //modelo
             modeloTurnos.setColumnIdentifiers(titulosTur); 
             
             cardTurnos.addComponentListener(new ComponentAdapter() {
@@ -506,7 +508,7 @@ public class Ventana extends javax.swing.JFrame {
             });
             
             //MODIFICAR
-            btnModCli.addActionListener(new ActionListener() {
+            btnModSer.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (modeloServicios.getRowCount()>0){
@@ -662,22 +664,29 @@ public class Ventana extends javax.swing.JFrame {
             btnNuevoEmp.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    
+                    String currentRol = control.getLoggedInUserRole();
+                    
+                    if ("Administrador".equalsIgnoreCase(currentRol)) {
+                        
+                        AltaEmpleados form = new AltaEmpleados();
+                        // Add a window listener to listen for close events
+                        form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaEmpleados(panelCentral);
+                            }
+                        });
 
-                    AltaEmpleados form = new AltaEmpleados();
+                        //if current user rol = empleado, show an error message
+                        form.setVisible(true);
+                        form.setLocationRelativeTo(null);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Solo el Administrador puede dar de alta nuevos empleados.", "No permitido", JOptionPane.INFORMATION_MESSAGE);
+                    };
                     
-                    // Add a window listener to listen for close events
-                    form.addWindowListener(new WindowAdapter() {
-                        @Override
-                        public void windowClosed(WindowEvent e) {
-                            // This code will run after the form has closed
-                            // Call the function you want here
-                            cargarTablaEmpleados(panelCentral);
-                        }
-                    });
-                    
-                    
-                    form.setVisible(true);
-                    form.setLocationRelativeTo(null);
                 }
             });
 
@@ -721,21 +730,42 @@ public class Ventana extends javax.swing.JFrame {
             btnElimEmp.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (modeloEmpleados.getRowCount()>0){
-                        if (tableEmpleados.getSelectedRow()!=-1){
-                            int numEmpleado = Integer.parseInt(String.valueOf(tableEmpleados.getValueAt(tableEmpleados.getSelectedRow(),0)));
+                    
+                    
+                    String currentRol = control.getLoggedInUserRole();
+                    
+                    if ("Administrador".equalsIgnoreCase(currentRol)) {
                         
-                            control.borrarUsuario(numEmpleado);
-                            cargarTablaEmpleados(panelCentral);
-                        
-                        // Show success message only if a record is deleted
-                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                        if (modeloEmpleados.getRowCount()>0){
+                            if (tableEmpleados.getSelectedRow()!=-1){
+                                int numEmpleado = Integer.parseInt(String.valueOf(tableEmpleados.getValueAt(tableEmpleados.getSelectedRow(),0)));
+                                int currentUserId = control.getLoggedInUserId();
+
+                                if (numEmpleado == currentUserId) {
+                                    //chequear que el num a elminar no coincida con el user loggeado
+                                    JOptionPane.showMessageDialog(null, "No se puede eliminar el usuario porque la sesión está iniciada.", "Error", JOptionPane.ERROR_MESSAGE);
+
+                                } else {
+                                    control.borrarUsuario(numEmpleado);
+                                    cargarTablaEmpleados(panelCentral);
+                                    // Show success message only if a record is deleted
+                                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                        
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Solo el Administrador puede eliminar empleados.", "No permitido", JOptionPane.INFORMATION_MESSAGE);
+                    };
+                    
+                    
+                    
                 }   
             });
             
@@ -744,34 +774,48 @@ public class Ventana extends javax.swing.JFrame {
             btnModEmp.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (modeloEmpleados.getRowCount()>0){
-                        if (tableEmpleados.getSelectedRow()!=-1){
-                            //LOGICA MODIFICAR
-                            int numEmpleado = Integer.parseInt(String.valueOf(tableEmpleados.getValueAt(tableEmpleados.getSelectedRow(),0)));
+                    
+                    String currentRol = control.getLoggedInUserRole();
+                    
+                    if ("Administrador".equalsIgnoreCase(currentRol)) {
                         
-                            //abrir form de modificacion
-                            ModifEmpleado form = new ModifEmpleado(numEmpleado);
-                            
-                            form.addWindowListener(new WindowAdapter() {
-                            @Override
-                            public void windowClosed(WindowEvent e) {
-                                // This code will run after the form has closed
-                                // Call the function you want here
-                                cargarTablaEmpleados(panelCentral);
+                        if (modeloEmpleados.getRowCount()>0){
+                            if (tableEmpleados.getSelectedRow()!=-1){
+                                //LOGICA MODIFICAR
+                                int numEmpleado = Integer.parseInt(String.valueOf(tableEmpleados.getValueAt(tableEmpleados.getSelectedRow(),0)));
+
+                                //abrir form de modificacion
+                                ModifEmpleado form = new ModifEmpleado(numEmpleado);
+
+                                form.addWindowListener(new WindowAdapter() {
+                                @Override
+                                public void windowClosed(WindowEvent e) {
+                                    // This code will run after the form has closed
+                                    // Call the function you want here
+                                    cargarTablaEmpleados(panelCentral);
+                                }
+                        });
+
+                                form.setVisible(true);
+                                form.setLocationRelativeTo(null);
+
+
+
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
                             }
-                    });
-                            
-                            form.setVisible(true);
-                            form.setLocationRelativeTo(null);
-                            
-                        
-                            
                         } else {
-                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                        
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Solo el Administrador puede modificar datos de empleados.", "No permitido", JOptionPane.INFORMATION_MESSAGE);
+                    };
+                    
+                    
+                    
+                    
                 }   
             });
         
@@ -1416,19 +1460,23 @@ public class Ventana extends javax.swing.JFrame {
 /*LOGICA
     DE LOGIN*/
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-        //card = (CardLayout)  this.mainPanel.getLayout();
-        //card.show(mainPanel,"mainScreen");
         
         String user = txtUser1.getText();
         String pass = txtPassword2.getText();
-        
-        boolean Login = control.validarUsuario(user,pass);
-        
-        if(Login){
-            card = (CardLayout)  this.mainPanel.getLayout();
-            card.show(mainPanel,"mainScreen");
-        }else{
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "Login", JOptionPane.INFORMATION_MESSAGE);
+
+        int userId = control.validarUsuario2(user, pass);
+
+        if (userId != -1) {
+            control.setLoggedInUserId(userId); // Store the logged-in user ID
+            //store the current users role
+            String role = control.getUserRole(userId); // Retrieve and store user role
+            control.setLoggedInUserRole(role);
+
+            // Switch to the main screen
+            card = (CardLayout) this.mainPanel.getLayout();
+            card.show(mainPanel, "mainScreen");
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "Login", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_btnLogin1ActionPerformed
@@ -1571,7 +1619,7 @@ public class Ventana extends javax.swing.JFrame {
                     } else {
                         nombreCliente = "No asignado"; // Or any default message when cliente is null
                     }
-                    Object[] objeto = {tur.getId(),nombreCliente, tur.getServicio(), tur.getFecha()};
+                    Object[] objeto = {tur.getId(),nombreCliente, tur.getServicio(), tur.getFecha(), tur.getEstado()};
                     modeloTurnos.addRow(objeto); // Add new data to the model
                 }
             }

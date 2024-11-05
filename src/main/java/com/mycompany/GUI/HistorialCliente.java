@@ -41,6 +41,7 @@ public class HistorialCliente extends javax.swing.JFrame {
         panelCenter.setBackground(Styles.bgLight);
         
         panelSouth.setBackground(Styles.bgLight);
+        panelSouth.setBorder(Styles.paddingBottom);
         
         Button btnCerrar = new Button("Cerrar");
         panelSouth.add(btnCerrar);
@@ -64,7 +65,7 @@ public class HistorialCliente extends javax.swing.JFrame {
             };
             //INICIALIZAR TABLA
             
-            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha"}; //modelo
+            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha", "Estado"}; //modelo
             modeloTurnos.setColumnIdentifiers(titulosTur); 
             
             
@@ -144,7 +145,7 @@ public class HistorialCliente extends javax.swing.JFrame {
             if (cli != null && cli.getId() == idCliente) {
                 String nombreCliente = cli.getNombre() + " " + cli.getApellido();
                 
-                Object[] objeto = {tur.getId(), nombreCliente, tur.getServicio(), tur.getFecha()};
+                Object[] objeto = {tur.getId(), nombreCliente, tur.getServicio(), tur.getFecha(), tur.getEstado()};
                 modeloTurnos.addRow(objeto); // Add new data to the model if it matches
             }
         }
