@@ -31,6 +31,9 @@ public class ControladoraPersistencia {
         public Usuario findUsuario(int numEmpleado) {
             return usuJpa.findUsuario(numEmpleado);
         }
+        public boolean doesUsernameExist(String username) {
+            return usuJpa.doesUsernameExist(username);
+    }
     
     //CLIENTE
     ClienteJpaController cliJpa = new ClienteJpaController();

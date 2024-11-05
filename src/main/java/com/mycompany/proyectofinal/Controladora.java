@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class Controladora {
     ControladoraPersistencia controlPersis = new ControladoraPersistencia();
+    private int loggedInUserId = -1;
+    public String userRole;
     
     //USUARIO
     //LOGICA DE VALIDAR USUARIO PARA LOGIN
@@ -34,8 +36,26 @@ public class Controladora {
         return estadoLogin;
     }
     
+    public int validarUsuario2(String user, String pass){
+        int idUser = -1;
+        
+        List<Usuario> listaUsuarios = controlPersis.traerUsuarios();
+        
+        for(Usuario usu : listaUsuarios){
+            if (usu.getUsername().equals(user)){
+                if(usu.getPassword().equals(pass)){
+                    idUser = usu.getId();
+                }
+            }
+        }
+        
+        return idUser;
+    }
+    
+    
+    
     //LOGICA DE ALTA DE USUARIO
-    public void guardar(String user, String pass, String nombre, String apellido, String tel, String rol, String dni) {
+    public void guardar(String user, String pass, String nombre, String apellido, String tel, String rol) {
         // Crear una nueva instancia de Usuario
         Usuario nuevoUsuario = new Usuario();
         
@@ -46,7 +66,6 @@ public class Controladora {
         nuevoUsuario.setApellido(apellido);
         nuevoUsuario.setTelefono(tel);
         nuevoUsuario.setRol(rol);
-        nuevoUsuario.setDni(dni);
 
         // Llamar al método para guardar el usuario en la base de datos
         controlPersis.guardar(nuevoUsuario);
@@ -67,6 +86,9 @@ public class Controladora {
         return controlPersis.findUsuario(numEmpleado);
     }
     
+    public boolean doesUsernameExist(String username) {
+            return controlPersis.doesUsernameExist(username);
+    }
     
     //DELETE USUARIO
     public void borrarUsuario(int numUsuario) {
@@ -74,13 +96,12 @@ public class Controladora {
     }
     
     //edit
-    public void modificarUsuario(Usuario usu, String user, String pass, String nombre, String apellido, String tel, String rol, String dni) {
+    public void modificarUsuario(Usuario usu, String user, String pass, String nombre, String apellido, String tel, String rol) {
         
         usu.setUsername(user);
         usu.setPassword(pass);
         usu.setNombre(nombre);
         usu.setApellido(apellido);
-        usu.setDni(dni);
         usu.setRol(rol);
         usu.setTelefono(tel);
         
@@ -190,13 +211,13 @@ public class Controladora {
         
     //TURNOS
         //ALTA
-        public void guardarTurno(int cliente, String servicio, LocalDateTime fecha, Cliente clientee){
+        public void guardarTurno(String servicio, LocalDateTime fecha, Cliente cliente, String estado){
         Turno nuevoTurno = new Turno();
         
-        nuevoTurno.setIdCliente(cliente);
         nuevoTurno.setServicio(servicio);
         nuevoTurno.setFecha(fecha);
-        nuevoTurno.setCliente(clientee);
+        nuevoTurno.setCliente(cliente);
+        nuevoTurno.setEstado(estado);
         
         controlPersis.guardarTurno(nuevoTurno);
         
@@ -221,13 +242,13 @@ public class Controladora {
             controlPersis.borrarTurno(id);
         }
 
-    public void modificarTurno(Turno tur, int idCliente, String servicio, LocalDateTime fechafinal, Cliente clienteEnt) {
+    public void modificarTurno(Turno tur, String servicio, LocalDateTime fechafinal, Cliente clienteEnt, String estado) {
         
         
-        tur.setIdCliente(idCliente);
         tur.setServicio(servicio);
         tur.setCliente(clienteEnt);
         tur.setFecha(fechafinal);
+        tur.setEstado(estado);
         
         controlPersis.modificarTurno(tur);
         
@@ -247,6 +268,27 @@ public class Controladora {
         
         controlPersis.modificarServicio(ser);
     
+    }
+
+     public void setLoggedInUserId(int userId) {
+        this.loggedInUserId = userId;
+    }
+
+    public int getLoggedInUserId() {
+        return this.loggedInUserId;
+    }
+
+    public String getUserRole(int userId) {
+        Usuario user = controlPersis.findUsuario(userId);
+        return user != null ? user.getRol() : null; // Returns the role or null if user not found
+    }
+
+    public void setLoggedInUserRole(String role) {
+        this.userRole = role;
+    }
+
+    public String getLoggedInUserRole() {
+        return userRole;
     }
 
     

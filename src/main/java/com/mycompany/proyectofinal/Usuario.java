@@ -31,15 +31,6 @@ public class Usuario implements Serializable {
     private String apellido;
     private String telefono;
     private String rol;
-    private String dni;
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
 
     public String getNombre() {
         return nombre;
