@@ -105,10 +105,20 @@ public class AltaTurnos extends javax.swing.JFrame {
                     
                     String estado = (String) cboEstado.getSelectedItem();
                     
-                    // Save the Turno
-                    control.guardarTurno(servicio, fechafinal, clienteEnt, estado);
-                    JOptionPane.showMessageDialog(null, "Turno guardado correctamente.", "Turno guardado.", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    Boolean turnoYaExiste = control.turnoYaExiste(servicio, fechafinal);
+                    
+                    if(turnoYaExiste){
+                        JOptionPane.showMessageDialog(null, "Ya existe un turno para el servicio seleccionado en esa fecha y horario.", "No se puede guardar el turno.", JOptionPane.ERROR_MESSAGE);
+                    
+                    }else{
+                        // Save the Turno
+                        control.guardarTurno(servicio, fechafinal, clienteEnt, estado);
+                        JOptionPane.showMessageDialog(null, "Turno guardado correctamente.", "Turno guardado.", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                    }
+                    
+                    
+                    
 
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID de cliente válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
@@ -183,11 +193,11 @@ public class AltaTurnos extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("ID Cliente");
+        jLabel1.setText("ID Cliente*");
 
-        jLabel2.setText("Servicio");
+        jLabel2.setText("Servicio*");
 
-        jLabel3.setText("Fecha");
+        jLabel3.setText("Fecha*");
 
         cboServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Corte Masculino", "Corte Femenino", "Colorista", "Estética" }));
 
@@ -203,11 +213,11 @@ public class AltaTurnos extends javax.swing.JFrame {
 
         cboMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre", " " }));
 
-        jLabel4.setText("Horario");
+        jLabel4.setText("Horario*");
 
         cboHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", " " }));
 
-        jLabel5.setText("Estado");
+        jLabel5.setText("Estado*");
 
         cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Finalizado" }));
 

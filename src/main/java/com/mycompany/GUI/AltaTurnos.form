@@ -166,17 +166,17 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="ID Cliente"/>
+            <Property name="text" type="java.lang.String" value="ID Cliente*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Servicio"/>
+            <Property name="text" type="java.lang.String" value="Servicio*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha"/>
+            <Property name="text" type="java.lang.String" value="Fecha*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cboServicio">
@@ -297,7 +297,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Horario"/>
+            <Property name="text" type="java.lang.String" value="Horario*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cboHora">
@@ -335,7 +335,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Estado"/>
+            <Property name="text" type="java.lang.String" value="Estado*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cboEstado">
