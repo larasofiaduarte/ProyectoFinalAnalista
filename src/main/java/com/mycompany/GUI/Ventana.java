@@ -23,6 +23,8 @@ import javax.swing.GroupLayout.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
 import java.util.List;
@@ -349,11 +351,11 @@ public class Ventana extends javax.swing.JFrame {
             
             modeloTurnos = new DefaultTableModel(){
                 @Override
-                public boolean isCellEditable(int row, int col){return false;}
+                public boolean isCellEditable(int row, int col){return col == 0;}
             };
             //INICIALIZAR TABLA
             
-            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha", "Estado"}; //modelo
+            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha","Horario", "Estado", "Detalle"}; //modelo
             modeloTurnos.setColumnIdentifiers(titulosTur); 
             
             cardTurnos.addComponentListener(new ComponentAdapter() {
@@ -390,6 +392,7 @@ public class Ventana extends javax.swing.JFrame {
                 
                 
             });
+            
             
             //MODIFICAR
             btnModTur.addActionListener(new ActionListener() {
@@ -1799,15 +1802,29 @@ public class Ventana extends javax.swing.JFrame {
 
             if (listaTurnos != null) {
                 for (Turno tur : listaTurnos) {
+                    
                     Cliente cli= tur.getCliente();
                     String nombreCliente;
+                    
+                    LocalDateTime fecha = tur.getFecha();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                    
+                    String fechaformateada = fecha.format(formatter);
+                    
+                    // Split the formatted date-time string into date and time parts
+                    String[] partesFecha = fechaformateada.split(" ");
 
+                    // Assign the date and time to separate variables
+                    String fechaParte = partesFecha[0];  // The date part (e.g., "06-11-2024")
+                    String horaParte = partesFecha[1];
+                    
+                    
                     if (cli != null) {
                         nombreCliente = cli.getNombre() + " " + cli.getApellido();
                     } else {
                         nombreCliente = "No asignado"; // Or any default message when cliente is null
                     }
-                    Object[] objeto = {tur.getId(),nombreCliente, tur.getServicio(), tur.getFecha(), tur.getEstado()};
+                    Object[] objeto = { tur.getId(),nombreCliente, tur.getServicio(), fechaParte, horaParte, tur.getEstado(), tur.getDetalle()};
                     modeloTurnos.addRow(objeto); // Add new data to the model
                 }
             }
@@ -1982,7 +1999,14 @@ public class Ventana extends javax.swing.JFrame {
             panel.revalidate(); // Refresh the panel to reflect changes
             panel.repaint(); // Repaint the panel
         }
-    
+        
+        public String formatFecha(LocalDateTime fecha) {
+        // Define the format for the output string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        
+        // Format and return the LocalDateTime as a string
+        return fecha.format(formatter);
+        }
 //FIN
 }
     

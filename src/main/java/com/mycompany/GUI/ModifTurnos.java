@@ -15,9 +15,11 @@ import com.mycompany.proyectofinal.Turno;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
+import java.util.*;
 
 
 public class ModifTurnos extends javax.swing.JFrame {
@@ -61,10 +63,7 @@ public class ModifTurnos extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     txtCliente.setText("");
                     cboServicio.setSelectedIndex(-1);
-                    cboDia.setSelectedIndex(-1);
-                    cboMes.setSelectedIndex(-1);
                     cboHora.setSelectedIndex(-1);
-                    cboAño.setSelectedIndex(-1);
                     
                 }
         });
@@ -94,28 +93,28 @@ public class ModifTurnos extends javax.swing.JFrame {
 
                     // Gather other details for the Turno
                     String servicio = (String) cboServicio.getSelectedItem();
-                    String dia = (String) cboDia.getSelectedItem();
-                    int mes = cboMes.getSelectedIndex() + 1;
-                    String año = (String) cboAño.getSelectedItem();
                     String hora = (String) cboHora.getSelectedItem();
-
-                    // Format month and day to always have two digits
-                    String mesString = mes < 10 ? "0" + mes : String.valueOf(mes);
-                    String diaString = cboDia.getSelectedIndex() + 1 < 10 ? "0" + dia : dia;
-
-                    // Build the date and time string
-                    String dateTimeString = año + "-" + mesString + "-" + diaString + " " + hora + ":00";
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-                    // Parse the string into a LocalDateTime object
-                    LocalDateTime fechafinal = LocalDateTime.parse(dateTimeString, formatter);
-
-                    // Save the Turno
-                    
                     String estado = (String) cboEstado.getSelectedItem();
-                    control.modificarTurno(tur, servicio, fechafinal, clienteEnt, estado);
-                    JOptionPane.showMessageDialog(null, "Turno modificado correctamente.", "Turno actualizado.", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    
+                    Date fecha = calendar.getDate();
+                    
+                    LocalDateTime fechafinal = obtenerFecha(hora,fecha);
+                    
+                    
+                    
+                    Boolean turnoYaExiste = control.turnoYaExiste(servicio, fechafinal);
+                    
+                    if(turnoYaExiste){
+                        JOptionPane.showMessageDialog(null, "Ya existe un turno para el servicio seleccionado en esa fecha y horario."
+                                + "", "No se puede guardar el turno.", JOptionPane.ERROR_MESSAGE);
+                    
+                    }else{
+                        // Save the Turno
+                        //control.guardarTurno(servicio, fechafinal, clienteEnt, estado);
+                        JOptionPane.showMessageDialog(null, "Turno guardado correctamente.", "Turno guardado.", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                    }
+                    
 
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID de cliente válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
@@ -147,13 +146,14 @@ public class ModifTurnos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cboServicio = new javax.swing.JComboBox<>();
         txtCliente = new javax.swing.JTextField();
-        cboAño = new javax.swing.JComboBox<>();
-        cboDia = new javax.swing.JComboBox<>();
-        cboMes = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         cboHora = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         cboEstado = new javax.swing.JComboBox<>();
+        calendar = new com.toedter.calendar.JDateChooser();
+        Detalle = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDetalle = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -204,12 +204,6 @@ public class ModifTurnos extends javax.swing.JFrame {
         txtCliente.setBorder(null);
         txtCliente.setPreferredSize(new java.awt.Dimension(73, 30));
 
-        cboAño.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2024", "2025", "2026", "2027", "2028", "2029", "2030" }));
-
-        cboDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-
-        cboMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre", " " }));
-
         jLabel4.setText("Horario");
 
         cboHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", " " }));
@@ -218,37 +212,40 @@ public class ModifTurnos extends javax.swing.JFrame {
 
         cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Finalizado" }));
 
+        Detalle.setText("Estado");
+
+        txtDetalle.setColumns(20);
+        txtDetalle.setRows(5);
+        jScrollPane1.setViewportView(txtDetalle);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(cboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(79, Short.MAX_VALUE))
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(calendar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cboServicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -256,13 +253,11 @@ public class ModifTurnos extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cboServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(calendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -270,7 +265,11 @@ public class ModifTurnos extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Detalle)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 88, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
@@ -312,20 +311,13 @@ public class ModifTurnos extends javax.swing.JFrame {
         });
     }
     
-    public static void obtenerFecha(String dia, String mes, String año, String hora){
-        
-        String fecha = año + "-" + mes + "-" + dia +" "+ hora + ":00";
-        
-    
-    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cboAño;
-    private javax.swing.JComboBox<String> cboDia;
+    private javax.swing.JLabel Detalle;
+    private com.toedter.calendar.JDateChooser calendar;
     private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JComboBox<String> cboHora;
-    private javax.swing.JComboBox<String> cboMes;
     private javax.swing.JComboBox<String> cboServicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -334,9 +326,11 @@ public class ModifTurnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCargaTurnos;
     private javax.swing.JPanel panelBtns;
     private javax.swing.JTextField txtCliente;
+    private javax.swing.JTextArea txtDetalle;
     // End of variables declaration//GEN-END:variables
 
     private void cargarDatos(int numTurno) {
@@ -348,5 +342,23 @@ public class ModifTurnos extends javax.swing.JFrame {
         txtCliente.setText(id);
         //cargar datos cbo
         
+    }
+    public LocalDateTime obtenerFecha(String hora, Date fecha){
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        String[] timeParts = hora.split(":");
+        int hour = Integer.parseInt(timeParts[0]);
+        int minute = Integer.parseInt(timeParts[1]);
+        
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        
+        Date combinedDate = calendar.getTime();
+        
+        return combinedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    
     }
 }

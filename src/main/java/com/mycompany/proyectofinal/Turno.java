@@ -6,6 +6,7 @@ package com.mycompany.proyectofinal;
 
 
 import java.time.*;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -26,6 +27,15 @@ public class Turno {
     private Cliente cliente;
     private String Servicio;
     private String estado;
+    private String detalle;
+
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
+    }
 
     public String getEstado() {
         return estado;

@@ -7,6 +7,7 @@ import com.mycompany.proyectofinal.Cliente;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Controladora {
     ControladoraPersistencia controlPersis = new ControladoraPersistencia();
@@ -215,13 +216,14 @@ public class Controladora {
         
     //TURNOS
         //ALTA
-        public void guardarTurno(String servicio, LocalDateTime fecha, Cliente cliente, String estado){
+        public void guardarTurno(String servicio, LocalDateTime fecha, Cliente cliente, String estado, String detalle){
         Turno nuevoTurno = new Turno();
         
         nuevoTurno.setServicio(servicio);
         nuevoTurno.setFecha(fecha);
         nuevoTurno.setCliente(cliente);
         nuevoTurno.setEstado(estado);
+        nuevoTurno.setDetalle(detalle);
         
         controlPersis.guardarTurno(nuevoTurno);
         
@@ -250,13 +252,14 @@ public class Controladora {
             return controlPersis.turnoYaExiste(servicio, fecha);
         }
 
-    public void modificarTurno(Turno tur, String servicio, LocalDateTime fechafinal, Cliente clienteEnt, String estado) {
+    public void modificarTurno(Turno tur, String servicio, LocalDateTime fechafinal, Cliente clienteEnt, String estado, String detalle) {
         
         
         tur.setServicio(servicio);
         tur.setCliente(clienteEnt);
         tur.setFecha(fechafinal);
         tur.setEstado(estado);
+        tur.setDetalle(detalle);
         
         controlPersis.modificarTurno(tur);
         

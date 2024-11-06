@@ -14,6 +14,7 @@ com\mycompany\persistencia\exceptions\PreexistingEntityException.class
 com\mycompany\proyectofinal\Caja_.class
 com\mycompany\GUI\Ventana$22$1.class
 com\mycompany\GUI\Ventana$48.class
+com\mycompany\GUI\AltaTurnos1$1.class
 com\mycompany\GUI\Ventana$8.class
 com\mycompany\GUI\AltaProductos$2.class
 com\mycompany\proyectofinal\Turno_.class
@@ -26,12 +27,14 @@ com\mycompany\GUI\ModifClientes$3.class
 com\mycompany\GUI\Ventana$27.class
 com\mycompany\GUI\ModifProveedores.class
 com\mycompany\GUI\Ventana$30.class
+com\mycompany\GUI\CustomTableModel.class
 com\mycompany\GUI\Ventana$2.class
 com\mycompany\GUI\AltaProductos$1.class
 com\mycompany\GUI\AltaEmpleados$3.class
 com\mycompany\GUI\Ventana$43.class
 com\mycompany\GUI\Ventana$34$1.class
 com\mycompany\GUI\ModifServicio$4.class
+com\mycompany\GUI\AltaTurnos1$2.class
 com\mycompany\GUI\AltaServicios$1.class
 com\mycompany\persistencia\ControladoraPersistencia.class
 com\mycompany\proyectofinal\Proveedor_.class
@@ -87,6 +90,7 @@ com\mycompany\GUI\Ventana$6.class
 com\mycompany\proyectofinal\ProyectoFinal.class
 com\mycompany\GUI\Ventana$51.class
 com\mycompany\GUI\AltaServicios.class
+com\mycompany\GUI\AltaTurnos1.class
 com\mycompany\GUI\ModifProducto$2.class
 com\mycompany\GUI\AltaProductos$4.class
 com\mycompany\GUI\HistorialCliente$2.class
@@ -102,6 +106,7 @@ com\mycompany\GUI\ModifClientes$1.class
 com\mycompany\GUI\ModifProducto$5.class
 com\mycompany\GUI\AltaProveedores$3.class
 com\mycompany\GUI\AltaClientes$2.class
+com\mycompany\GUI\AltaTurnos1$4.class
 com\mycompany\GUI\ModifEmpleado$4.class
 com\mycompany\GUI\AltaTurnos$1.class
 com\mycompany\GUI\Ventana$18.class
@@ -133,6 +138,7 @@ com\mycompany\GUI\Ventana$31.class
 com\mycompany\GUI\Tabla.class
 com\mycompany\GUI\ModifTurnos$4.class
 com\mycompany\GUI\AltaProductos.class
+com\mycompany\GUI\AltaTurnos1$3.class
 com\mycompany\GUI\ModifEmpleado$3.class
 com\mycompany\proyectofinal\Proveedor.class
 com\mycompany\GUI\AltaCaja$3.class
@@ -166,6 +172,7 @@ com\mycompany\GUI\ModifServicio.class
 com\mycompany\GUI\ModifTurnos$2.class
 com\mycompany\GUI\Ventana$10.class
 com\mycompany\GUI\Ventana$40.class
+com\mycompany\GUI\AltaTurnos1$5.class
 com\mycompany\GUI\Button$1.class
 com\mycompany\GUI\AltaTurnos$3.class
 com\mycompany\GUI\ModifCaja$3.class

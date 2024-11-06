@@ -6,6 +6,7 @@ package com.mycompany.persistencia;
 
 import com.mycompany.proyectofinal.Turno;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.*;
