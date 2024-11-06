@@ -49,7 +49,7 @@ public class ProveedorJpaController implements Serializable {
     }
     
     // Read
-    public Proveedor findProveedor(Long id) {
+    public Proveedor findProveedor(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Proveedor.class, id);
@@ -101,7 +101,7 @@ public class ProveedorJpaController implements Serializable {
     }
     
     // Delete
-    public void destroy(Long id) {
+    public void destroy(int id) {
         EntityManager em = null;
         EntityTransaction transaction = null;
 

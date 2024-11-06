@@ -59,6 +59,8 @@ public class AltaProveedores extends javax.swing.JFrame {
                     String email = txtCorreo.getText();
                     
                     control.guardarProveedor(nombre, telefono, email);
+                    JOptionPane.showMessageDialog(null, "Producto guardado correctamente.", "Producto guardado.", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
                     
                 }
         });

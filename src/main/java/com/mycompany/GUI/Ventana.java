@@ -8,7 +8,10 @@ import com.mycompany.proyectofinal.Controladora;
 import com.mycompany.GUI.Button;
 import com.mycompany.GUI.TitlePanel;
 import com.mycompany.GUI.Tabla;
+import com.mycompany.proyectofinal.Caja;
 import com.mycompany.proyectofinal.Cliente;
+import com.mycompany.proyectofinal.Producto;
+import com.mycompany.proyectofinal.Proveedor;
 import com.mycompany.proyectofinal.Servicio;
 import com.mycompany.proyectofinal.Turno;
 import com.mycompany.proyectofinal.Usuario;
@@ -38,6 +41,12 @@ public class Ventana extends javax.swing.JFrame {
     private DefaultTableModel modeloEmpleados;
     private Tabla tablaServicios;
     private DefaultTableModel modeloServicios;
+    private Tabla tablaProductos;
+    private DefaultTableModel modeloProductos;
+    private Tabla tablaProveedores;
+    private DefaultTableModel modeloProveedores;
+    private Tabla tablaCaja;
+    private DefaultTableModel modeloCaja;
     
     /**
      * Creates new form Ventana
@@ -49,7 +58,7 @@ public class Ventana extends javax.swing.JFrame {
         initComponents();
         this.setVisible(true);
         this.setTitle("HY Peluquería");
-        this.setSize(1000,600);
+        this.setSize(900,600);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
@@ -58,8 +67,8 @@ public class Ventana extends javax.swing.JFrame {
         
         card = (CardLayout) mainPanel.getLayout();
         
-        card.show(mainPanel, "Login1");
-        //card.show(mainPanel, "mainScreen");
+        //card.show(mainPanel, "Login1");
+        card.show(mainPanel, "mainScreen");
         
         /*PANEL LOGIN 1*/
 /*
@@ -164,7 +173,7 @@ public class Ventana extends javax.swing.JFrame {
             //INICIALIZAR TABLA
             String titulos2[] = {"ID","Nombre", "Apellido", "Telefono", "Genero"}; //modelo
             modeloClientes2.setColumnIdentifiers(titulos2); 
-            
+            //LOAD TABLE UPON LOADING PANEL
             cardClientes.addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentShown(ComponentEvent e) {
@@ -175,7 +184,7 @@ public class Ventana extends javax.swing.JFrame {
             tablaClientes2 = new Tabla(modeloClientes2);
             panelCenterCli.add(tablaClientes2, BorderLayout.CENTER);
             
-            //LOAD TABLE UPON LOADING PANEL
+            
             
             JTable tableClientes = tablaClientes2.getTable(); //useful para eliminar
             
@@ -569,7 +578,110 @@ public class Ventana extends javax.swing.JFrame {
             //btn eliminar
             Button btnElimCaja = new Button("Eliminar");
             btnPanelCaja.add(btnElimCaja);
+            
+            
             //logica abrir form al clickear btn
+            
+            btnNuevoCaja.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    AltaCaja form = new AltaCaja();
+                    
+                    // Add a window listener to listen for close events
+                    form.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            // This code will run after the form has closed
+                            // Call the function you want here
+                            cargarTablaCaja(panelCenterCaja);
+                        }
+                    });
+                    
+                    form.setVisible(true);
+                    form.setLocationRelativeTo(null);
+                    
+                }
+            });
+            
+            //CREAR TABLA
+            
+            modeloCaja = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int col){return false;}
+            };
+            //INICIALIZAR TABLA
+            String titulosCaja[] = {"ID","Tipo", "Monto", "Medio de Pago", "Detalle"}; //modelo
+            modeloCaja.setColumnIdentifiers(titulosCaja); 
+            //LOAD TABLE UPON LOADING PANEL
+            cardCaja.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentShown(ComponentEvent e) {
+                    cargarTablaCaja(panelCenterCaja);
+                }
+            });
+            
+            tablaCaja = new Tabla(modeloCaja);
+            panelCenterCaja.add(tablaCaja, BorderLayout.CENTER);
+            JTable tableCaja = tablaCaja.getTable(); //useful para eliminar
+            
+            //ELIMINAR
+            btnElimCaja.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloCaja.getRowCount()>0){
+                        if (tableCaja.getSelectedRow()!=-1){
+                            int numConcepto = Integer.parseInt(String.valueOf(tableCaja.getValueAt(tableCaja.getSelectedRow(),0)));
+                        
+                            control.borrarConcepto(numConcepto);
+                            cargarTablaCaja(panelCenterCaja);
+                        
+                        // Show success message only if a record is deleted
+                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
+            //MODIFICAR
+            btnModCaja.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloCaja.getRowCount()>0){
+                        if (tableCaja.getSelectedRow()!=-1){
+                            //LOGICA MODIFICAR
+                            int numConcepto = Integer.parseInt(String.valueOf(tableCaja.getValueAt(tableCaja.getSelectedRow(),0)));
+                        
+                            //abrir form de modificacion
+                            ModifCaja form = new ModifCaja(numConcepto);
+                            
+                            form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaCaja(panelCenterCaja);
+                            }
+                    });
+                            
+                            form.setVisible(true);
+                            form.setLocationRelativeTo(null);
+                            
+                        
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
             
         //PROVEEDORES
             TitlePanel titleProv = new TitlePanel("Proveedores");
@@ -598,16 +710,74 @@ public class Ventana extends javax.swing.JFrame {
             //btn eliminar
             Button btnElimProv = new Button("Eliminar");
             btnPanelProv.add(btnElimProv);
+            
             //logica abrir form al clickear btn
             btnNuevoProv.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
                     AltaProveedores form = new AltaProveedores();
+                    
+                    form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaProveedores(panelCenterProv);
+                            }
+                    });
+                    
                     form.setVisible(true);
                     form.setLocationRelativeTo(null);
                 }
             });
+            
+            //CREAR TABLA
+            
+            modeloProveedores = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int col){return false;}
+            };
+            //INICIALIZAR TABLA
+            String titulosProv[] = {"ID","Nombre", "Correo", "Telefono"}; //modelo
+            modeloProveedores.setColumnIdentifiers(titulosProv); 
+            
+            //LOAD TABLE UPON LOADING PANEL
+            cardProveedores.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentShown(ComponentEvent e) {
+                    cargarTablaProveedores(panelCenterProv);
+                }
+            });
+            
+            tablaProveedores = new Tabla(modeloProveedores);
+            panelCenterProv.add(tablaProveedores, BorderLayout.CENTER);
+            
+            
+            
+            JTable tableProveedores = tablaProveedores.getTable(); //useful para eliminar
+            
+            btnElimProv.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloProveedores.getRowCount()>0){
+                        if (tableProveedores.getSelectedRow()!=-1){
+                            int numProv = Integer.parseInt(String.valueOf(tableProveedores.getValueAt(tableProveedores.getSelectedRow(),0)));
+                        
+                            control.borrarProveedor(numProv);
+                            cargarTablaProveedores(panelCenterProv);
+                        
+                        // Show success message only if a record is deleted
+                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
             
             
         //INVENTARIO
@@ -638,6 +808,71 @@ public class Ventana extends javax.swing.JFrame {
             Button btnElimInv = new Button("Eliminar");
             btnPanelInv.add(btnElimInv);
             //logica abrir form al clickear btn
+            
+            //logica abrir form al clickear btn
+            btnNuevoInv.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    AltaProductos form = new AltaProductos();
+                    
+                    form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaProductos(panelCenterInv);
+                            }
+                        });
+                    
+                    form.setVisible(true);
+                    form.setLocationRelativeTo(null);
+                }
+            });
+            
+             //CREAR TABLA
+            
+            modeloProductos = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int col){return false;}
+            };
+            //INICIALIZAR TABLA
+            String titulosProductos[] = {"ID","Nombre", "Stock", "Minimo", "Proveedor"}; //modelo
+            modeloProductos.setColumnIdentifiers(titulosProductos); 
+            //LOAD TABLE UPON LOADING PANEL
+            cardInventario.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentShown(ComponentEvent e) {
+                    cargarTablaProductos(panelCenterInv);
+                }
+            });
+            
+            tablaProductos = new Tabla(modeloProductos);
+            panelCenterInv.add(tablaProductos, BorderLayout.CENTER);
+            
+            
+            JTable tableProductos = tablaProductos.getTable(); //useful para eliminar
+            
+            btnElimInv.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloProductos.getRowCount()>0){
+                        if (tableProductos.getSelectedRow()!=-1){
+                            int numProducto = Integer.parseInt(String.valueOf(tableProductos.getValueAt(tableProductos.getSelectedRow(),0)));
+                        
+                            control.borrarProducto(numProducto);
+                            cargarTablaProductos(panelCenterInv);
+                        
+                        // Show success message only if a record is deleted
+                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
             
         
         //EMPLEADOS
@@ -823,64 +1058,8 @@ public class Ventana extends javax.swing.JFrame {
         
         /*LOGO LOGIN*/
         
-        JLabel lblLogo = new JLabel("HECTOR");
-        lblLogo.setBounds(130, 190, 250, 70); 
-        lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-        jLayeredPane2.add(lblLogo, JLayeredPane.PALETTE_LAYER);
-        lblLogo.setFont(Styles.customFontXl);
-        lblLogo.setForeground(Styles.fontLight);
         
-        JLabel lblLogo2 = new JLabel("YAGUSZ");
-        lblLogo2.setBounds(130, 235, 250, 70); 
-        lblLogo2.setHorizontalAlignment(SwingConstants.CENTER);
-        jLayeredPane2.add(lblLogo2, JLayeredPane.PALETTE_LAYER);
-        lblLogo2.setFont(Styles.customFontXl);
-        lblLogo2.setForeground(Styles.fontLight);
-        
-        JLabel lblLogo3 = new JLabel(" P   E   L   U   Q   U   E   R   I   A");
-        lblLogo3.setBounds(130, 270, 250, 70); 
-        lblLogo3.setHorizontalAlignment(SwingConstants.CENTER);
-        jLayeredPane2.add(lblLogo3, JLayeredPane.PALETTE_LAYER);
-        lblLogo3.setFont(Styles.customFontMd);
-        lblLogo3.setForeground(Styles.fontLight);
-        
-        this.addComponentListener(new ComponentAdapter(){
-            @Override
-            public void componentResized(ComponentEvent e){
-                // Get the parent container's width and height
-        int parentWidth = jLayeredPane2.getWidth();
-        int parentHeight = jLayeredPane2.getHeight();
-        
-        // Get each label's width and height
-        int lblLogoWidth = lblLogo.getWidth();
-        int lblLogoHeight = lblLogo.getHeight();
-        
-        int lblLogo2Width = lblLogo2.getWidth();
-        int lblLogo2Height = lblLogo2.getHeight();
-        
-        int lblLogo3Width = lblLogo3.getWidth();
-        int lblLogo3Height = lblLogo3.getHeight();
-
-        // Calculate new centered positions for each label
-        int lblLogoX = (parentWidth - lblLogoWidth) / 2;
-        int lblLogoY = (parentHeight - lblLogoHeight) / 2 - 30;
-
-        int lblLogo2X = (parentWidth - lblLogo2Width) / 2;
-        int lblLogo2Y = (parentHeight - lblLogo2Height) / 2 + 30;  // Adjust the y position if necessary
-
-        int lblLogo3X = (parentWidth - lblLogo3Width) / 2;
-        int lblLogo3Y = (parentHeight - lblLogo3Height) / 2 + 70;  // Adjust the y position if necessary
-
-        // Set the new bounds (x, y, width, height) for each label
-        lblLogo.setBounds(lblLogoX, lblLogoY, lblLogoWidth, lblLogoHeight);
-        lblLogo2.setBounds(lblLogo2X, lblLogo2Y, lblLogo2Width, lblLogo2Height);
-        lblLogo3.setBounds(lblLogo3X, lblLogo3Y, lblLogo3Width, lblLogo3Height);
-            }
-            
-        }
-        
-        );
-        
+        setupLoginPanel();
     }
 
     /**
@@ -964,7 +1143,6 @@ public class Ventana extends javax.swing.JFrame {
 
         txtUser1.setBackground(new java.awt.Color(229, 229, 229));
         txtUser1.setForeground(new java.awt.Color(153, 153, 153));
-        txtUser1.setText("usuario");
         txtUser1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtUser1FocusGained(evt);
@@ -997,7 +1175,7 @@ public class Ventana extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
+                .addContainerGap(107, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtPassword2)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1006,7 +1184,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(lblPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblLogin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLogin1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1041,8 +1219,8 @@ public class Ventana extends javax.swing.JFrame {
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 621, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1054,9 +1232,9 @@ public class Ventana extends javax.swing.JFrame {
         Login1Layout.setHorizontalGroup(
             Login1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Login1Layout.createSequentialGroup()
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         Login1Layout.setVerticalGroup(
@@ -1660,6 +1838,140 @@ public class Ventana extends javax.swing.JFrame {
             panel.repaint(); // Repaint the panel
         }
         
+        private void cargarTablaProductos(JPanel panel) {
+            modeloProductos.setRowCount(0); // Clear existing data in the model
+
+            List<Producto> listaProductos = control.traerProductos(); // Fetch updated client list
+            
+            //guardar nombre Producto.getproveedor en un string
+            
+            if (listaProductos != null) {
+                for (Producto prod : listaProductos) {
+                    
+                    Proveedor prov= prod.getProveedor();
+                    String nombreProveedor;
+
+                    if (prov != null) {
+                        nombreProveedor = prov.getNombre();
+                    } else {
+                        nombreProveedor = "No asignado"; // Or any default message when cliente is null
+                    }
+                    
+                    
+                    Object[] objeto = {prod.getId(),prod.getNombre(), prod.getStock(), prod.getMinimo(), nombreProveedor};
+                    modeloProductos.addRow(objeto); // Add new data to the model
+                }
+            }
+
+            panel.revalidate(); // Refresh the panel to reflect changes
+            panel.repaint(); // Repaint the panel
+        }
+        
+        private void setupLoginPanel(){
+
+                /*LOGO LOGIN*/
+
+            JLabel lblLogo = new JLabel("HECTOR");
+            lblLogo.setBounds(128, 190, 250, 70); 
+            lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
+            jLayeredPane2.add(lblLogo, JLayeredPane.PALETTE_LAYER);
+            lblLogo.setFont(Styles.customFontXl);
+            lblLogo.setForeground(Styles.fontLight);
+
+            JLabel lblLogo2 = new JLabel("YAGUSZ");
+            lblLogo2.setBounds(128, 235, 250, 70); 
+            lblLogo2.setHorizontalAlignment(SwingConstants.CENTER);
+            jLayeredPane2.add(lblLogo2, JLayeredPane.PALETTE_LAYER);
+            lblLogo2.setFont(Styles.customFontXl);
+            lblLogo2.setForeground(Styles.fontLight);
+
+            JLabel lblLogo3 = new JLabel(" P   E   L   U   Q   U   E   R   I   A");
+            lblLogo3.setBounds(128, 270, 250, 70); 
+            lblLogo3.setHorizontalAlignment(SwingConstants.CENTER);
+            jLayeredPane2.add(lblLogo3, JLayeredPane.PALETTE_LAYER);
+            lblLogo3.setFont(Styles.customFontMd);
+            lblLogo3.setForeground(Styles.fontLight);
+
+
+            this.addComponentListener(new ComponentAdapter(){
+                @Override
+                public void componentResized(ComponentEvent e){
+                    // Get the parent container's width and height
+                    int parentWidth = jLayeredPane2.getWidth();
+                    int parentHeight = jLayeredPane2.getHeight();
+
+                    // Get each label's width and height
+                    int lblLogoWidth = lblLogo.getWidth();
+                    int lblLogoHeight = lblLogo.getHeight();
+
+                    int lblLogo2Width = lblLogo2.getWidth();
+                    int lblLogo2Height = lblLogo2.getHeight();
+
+                    int lblLogo3Width = lblLogo3.getWidth();
+                    int lblLogo3Height = lblLogo3.getHeight();
+
+                    // Calculate new centered positions for each label
+                    int lblLogoX = (parentWidth - lblLogoWidth) / 2;
+                    int lblLogoY = (parentHeight - lblLogoHeight) / 2 - 30;
+
+                    int lblLogo2X = (parentWidth - lblLogo2Width) / 2;
+                    int lblLogo2Y = (parentHeight - lblLogo2Height) / 2 + 30;  // Adjust the y position if necessary
+
+                    int lblLogo3X = (parentWidth - lblLogo3Width) / 2;
+                    int lblLogo3Y = (parentHeight - lblLogo3Height) / 2 + 70;  // Adjust the y position if necessary
+
+                    // Set the new bounds (x, y, width, height) for each label
+                    lblLogo.setBounds(lblLogoX, lblLogoY, lblLogoWidth, lblLogoHeight);
+                    lblLogo2.setBounds(lblLogo2X, lblLogo2Y, lblLogo2Width, lblLogo2Height);
+                    lblLogo3.setBounds(lblLogo3X, lblLogo3Y, lblLogo3Width, lblLogo3Height);
+                        }
+
+                    }
+
+                );
+            
+            jLayeredPane2.revalidate();
+            jLayeredPane2.repaint();
+            
+        }
+        
+        private void cargarTablaProveedores(JPanel panel) {
+            modeloProveedores.setRowCount(0); // Clear existing data in the model
+
+            List<Proveedor> listaProveedores = control.traerProveedores(); // Fetch updated client list
+            
+            //guardar nombre Producto.getproveedor en un string
+            
+            if (listaProveedores != null) {
+                for (Proveedor prov : listaProveedores) {
+                    
+                    Object[] objeto = {prov.getId(),prov.getNombre(), prov.getEmail(), prov.getTelefono()};
+                    modeloProveedores.addRow(objeto); // Add new data to the model
+                }
+            }
+
+            panel.revalidate(); // Refresh the panel to reflect changes
+            panel.repaint(); // Repaint the panel
+        }
+        
+        private void cargarTablaCaja(JPanel panel) {
+            modeloCaja.setRowCount(0); // Clear existing data in the model
+
+            List<Caja> listaCaja = control.traerConceptos(); // Fetch updated client list
+            
+            //guardar nombre Producto.getproveedor en un string
+            
+            if (listaCaja != null) {
+                for (Caja caja : listaCaja) {
+                    
+                    Object[] objeto = {caja.getId(),caja.getTipo(), caja.getMonto(), caja.getMedio(),caja.getDetalle()};
+                    modeloCaja.addRow(objeto); // Add new data to the model
+                }
+            }
+
+            panel.revalidate(); // Refresh the panel to reflect changes
+            panel.repaint(); // Repaint the panel
+        }
     
 //FIN
 }

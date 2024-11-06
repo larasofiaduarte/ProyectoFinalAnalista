@@ -169,20 +169,24 @@ public class Controladora {
         
         controlPersis.guardarProveedor(nuevoProveedor);
     }
-    
+    public Proveedor findProveedor(int idProveedor) {
+       
+        return controlPersis.findProveedor(idProveedor);
+    }
     //PRODUCTO
     //ALTA
-    public void guardarProducto(String nombre, String stock, String minimo, String idProveedor){
+    public void guardarProducto(String nombre, String stock, String minimo, Proveedor proveedor){
         Producto nuevoProducto = new Producto();
         
         nuevoProducto.setNombre(nombre);
         nuevoProducto.setStock(stock);
         nuevoProducto.setMinimo(minimo);
-        nuevoProducto.setIdProveedor(idProveedor);
+        nuevoProducto.setProveedor(proveedor);
         
         controlPersis.guardarProducto(nuevoProducto);
         
     }
+    
     
     //SERVICIO
     //ALTA
@@ -291,8 +295,88 @@ public class Controladora {
         return userRole;
     }
 
+    public List<Producto> traerProductos() {
+        
+        return controlPersis.traerProductos();
     
+    }
 
+    public void borrarProducto(int numProducto) {
+        controlPersis.borrarProducto(numProducto);
+    }
+
+    public Producto findProducto(int numProducto) {
+        return controlPersis.findProducto(numProducto);
+    }
+
+    public void modificarProducto(Producto prod, String nombre, String stock, String minimo, Proveedor proveedor) {
+        prod.setMinimo(minimo);
+        prod.setStock(stock);
+        prod.setNombre(nombre);
+        prod.setProveedor(proveedor);
+                
+    }
+
+    public List<Proveedor> traerProveedores() {
+        return controlPersis.traerProveedores();
+    }
+
+    public void borrarProveedor(int numProv) {
+        controlPersis.borrarProveedor(numProv);
+    }
+
+    public void modificarProveedor(Proveedor prov, String nombre, String telefono, String email) {
+        prov.setEmail(email);
+        prov.setNombre(nombre);
+        prov.setTelefono(telefono);
+        
+        controlPersis.modificarProveedor(prov);
+    
+    }
+
+    //CAJA
+        //ALTA
+        public void guardarConcepto(String tipo, String monto, String medio, String detalle){
+        Caja nuevoConcepto = new Caja();
+        
+        nuevoConcepto.setTipo(tipo);
+        nuevoConcepto.setDetalle(detalle);
+        nuevoConcepto.setMedio(medio);
+        nuevoConcepto.setMonto(monto);
+        
+        controlPersis.guardarCaja(nuevoConcepto);
+        
+    }
+        
+        //READ all
+        public List <Caja> traerConceptos(){
+
+
+            return controlPersis.traerConceptos();
+
+        }
+        //by id
+        public Caja findConcepto(int id){
+            return controlPersis.findConcepto(id);
+        }
+        
+        //DELETE
+        
+        public void borrarConcepto(int id){
+            
+            controlPersis.borrarConcepto(id);
+        }
+        
+        //EDIT
+        public void modificarConcepto(Caja concepto, String tipo, String monto, String medio, String detalle) {
+            concepto.setDetalle(detalle);
+            concepto.setMedio(medio);
+            concepto.setMonto(monto);
+            concepto.setTipo(tipo);
+            
+            controlPersis.modificarConcepto(concepto);
+
+        }
     
     
     

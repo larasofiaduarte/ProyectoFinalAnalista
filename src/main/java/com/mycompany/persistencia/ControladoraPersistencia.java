@@ -2,6 +2,7 @@
 package com.mycompany.persistencia;
 
 import com.mycompany.GUI.exceptions.NonexistentEntityException;
+import com.mycompany.proyectofinal.Caja;
 import com.mycompany.proyectofinal.Usuario;
 import com.mycompany.proyectofinal.Cliente;
 import com.mycompany.proyectofinal.Proveedor;
@@ -72,7 +73,12 @@ public class ControladoraPersistencia {
         public void guardarProveedor(Proveedor nuevoProveedor){
             provJpa.create(nuevoProveedor);
         }
-
+        
+        public Proveedor findProveedor(int id){
+            return provJpa.findProveedor(id);
+        }
+        
+        
     //PRODUCTO
     
     ProductoJpaController prodJpa = new ProductoJpaController();
@@ -85,6 +91,10 @@ public class ControladoraPersistencia {
         //READ
         public List<Producto> traerProducto() {
            return prodJpa.findProductoEntities();
+        }
+        
+        public Producto findProducto(int id){
+            return prodJpa.findProducto(id);
         }
 
         //DELETE
@@ -156,6 +166,53 @@ public class ControladoraPersistencia {
     public void modificarServicio(Servicio ser) {
         serJpa.edit(ser);
     }
+
+    public List<Producto> traerProductos() {
+        return prodJpa.findProductoEntities();
+    }
+
+    public List<Proveedor> traerProveedores() {
+        return provJpa.findProveedorEntities();
+    }
+
+    public void borrarProveedor(int numProv) {
+        provJpa.destroy(numProv);
+    }
+
+    public void modificarProveedor(Proveedor prov) {
+        provJpa.edit(prov);
+    }
+    
+    //CAJA
+    
+    CajaJpaController cajaJpa = new CajaJpaController();
+    
+        public void guardarCaja(Caja nuevoConcepto){
+            cajaJpa.create(nuevoConcepto);
+        }
+
+        //READ
+        public List<Caja> traerConceptos() {
+                return cajaJpa.findCajaEntities();
+        }
+        //by id
+        public Caja findConcepto(int id) {
+            
+            return cajaJpa.findCaja(id);
+                
+        }
+        
+        //DELETE
+        public void borrarConcepto(int numConcepto) {
+
+            cajaJpa.destroy(numConcepto);
+        }
+        
+        //UPDATE/EDIT
+        public void modificarConcepto(Caja concepto) {
+
+            cajaJpa.edit(concepto);
+        }
 
 
         

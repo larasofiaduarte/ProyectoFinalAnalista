@@ -5,6 +5,7 @@
 package com.mycompany.persistencia;
 
 import com.mycompany.proyectofinal.Producto;
+import com.mycompany.proyectofinal.Proveedor;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -53,7 +54,7 @@ public class ProductoJpaController implements Serializable {
     
     
     // Read
-    public Producto findCliente(Long id) {
+    public Producto findProducto(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Producto.class, id);
@@ -125,5 +126,9 @@ public class ProductoJpaController implements Serializable {
                 em.close();
             }
         }
+    }
+
+    Proveedor findProveedor(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
