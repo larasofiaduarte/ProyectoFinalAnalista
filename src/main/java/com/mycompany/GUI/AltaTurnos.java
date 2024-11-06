@@ -108,7 +108,8 @@ public class AltaTurnos extends javax.swing.JFrame {
                     Boolean turnoYaExiste = control.turnoYaExiste(servicio, fechafinal);
                     
                     if(turnoYaExiste){
-                        JOptionPane.showMessageDialog(null, "Ya existe un turno para el servicio seleccionado en esa fecha y horario.", "No se puede guardar el turno.", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Ya existe un turno para el servicio seleccionado en esa fecha y horario."
+                                + "", "No se puede guardar el turno.", JOptionPane.ERROR_MESSAGE);
                     
                     }else{
                         // Save the Turno

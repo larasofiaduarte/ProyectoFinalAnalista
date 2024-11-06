@@ -122,9 +122,9 @@ public class AltaServicios extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre*");
 
-        jLabel2.setText("Precio");
+        jLabel2.setText("Precio*");
 
         txtPrecio.setBackground(new java.awt.Color(242, 242, 242));
         txtPrecio.setForeground(new java.awt.Color(102, 102, 102));
@@ -143,7 +143,7 @@ public class AltaServicios extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("ID Empleado");
+        jLabel6.setText("ID Empleado*");
 
         txtEmpleado.setBackground(new java.awt.Color(242, 242, 242));
         txtEmpleado.setForeground(new java.awt.Color(102, 102, 102));
@@ -192,7 +192,7 @@ public class AltaServicios extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

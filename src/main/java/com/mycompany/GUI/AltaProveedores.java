@@ -59,7 +59,7 @@ public class AltaProveedores extends javax.swing.JFrame {
                     String email = txtCorreo.getText();
                     
                     control.guardarProveedor(nombre, telefono, email);
-                    JOptionPane.showMessageDialog(null, "Producto guardado correctamente.", "Producto guardado.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Proveedor guardado correctamente.", "Proveedor guardado.", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                     
                 }
@@ -84,7 +84,6 @@ public class AltaProveedores extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(250, 250, 250));
-        setPreferredSize(new java.awt.Dimension(650, 550));
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -96,7 +95,7 @@ public class AltaProveedores extends javax.swing.JFrame {
 
         panelCenter.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre*");
 
         jLabel2.setText("Teléfono");
 

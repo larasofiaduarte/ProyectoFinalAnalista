@@ -5,6 +5,7 @@
 package com.mycompany.persistencia;
 
 import com.mycompany.proyectofinal.Turno;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.*;
@@ -122,5 +123,20 @@ public class TurnoJpaController {
         }
     }
     
+    public boolean turnoYaExiste(String servicio, LocalDateTime fecha) {
+    EntityManager em = emf.createEntityManager();
+    try {
+        // Crear consulta para verificar si ya existe un turno con el mismo servicio y fecha
+        TypedQuery<Long> query = em.createQuery(
+            "SELECT COUNT(t) FROM Turno t WHERE t.Servicio = :Servicio AND t.fecha = :fecha", Long.class);
+        query.setParameter("Servicio", servicio);
+        query.setParameter("fecha", fecha);
+
+        // Devuelve true si el conteo es mayor que 0, lo que indica que ya existe un turno con estos valores
+        return query.getSingleResult() > 0;
+    } finally {
+        em.close();
+    }
+}
     
 }

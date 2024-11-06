@@ -87,6 +87,10 @@ public class Ventana extends javax.swing.JFrame {
         label2.setForeground(Styles.fontLight);
         label1.setForeground(Styles.fontLight);
         
+        JLabel welc = new JLabel("Bienvenido", JLabel.CENTER);
+        welc.setFont(Styles.fontTitleIt);
+        cardWelcome.add(welc, BorderLayout.CENTER);
+        
         
         /*UI MAIN SCREEN GESTIONES*/
         
@@ -1095,6 +1099,7 @@ public class Ventana extends javax.swing.JFrame {
         label1 = new javax.swing.JLabel();
         label2 = new javax.swing.JLabel();
         panelMain = new javax.swing.JPanel();
+        cardWelcome = new javax.swing.JPanel();
         cardTurnos = new javax.swing.JPanel();
         cardClientes = new javax.swing.JPanel();
         cardEmpleados = new javax.swing.JPanel();
@@ -1475,6 +1480,10 @@ public class Ventana extends javax.swing.JFrame {
         panelMain.setPreferredSize(new java.awt.Dimension(800, 500));
         panelMain.setLayout(new java.awt.CardLayout());
 
+        cardWelcome.setBackground(new java.awt.Color(250, 250, 250));
+        cardWelcome.setLayout(new java.awt.BorderLayout());
+        panelMain.add(cardWelcome, "cardTurnos");
+
         cardTurnos.setBackground(new java.awt.Color(250, 250, 250));
         cardTurnos.setLayout(new java.awt.BorderLayout());
         panelMain.add(cardTurnos, "cardTurnos");
@@ -1723,6 +1732,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel cardProveedores;
     private javax.swing.JPanel cardServicios;
     private javax.swing.JPanel cardTurnos;
+    private javax.swing.JPanel cardWelcome;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel3;

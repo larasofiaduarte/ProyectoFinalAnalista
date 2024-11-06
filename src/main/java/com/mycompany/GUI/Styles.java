@@ -59,6 +59,7 @@ public class Styles {
     public static Font customFontL;
     
     public static Font fontTitle = new Font("Dialog", Font.BOLD, 20);
+    public static Font fontTitleIt = new Font("Dialog", Font.BOLD | Font.ITALIC, 20);
     public static Font fontBtn = new Font("Dialog", Font.BOLD, 14);
 
     static {

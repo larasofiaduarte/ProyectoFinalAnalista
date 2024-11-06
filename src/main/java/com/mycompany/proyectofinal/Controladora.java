@@ -245,6 +245,10 @@ public class Controladora {
             
             controlPersis.borrarTurno(id);
         }
+        
+        public boolean turnoYaExiste(String servicio, LocalDateTime fecha){
+            return controlPersis.turnoYaExiste(servicio, fecha);
+        }
 
     public void modificarTurno(Turno tur, String servicio, LocalDateTime fechafinal, Cliente clienteEnt, String estado) {
         

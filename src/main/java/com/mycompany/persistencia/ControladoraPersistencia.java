@@ -9,6 +9,7 @@ import com.mycompany.proyectofinal.Proveedor;
 import com.mycompany.proyectofinal.Producto;
 import com.mycompany.proyectofinal.Servicio;
 import com.mycompany.proyectofinal.Turno;
+import java.time.LocalDateTime;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -153,6 +154,10 @@ public class ControladoraPersistencia {
         public void modificarTurno(Turno tur) {
 
             turJpa.edit(tur);
+        }
+        // Método para verificar si el turno ya existe
+        public boolean turnoYaExiste(String servicio, LocalDateTime fechahora) {
+            return turJpa.turnoYaExiste(servicio, fechahora);
         }
 
     public void modificarUsuario(Usuario usu) {

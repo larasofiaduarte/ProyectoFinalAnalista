@@ -90,9 +90,9 @@ public class AltaClientes extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre*");
 
-        jLabel2.setText("Apellido");
+        jLabel2.setText("Apellido*");
 
         jLabel3.setText("Teléfono");
 

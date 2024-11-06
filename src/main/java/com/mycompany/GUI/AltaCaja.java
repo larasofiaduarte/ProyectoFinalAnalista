@@ -71,9 +71,10 @@ public class AltaCaja extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
-        txtDetalle = new javax.swing.JTextField();
         cboTipo = new javax.swing.JComboBox<>();
         cboMedio = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDetalle = new javax.swing.JTextArea();
         panelBtns = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -85,11 +86,11 @@ public class AltaCaja extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("Tipo");
+        jLabel1.setText("Tipo*");
 
-        jLabel2.setText("Monto");
+        jLabel2.setText("Monto*");
 
-        jLabel3.setText("Medio de Pago");
+        jLabel3.setText("Medio de Pago*");
 
         jLabel4.setText("Detalle");
 
@@ -99,11 +100,6 @@ public class AltaCaja extends javax.swing.JFrame {
         txtMonto.setBorder(null);
         txtMonto.setPreferredSize(new java.awt.Dimension(73, 30));
 
-        txtDetalle.setBackground(new java.awt.Color(242, 242, 242));
-        txtDetalle.setForeground(new java.awt.Color(102, 102, 102));
-        txtDetalle.setBorder(null);
-        txtDetalle.setPreferredSize(new java.awt.Dimension(73, 30));
-
         cboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Gasto", " " }));
 
         cboMedio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Débito", "Crédito", "MercadoPago", "Otro" }));
@@ -112,6 +108,10 @@ public class AltaCaja extends javax.swing.JFrame {
                 cboMedioActionPerformed(evt);
             }
         });
+
+        txtDetalle.setColumns(20);
+        txtDetalle.setRows(5);
+        jScrollPane1.setViewportView(txtDetalle);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -126,10 +126,10 @@ public class AltaCaja extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                     .addComponent(cboMedio, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMonto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtMonto, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -147,11 +147,11 @@ public class AltaCaja extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cboMedio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(txtDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(88, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         panelBtns.setBackground(new java.awt.Color(250, 250, 250));
@@ -238,9 +238,10 @@ public class AltaCaja extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCargaEmp;
     private javax.swing.JPanel panelBtns;
-    private javax.swing.JTextField txtDetalle;
+    private javax.swing.JTextArea txtDetalle;
     private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 }

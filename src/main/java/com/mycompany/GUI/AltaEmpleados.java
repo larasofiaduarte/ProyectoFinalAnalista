@@ -88,7 +88,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
         txtEmpUser.setSelectionColor(new java.awt.Color(204, 204, 255));
 
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Contraseña");
+        jLabel3.setText("Contraseña*");
 
         btnAltaEmp.setBackground(new java.awt.Color(112, 80, 175));
         btnAltaEmp.setForeground(new java.awt.Color(255, 255, 255));
@@ -125,7 +125,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
         txtEmpApe.setBorder(null);
         txtEmpApe.setPreferredSize(new java.awt.Dimension(64, 28));
 
-        jLabel6.setText("Rol");
+        jLabel6.setText("Rol*");
 
         jLabel7.setText("Nº Teléfono");
 
@@ -157,7 +157,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
         });
 
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel8.setText("Nombre de Usuario");
+        jLabel8.setText("Nombre de Usuario*");
 
         btnCerrarEmp.setForeground(new java.awt.Color(51, 51, 51));
         btnCerrarEmp.setText("Cerrar");
