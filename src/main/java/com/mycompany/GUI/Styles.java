@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Styles {
     public static final Color bgDark = new Color(43, 43, 45);  //Petrol grey, sidebar
+    public static final Color bgDark2 = new Color(51, 51, 51);  //Petrol grey, sidebar
     public static final Color bgDarkHover = new Color(76, 76, 79); 
     public static final Color bgGreyLight = new Color(238, 238, 238); //2nd lightest, for textfields
     public static final Color bgGreyDark = new Color(209, 209, 209); //3rd lightest, for textfields

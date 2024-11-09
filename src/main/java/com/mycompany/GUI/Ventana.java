@@ -63,6 +63,7 @@ public class Ventana extends javax.swing.JFrame {
         this.setSize(900,600);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        card = (CardLayout) mainPanel.getLayout();
         
         SwingUtilities.invokeLater(() -> {
             mainPanel.requestFocusInWindow();
@@ -70,12 +71,57 @@ public class Ventana extends javax.swing.JFrame {
         
         
         
+        int padding = 20;
+        JButton btnLogout = new JButton ("CERRAR SESIÓN");
+        btnLogout.setBounds(5, sideMenu.getHeight() - btnLogout.getHeight() , 170, 30);
+
+        sideMenu.add(btnLogout);
+        sideMenu.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                 btnLogout.setLocation(5, sideMenu.getHeight() - btnLogout.getHeight() - padding);
+                }
+        });
+        btnLogout.setBackground(Styles.bgDark2);
+        btnLogout.setForeground(Styles.fontLight);
+        btnLogout.setBorderPainted(false);
+        btnLogout.setFont(Styles.fontBtn);
+        
+        
+        
+        
+        
+        btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                // Action to perform on hover (e.g., change background color)
+                btnLogout.setForeground(Styles.fontLightHover);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                // Action to perform when hover ends (e.g., revert background color)
+                btnLogout.setForeground(Styles.fontLight);
+            }
+        });
+        
+        
         control = new Controladora();
         
-        card = (CardLayout) mainPanel.getLayout();
+        
         
         card.show(mainPanel, "Login1");
         //card.show(mainPanel, "mainScreen");
+        
+        btnLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+                cardLayout.show(mainPanel, "Login1");  // Switch to "Login1" card
+                mainPanel.revalidate();
+                mainPanel.repaint();
+            }
+        });
         
         /*PANEL LOGIN 1*/
 /*
