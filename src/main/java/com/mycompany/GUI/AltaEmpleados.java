@@ -67,7 +67,6 @@ public class AltaEmpleados extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         btnCerrarEmp = new javax.swing.JButton();
         btnLimpiarEmp = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("frameAltaEmp"); // NOI18N
@@ -109,7 +108,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Nombre");
+        jLabel4.setText("Nombre*");
 
         txtEmpNombre.setBackground(new java.awt.Color(240, 240, 240));
         txtEmpNombre.setForeground(new java.awt.Color(51, 51, 51));
@@ -117,7 +116,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
         txtEmpNombre.setBorder(null);
         txtEmpNombre.setPreferredSize(new java.awt.Dimension(64, 28));
 
-        jLabel5.setText("Apellido");
+        jLabel5.setText("Apellido*");
 
         txtEmpApe.setBackground(new java.awt.Color(240, 240, 240));
         txtEmpApe.setForeground(new java.awt.Color(51, 51, 51));
@@ -193,9 +192,6 @@ public class AltaEmpleados extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setText("Opcional");
-
         javax.swing.GroupLayout panelDataEmpLayout = new javax.swing.GroupLayout(panelDataEmp);
         panelDataEmp.setLayout(panelDataEmpLayout);
         panelDataEmpLayout.setHorizontalGroup(
@@ -213,29 +209,29 @@ public class AltaEmpleados extends javax.swing.JFrame {
                     .addGroup(panelDataEmpLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41)
-                        .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelDataEmpLayout.createSequentialGroup()
-                                .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEmpApe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtEmpTel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtEmpNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(panelDataEmpLayout.createSequentialGroup()
+                                .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)
                                 .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cboEmpRol, javax.swing.GroupLayout.Alignment.TRAILING, 0, 260, Short.MAX_VALUE)
                                     .addComponent(txtEmpUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtEmpPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(txtEmpPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(panelDataEmpLayout.createSequentialGroup()
+                                .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(checkPass)
-                                .addGap(46, 46, 46))))))
+                                .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEmpNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEmpApe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEmpTel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(checkPass)
+                        .addGap(46, 46, 46))))
         );
         panelDataEmpLayout.setVerticalGroup(
             panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,23 +250,19 @@ public class AltaEmpleados extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addComponent(jLabel6))
                     .addComponent(cboEmpRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(77, 77, 77)
-                .addComponent(jLabel1)
-                .addGap(22, 22, 22)
-                .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelDataEmpLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel5)
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel7))
-                    .addGroup(panelDataEmpLayout.createSequentialGroup()
-                        .addComponent(txtEmpNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(txtEmpApe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(txtEmpTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtEmpNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtEmpApe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtEmpTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCerrarEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiarEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,10 +316,13 @@ public class AltaEmpleados extends javax.swing.JFrame {
             // If it exists, show an error message
             JOptionPane.showMessageDialog(null, "El nombre de usuario ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            // If it does not exist, proceed to save the user
-            control.guardar(user, pass, nombre, apellido, tel, rol);
-            JOptionPane.showMessageDialog(null, "Usuario creado correctamente.", "Usuario guardado.", JOptionPane.INFORMATION_MESSAGE);
-            dispose(); // Close the dialog or window after successful creation
+            
+            if(validarCampos()){
+                control.guardar(user, pass, nombre, apellido, tel, rol);
+                JOptionPane.showMessageDialog(null, "Usuario creado correctamente.", "Usuario guardado.", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            }
+            
         }
         
     }//GEN-LAST:event_btnAltaEmpActionPerformed
@@ -376,7 +371,15 @@ public class AltaEmpleados extends javax.swing.JFrame {
         btnCerrarEmp.setBackground(Styles.bgLight);
     }//GEN-LAST:event_btnCerrarEmpMouseExited
 
-    
+    private boolean validarCampos() {
+        if (txtEmpUser.getText().isEmpty() || cboEmpRol.getSelectedItem() == null || 
+           txtEmpNombre.getText().isEmpty() || txtEmpApe.getText().isEmpty() || txtEmpPass.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAltaEmp;
@@ -384,7 +387,6 @@ public class AltaEmpleados extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpiarEmp;
     private javax.swing.JComboBox<String> cboEmpRol;
     private javax.swing.JCheckBox checkPass;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

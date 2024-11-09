@@ -58,9 +58,9 @@
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="lblCargaEmp" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="panelBtns" pref="133" max="32767" attributes="0"/>
+                  <Component id="jPanel2" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="panelBtns" min="-2" pref="91" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -131,7 +131,7 @@
                           <Component id="RadioBtnF" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="RadioBtnM" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="85" max="32767" attributes="0"/>
+                      <EmptySpace pref="121" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

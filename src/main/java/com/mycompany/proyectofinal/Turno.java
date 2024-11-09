@@ -25,7 +25,8 @@ public class Turno {
     @ManyToOne
     @JoinColumn(name="Cliente")
     private Cliente cliente;
-    private String Servicio;
+    @JoinColumn(name="Servicio")
+    private Servicio servicio;
     private String estado;
     private String detalle;
 
@@ -64,12 +65,12 @@ public class Turno {
 
    
 
-    public String getServicio() {
-        return Servicio;
+    public Servicio getServicio() {
+        return servicio;
     }
 
-    public void setServicio(String Servicio) {
-        this.Servicio = Servicio;
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
     }
 
     

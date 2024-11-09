@@ -5,9 +5,12 @@
 package com.mycompany.GUI;
 
 import com.mycompany.proyectofinal.Controladora;
+import com.mycompany.proyectofinal.Usuario;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,6 +38,17 @@ public class AltaServicios extends javax.swing.JFrame {
         ButtonSec btnCerrar = new ButtonSec("Cerrar");
         btnPanel.add(btnCerrar);
         
+        txtEmpleado.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
+        
+        
         btnLimpiar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -56,12 +70,26 @@ public class AltaServicios extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     String nombre = txtNombre.getText();
                     String precio = txtPrecio.getText();
-                    String emp = txtEmpleado.getText();
+                    int emp = Integer.parseInt(txtEmpleado.getText());
+                    
+                    Usuario user = control.findUsuario(emp);
+                    if (user == null) {
+                        JOptionPane.showMessageDialog(null, "Empleado no encontrado. Por favor, ingrese un ID de empleado válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return; // Exit the action if client does not exist
+                    }else{
+                    
+                        if (validarCampos()){
+                            control.guardarServicio(nombre, precio, user);
+                            JOptionPane.showMessageDialog(null, "Servicio guardado correctamente.", "Servicio guardado.", JOptionPane.INFORMATION_MESSAGE);
+                            dispose();
+
+                        }
+                    
+                    }
                     
                     
-                    control.guardarServicio(nombre, precio, emp);
-                    JOptionPane.showMessageDialog(null, "Servicio guardado correctamente.", "Servicio guardado.", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    
+                    
                 }
         });
         
@@ -128,7 +156,7 @@ public class AltaServicios extends javax.swing.JFrame {
 
         txtPrecio.setBackground(new java.awt.Color(242, 242, 242));
         txtPrecio.setForeground(new java.awt.Color(102, 102, 102));
-        txtPrecio.setText("10.000");
+        txtPrecio.setText("10000");
         txtPrecio.setBorder(null);
         txtPrecio.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -239,6 +267,17 @@ public class AltaServicios extends javax.swing.JFrame {
                 new AltaServicios().setVisible(true);
             }
         });
+    }
+    
+    private boolean validarCampos() {
+        if (txtEmpleado.getText().isEmpty() || 
+            txtNombre.getText().isEmpty() || 
+            txtPrecio.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -11,7 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import com.mycompany.proyectofinal.Controladora;
+import com.mycompany.proyectofinal.Servicio;
 import com.mycompany.proyectofinal.Turno;
+import com.toedter.calendar.JDateChooser;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
@@ -28,11 +30,12 @@ public class ModifTurnos extends javax.swing.JFrame {
     
     int numTurno;
     Turno tur;
+    Servicio servicioSeleccionado;
     
     public ModifTurnos(int numTurno) {
         initComponents();
         
-        panelBtns.setBorder(Styles.padding);
+        panelBtns.setBorder(Styles.paddingBottom);
         
         Button btnAlta = new Button("Guardar");
         panelBtns.add(btnAlta);
@@ -53,7 +56,7 @@ public class ModifTurnos extends javax.swing.JFrame {
             }
         });
         
-        
+        obtenerServicios();
         cargarDatos(numTurno);
         
         
@@ -93,31 +96,32 @@ public class ModifTurnos extends javax.swing.JFrame {
 
                     // Gather other details for the Turno
                     String servicio = (String) cboServicio.getSelectedItem();
+                    servicioSeleccionado = guardarServicio(servicio);
                     String hora = (String) cboHora.getSelectedItem();
                     String estado = (String) cboEstado.getSelectedItem();
+                    String detalle = txtDetalle.getText();
                     
                     Date fecha = calendar.getDate();
                     
-                    LocalDateTime fechafinal = obtenerFecha(hora,fecha);
                     
-                    
-                    
-                    Boolean turnoYaExiste = control.turnoYaExiste(servicio, fechafinal);
-                    
-                    if(turnoYaExiste){
-                        JOptionPane.showMessageDialog(null, "Ya existe un turno para el servicio seleccionado en esa fecha y horario."
-                                + "", "No se puede guardar el turno.", JOptionPane.ERROR_MESSAGE);
-                    
-                    }else{
-                        // Save the Turno
-                        //control.guardarTurno(servicio, fechafinal, clienteEnt, estado);
-                        JOptionPane.showMessageDialog(null, "Turno guardado correctamente.", "Turno guardado.", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
+                    if (validarCampos()){
+                        LocalDateTime fechafinal = obtenerFecha(hora,fecha);
+                        Boolean turnoYaExiste = control.turnoYaExiste2(servicioSeleccionado, fechafinal, numTurno);
+                        
+                        
+                        if(turnoYaExiste){
+                            JOptionPane.showMessageDialog(null, "Ya existe un turno para el servicio seleccionado en esa fecha y horario.", "No se puede guardar el turno.", JOptionPane.ERROR_MESSAGE);
+                        
+                        }else{
+                            control.modificarTurno(tur, servicioSeleccionado, fechafinal, clienteEnt, estado, detalle);
+                            JOptionPane.showMessageDialog(null, "Turno modificado correctamente.", "Turno actualizado.", JOptionPane.INFORMATION_MESSAGE);
+                            dispose();
+                        }
                     }
                     
 
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID de cliente válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(null, "Error al procesar la fecha. Por favor, revise la entrada.", "Error de fecha", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
@@ -160,27 +164,23 @@ public class ModifTurnos extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(250, 250, 250));
 
         lblCargaTurnos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblCargaTurnos.setText("Carga de Turnos");
+        lblCargaTurnos.setText("Modificación de Turnos");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 567, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(210, 210, 210)
-                    .addComponent(lblCargaTurnos)
-                    .addContainerGap(219, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(190, Short.MAX_VALUE)
+                .addComponent(lblCargaTurnos)
+                .addGap(174, 174, 174))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(37, 37, 37)
-                    .addComponent(lblCargaTurnos)
-                    .addContainerGap(38, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(lblCargaTurnos)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -190,11 +190,11 @@ public class ModifTurnos extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("ID Cliente");
+        jLabel1.setText("ID Cliente*");
 
-        jLabel2.setText("Servicio");
+        jLabel2.setText("Servicio*");
 
-        jLabel3.setText("Fecha");
+        jLabel3.setText("Fecha*");
 
         cboServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Corte Masculino", "Corte Femenino", "Colorista", "Estética" }));
 
@@ -204,15 +204,15 @@ public class ModifTurnos extends javax.swing.JFrame {
         txtCliente.setBorder(null);
         txtCliente.setPreferredSize(new java.awt.Dimension(73, 30));
 
-        jLabel4.setText("Horario");
+        jLabel4.setText("Horario*");
 
-        cboHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", " " }));
+        cboHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" }));
 
-        jLabel5.setText("Estado");
+        jLabel5.setText("Estado*");
 
         cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Finalizado" }));
 
-        Detalle.setText("Estado");
+        Detalle.setText("Detalle");
 
         txtDetalle.setColumns(20);
         txtDetalle.setRows(5);
@@ -233,14 +233,14 @@ public class ModifTurnos extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(calendar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cboServicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cboServicio, javax.swing.GroupLayout.Alignment.LEADING, 0, 122, Short.MAX_VALUE)))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -342,7 +342,50 @@ public class ModifTurnos extends javax.swing.JFrame {
         txtCliente.setText(id);
         //cargar datos cbo
         
+        if(tur.getEstado().equals("Pendiente")){
+            cboEstado.setSelectedIndex(0);
+        }else{
+            cboEstado.setSelectedIndex(1);
+        }
+        
+        txtDetalle.setText(tur.getDetalle());
+        
+        Servicio servicio = tur.getServicio();
+        String serv = servicio.getNombre();
+        
+        if (serv.equals("Corte Masculino")){
+            cboServicio.setSelectedIndex(0);
+        }else if(serv.equals("Corte Femenino")){
+            cboServicio.setSelectedIndex(1);
+        }else if(serv.equals("Colorista")){
+            cboServicio.setSelectedIndex(2);
+        }else{
+            cboServicio.setSelectedIndex(3);
+        }
+        
+        LocalDateTime fecha = tur.getFecha();
+        Date date = Date.from(fecha.atZone(ZoneId.systemDefault()).toInstant());
+        
+        calendar.setDate(date);
+        
+        int hour = fecha.getHour();
+        int minute = fecha.getMinute();
+        
+        String time = String.format("%02d:%02d", hour, minute); 
+        int matchingIndex = -1;
+        for (int i = 0; i < cboHora.getItemCount(); i++) {
+            String item = (String) cboHora.getItemAt(i);
+            if (item.equals(time)) {
+                matchingIndex = i;
+                break;
+            }
+        }
+        // If a matching index was found, set the selected index
+        if (matchingIndex != -1) {
+            cboHora.setSelectedIndex(matchingIndex);
+        } 
     }
+    
     public LocalDateTime obtenerFecha(String hora, Date fecha){
         
         Calendar calendar = Calendar.getInstance();
@@ -360,5 +403,43 @@ public class ModifTurnos extends javax.swing.JFrame {
         
         return combinedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     
+    }
+    private boolean validarCampos() {
+        if (txtCliente.getText().isEmpty() || 
+            servicioSeleccionado == null || 
+            cboHora.getSelectedItem() == null || 
+            cboEstado.getSelectedItem() == null || 
+            calendar.getDate() == null ) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
+    }
+    public void obtenerServicios(){
+        List<Servicio> servicios = control.traerServicios();
+        for (Servicio servicio : servicios) {
+            String nombreServicio = servicio.getNombre();
+            cboServicio.addItem(nombreServicio);  // Assuming the toString method is implemented in Servicio
+        }
+    }
+    public Servicio guardarServicio(String ser){
+        List<Servicio> servicios = control.traerServicios();
+        Servicio servicioSeleccionado = null;
+
+        // Loop through the list to find the Servicio object with the matching name
+        for (Servicio servicio : servicios) {
+            if (servicio.getNombre().equals(ser)) {  // Compare the name of the service
+                servicioSeleccionado = servicio;
+                break;  // Stop the loop once the match is found
+            }
+        }
+
+        // If the service is found, you can now use 'servicioSeleccionado' for further operations
+        if (servicioSeleccionado != null) {
+            return servicioSeleccionado;
+        } else {
+            return null;
+        }
     }
 }

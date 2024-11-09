@@ -28,12 +28,32 @@ public class ModifProducto extends javax.swing.JFrame {
         ButtonSec btnCerrar = new ButtonSec("Cerrar");
         panelBtns.add(btnCerrar);
         
-        cargarDatos();
+        txtStock.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
+        
+        txtMinimo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
+        
+        cargarDatos(numProducto);
         
         btnLimpiar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    txtNombreCli.setText("");
+                    txtNombre.setText("");
                     txtStock.setText("");
                     txtMinimo.setText("");
                     txtProveedor.setText("");
@@ -61,7 +81,7 @@ public class ModifProducto extends javax.swing.JFrame {
         btnAlta.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String nombre = txtNombreCli.getText();
+                    String nombre = txtNombre.getText();
                     String stock = txtStock.getText();
                     String minimo = txtMinimo.getText();
                     String prov = txtProveedor.getText();
@@ -69,16 +89,16 @@ public class ModifProducto extends javax.swing.JFrame {
                     
                     Proveedor proveedor = control.findProveedor(idProveedor);
                     
-                    if (nombre != null && stock!=null && minimo!=null &&prov!=null){
-                        
-                        
-                        control.modificarProducto(prod, nombre, stock, minimo, proveedor);
-                        JOptionPane.showMessageDialog(null, "Producto guardado correctamente.", "Producto guardado.", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
-                        
-                        
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Hay campos vacíos. Por favor complete los datos.", "Campos incompletos", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    if (validarCampos()){
+                        if (proveedor == null) {
+                            JOptionPane.showMessageDialog(null, "Proveedor no encontrado. Por favor, ingrese un ID de proveedor válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                            return; // Exit the action if prov does not exist
+                        }else{
+                            control.modificarProducto(prod, nombre, stock, minimo, proveedor);
+                            JOptionPane.showMessageDialog(null, "Producto modificado correctamente.", "Producto actualizado.", JOptionPane.INFORMATION_MESSAGE);
+                            dispose();
+                        }
                         
                     }
                     
@@ -101,7 +121,7 @@ public class ModifProducto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtStock = new javax.swing.JTextField();
-        txtNombreCli = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         txtMinimo = new javax.swing.JTextField();
         txtProveedor = new javax.swing.JTextField();
         panelBtns = new javax.swing.JPanel();
@@ -129,11 +149,11 @@ public class ModifProducto extends javax.swing.JFrame {
         txtStock.setBorder(null);
         txtStock.setPreferredSize(new java.awt.Dimension(73, 30));
 
-        txtNombreCli.setBackground(new java.awt.Color(242, 242, 242));
-        txtNombreCli.setForeground(new java.awt.Color(102, 102, 102));
-        txtNombreCli.setText("Nombre Productos");
-        txtNombreCli.setBorder(null);
-        txtNombreCli.setPreferredSize(new java.awt.Dimension(73, 30));
+        txtNombre.setBackground(new java.awt.Color(242, 242, 242));
+        txtNombre.setForeground(new java.awt.Color(102, 102, 102));
+        txtNombre.setText("Nombre Producto");
+        txtNombre.setBorder(null);
+        txtNombre.setPreferredSize(new java.awt.Dimension(73, 30));
 
         txtMinimo.setBackground(new java.awt.Color(242, 242, 242));
         txtMinimo.setForeground(new java.awt.Color(102, 102, 102));
@@ -160,7 +180,7 @@ public class ModifProducto extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombreCli, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                     .addComponent(txtStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtMinimo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -172,7 +192,7 @@ public class ModifProducto extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNombreCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -271,19 +291,31 @@ public class ModifProducto extends javax.swing.JFrame {
     private javax.swing.JLabel lblCargaEmp;
     private javax.swing.JPanel panelBtns;
     private javax.swing.JTextField txtMinimo;
-    private javax.swing.JTextField txtNombreCli;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtProveedor;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarDatos() {
+    private void cargarDatos(int numProducto) {
         this.prod = control.findProducto(numProducto);
         Proveedor proveedor = prod.getProveedor();
-        String nombreProv = proveedor.getNombre();
+        String id = String.valueOf(proveedor.getId());
         
-        txtNombreCli.setText(prod.getNombre());
+        txtNombre.setText(prod.getNombre());
         txtStock.setText(prod.getStock());
         txtMinimo.setText(prod.getMinimo());
-        txtProveedor.setText(nombreProv);
+        txtProveedor.setText(id);
+    }
+    
+    private boolean validarCampos() {
+        if (txtProveedor.getText().isEmpty() ||
+                txtMinimo.getText().isEmpty() ||
+                txtStock.getText().isEmpty()||
+                txtNombre.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
     }
 }

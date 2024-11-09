@@ -65,15 +65,15 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLayeredPane2" min="-2" pref="530" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="jPanel3" pref="466" max="32767" attributes="0"/>
+                      <Component id="jPanel3" pref="479" max="32767" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel3" alignment="0" pref="570" max="32767" attributes="0"/>
-                  <Component id="jLayeredPane2" alignment="0" pref="570" max="32767" attributes="0"/>
+                  <Component id="jPanel3" alignment="0" pref="574" max="32767" attributes="0"/>
+                  <Component id="jLayeredPane2" alignment="0" pref="574" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -100,7 +100,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace pref="107" max="32767" attributes="0"/>
+                          <EmptySpace pref="113" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="txtPassword2" alignment="1" max="32767" attributes="0"/>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
@@ -111,7 +111,7 @@
                               <Component id="lblLogin1" alignment="1" max="32767" attributes="0"/>
                               <Component id="btnLogin1" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="107" max="32767" attributes="0"/>
+                          <EmptySpace pref="114" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -148,9 +148,11 @@
                       <Color blue="fb" green="fb" red="fb" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Iniciar Sesi&#xf3;n"/>
+                    <Property name="focusPainted" type="boolean" value="false"/>
                     <Property name="name" type="java.lang.String" value="btnLogin" noResource="true"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="btnLogin1FocusGained"/>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnLogin1MouseEntered"/>
                     <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnLogin1MouseExited"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogin1ActionPerformed"/>
@@ -164,6 +166,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
+                    <Property name="text" type="java.lang.String" value="Ingrese su nombre de usuario"/>
                   </Properties>
                   <Events>
                     <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtUser1FocusGained"/>
@@ -200,9 +203,13 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="contrasena"/>
+                    <Property name="text" type="java.lang.String" value="contrase&#xf1;a"/>
                     <Property name="name" type="java.lang.String" value="" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPassword2FocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPassword2FocusLost"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblLogin1">
                   <Properties>
@@ -279,15 +286,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="sideMenu" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="panelMain" pref="818" max="32767" attributes="0"/>
+                      <Component id="panelMain" pref="831" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="panelMain" max="32767" attributes="0"/>
                   <Component id="sideMenu" max="32767" attributes="0"/>
+                  <Component id="panelMain" alignment="1" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -342,7 +348,7 @@
                           <Component id="btnCaja" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnServicios" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace pref="91" max="32767" attributes="0"/>
+                          <EmptySpace pref="95" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

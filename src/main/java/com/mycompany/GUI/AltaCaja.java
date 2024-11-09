@@ -24,6 +24,16 @@ public class AltaCaja extends javax.swing.JFrame {
         ButtonSec btnCerrar = new ButtonSec("Cerrar");
         panelBtns.add(btnCerrar);
         
+        txtMonto.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
+        
         btnLimpiar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -50,10 +60,12 @@ public class AltaCaja extends javax.swing.JFrame {
                     String tipo = (String) cboTipo.getSelectedItem();
                     String medio = (String) cboMedio.getSelectedItem();
                     
+                    if (validarCampos()){
+                        control.guardarConcepto(tipo, monto, medio, detalle);
+                        JOptionPane.showMessageDialog(null, "Concepto guardado correctamente.", "Concepto guardado.", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                    }
                     
-                    control.guardarConcepto(tipo, monto, medio, detalle);
-                    JOptionPane.showMessageDialog(null, "Concepto guardado correctamente.", "Concepto guardado.", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
                 }
         });
         
@@ -96,7 +108,7 @@ public class AltaCaja extends javax.swing.JFrame {
 
         txtMonto.setBackground(new java.awt.Color(242, 242, 242));
         txtMonto.setForeground(new java.awt.Color(102, 102, 102));
-        txtMonto.setText("$1");
+        txtMonto.setText("1");
         txtMonto.setBorder(null);
         txtMonto.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -151,7 +163,7 @@ public class AltaCaja extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         panelBtns.setBackground(new java.awt.Color(250, 250, 250));
@@ -173,9 +185,9 @@ public class AltaCaja extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(lblCargaEmp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelBtns, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                .addComponent(panelBtns, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,6 +239,15 @@ public class AltaCaja extends javax.swing.JFrame {
                 new AltaCaja().setVisible(true);
             }
         });
+    }
+    
+    private boolean validarCampos() {
+        if (txtMonto.getText().isEmpty() || cboTipo.getSelectedItem() == null || cboMedio.getSelectedItem() == null) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -157,8 +157,13 @@ public class ControladoraPersistencia {
             turJpa.edit(tur);
         }
         // Método para verificar si el turno ya existe
-        public boolean turnoYaExiste(String servicio, LocalDateTime fechahora) {
+        public boolean turnoYaExiste(Servicio servicio, LocalDateTime fechahora) {
             return turJpa.turnoYaExiste(servicio, fechahora);
+        }
+        
+        public boolean turnoYaExiste2(Servicio servicio, LocalDateTime fechahora, int id){
+            
+            return turJpa.turnoYaExiste2(servicio,fechahora,id);
         }
 
     public void modificarUsuario(Usuario usu) {
@@ -219,6 +224,10 @@ public class ControladoraPersistencia {
 
             cajaJpa.edit(concepto);
         }
+
+    public void modificarProducto(Producto prod) {
+        prodJpa.edit(prod);
+    }
 
 
         

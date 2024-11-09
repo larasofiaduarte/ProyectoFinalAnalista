@@ -191,12 +191,12 @@ public class Controladora {
     
     //SERVICIO
     //ALTA
-        public void guardarServicio(String nombre, String precio, String empleado){
+        public void guardarServicio(String nombre, String precio, Usuario empleado){
         Servicio nuevoServicio = new Servicio();
         
         nuevoServicio.setNombre(nombre);
         nuevoServicio.setPrecio(precio);
-        nuevoServicio.setIdEmpleado(empleado);
+        nuevoServicio.setEmpleado(empleado);
         
         controlPersis.guardarServicio(nuevoServicio);
         
@@ -216,7 +216,7 @@ public class Controladora {
         
     //TURNOS
         //ALTA
-        public void guardarTurno(String servicio, LocalDateTime fecha, Cliente cliente, String estado, String detalle){
+        public void guardarTurno(Servicio servicio, LocalDateTime fecha, Cliente cliente, String estado, String detalle){
         Turno nuevoTurno = new Turno();
         
         nuevoTurno.setServicio(servicio);
@@ -248,11 +248,16 @@ public class Controladora {
             controlPersis.borrarTurno(id);
         }
         
-        public boolean turnoYaExiste(String servicio, LocalDateTime fecha){
+        public boolean turnoYaExiste(Servicio servicio, LocalDateTime fecha){
             return controlPersis.turnoYaExiste(servicio, fecha);
         }
-
-    public void modificarTurno(Turno tur, String servicio, LocalDateTime fechafinal, Cliente clienteEnt, String estado, String detalle) {
+        
+        public boolean turnoYaExiste2(Servicio servicio, LocalDateTime fecha, int id){
+        
+            return controlPersis.turnoYaExiste2(servicio, fecha, id);
+        }
+        
+    public void modificarTurno(Turno tur, Servicio servicio, LocalDateTime fechafinal, Cliente clienteEnt, String estado, String detalle) {
         
         
         tur.setServicio(servicio);
@@ -271,9 +276,9 @@ public class Controladora {
             return controlPersis.findServicio(numServicio);
     }
 
-    public void modificarServicio(Servicio ser, String nombre, String precio, String emp) {
+    public void modificarServicio(Servicio ser, String nombre, String precio, Usuario emp) {
         
-        ser.setIdEmpleado(emp);
+        ser.setEmpleado(emp);
         ser.setNombre(nombre);
         ser.setPrecio(precio);
         
@@ -321,6 +326,7 @@ public class Controladora {
         prod.setStock(stock);
         prod.setNombre(nombre);
         prod.setProveedor(proveedor);
+        controlPersis.modificarProducto(prod);
                 
     }
 

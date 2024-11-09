@@ -64,13 +64,18 @@ public class Ventana extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
+        SwingUtilities.invokeLater(() -> {
+            mainPanel.requestFocusInWindow();
+        });
+        
+        
         
         control = new Controladora();
         
         card = (CardLayout) mainPanel.getLayout();
         
-        //card.show(mainPanel, "Login1");
-        card.show(mainPanel, "mainScreen");
+        card.show(mainPanel, "Login1");
+        //card.show(mainPanel, "mainScreen");
         
         /*PANEL LOGIN 1*/
 /*
@@ -785,6 +790,41 @@ public class Ventana extends javax.swing.JFrame {
                 }   
             });
             
+            //modif
+            btnModProv.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloProveedores.getRowCount()>0){
+                        if (tableProveedores.getSelectedRow()!=-1){
+                            //LOGICA MODIFICAR
+                            int numProv = Integer.parseInt(String.valueOf(tableProveedores.getValueAt(tableProveedores.getSelectedRow(),0)));
+                        
+                            //abrir form de modificacion
+                            ModifProveedores form = new ModifProveedores(numProv);
+                            
+                            form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaProveedores(panelCenterProv);
+                            }
+                    });
+                            
+                            form.setVisible(true);
+                            form.setLocationRelativeTo(null);
+                            
+                        
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            
             
             
         //INVENTARIO
@@ -837,6 +877,7 @@ public class Ventana extends javax.swing.JFrame {
                 }
             });
             
+            
              //CREAR TABLA
             
             modeloProductos = new DefaultTableModel(){
@@ -859,7 +900,7 @@ public class Ventana extends javax.swing.JFrame {
             
             
             JTable tableProductos = tablaProductos.getTable(); //useful para eliminar
-            
+            //eliminar
             btnElimInv.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -874,6 +915,41 @@ public class Ventana extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }   
+            });
+            //modif
+            
+            btnModInv.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (modeloProductos.getRowCount()>0){
+                        if (tableProductos.getSelectedRow()!=-1){
+                            //LOGICA MODIFICAR
+                            int numProd = Integer.parseInt(String.valueOf(tableProductos.getValueAt(tableProductos.getSelectedRow(),0)));
+                        
+                            //abrir form de modificacion
+                            ModifProducto form = new ModifProducto(numProd);
+                            
+                            form.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                // This code will run after the form has closed
+                                // Call the function you want here
+                                cargarTablaProductos(panelCenterInv);
+                            }
+                    });
+                            
+                            form.setVisible(true);
+                            form.setLocationRelativeTo(null);
+                            
+                        
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Seleccione el registro que desea modificar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "La Tabla está vacía.", "Tabla vacía", JOptionPane.INFORMATION_MESSAGE);
@@ -1134,7 +1210,13 @@ public class Ventana extends javax.swing.JFrame {
         btnLogin1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnLogin1.setForeground(new java.awt.Color(251, 251, 251));
         btnLogin1.setText("Iniciar Sesión");
+        btnLogin1.setFocusPainted(false);
         btnLogin1.setName("btnLogin"); // NOI18N
+        btnLogin1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                btnLogin1FocusGained(evt);
+            }
+        });
         btnLogin1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnLogin1MouseEntered(evt);
@@ -1151,6 +1233,7 @@ public class Ventana extends javax.swing.JFrame {
 
         txtUser1.setBackground(new java.awt.Color(229, 229, 229));
         txtUser1.setForeground(new java.awt.Color(153, 153, 153));
+        txtUser1.setText("Ingrese su nombre de usuario");
         txtUser1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtUser1FocusGained(evt);
@@ -1170,8 +1253,16 @@ public class Ventana extends javax.swing.JFrame {
 
         txtPassword2.setBackground(new java.awt.Color(229, 229, 229));
         txtPassword2.setForeground(new java.awt.Color(153, 153, 153));
-        txtPassword2.setText("contrasena");
+        txtPassword2.setText("contraseña");
         txtPassword2.setName(""); // NOI18N
+        txtPassword2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPassword2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPassword2FocusLost(evt);
+            }
+        });
 
         lblLogin1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblLogin1.setForeground(new java.awt.Color(51, 51, 51));
@@ -1183,7 +1274,7 @@ public class Ventana extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(107, Short.MAX_VALUE)
+                .addContainerGap(113, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtPassword2)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1192,7 +1283,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(lblPass1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblLogin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLogin1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1242,13 +1333,13 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Login1Layout.createSequentialGroup()
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         Login1Layout.setVerticalGroup(
             Login1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
-            .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 570, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+            .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 574, Short.MAX_VALUE)
         );
 
         mainPanel.add(Login1, "login");
@@ -1476,7 +1567,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addComponent(btnCaja, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         panelMain.setBackground(new java.awt.Color(250, 250, 250));
@@ -1521,13 +1612,12 @@ public class Ventana extends javax.swing.JFrame {
             mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainScreenLayout.createSequentialGroup()
                 .addComponent(sideMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE))
+                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 831, Short.MAX_VALUE))
         );
         mainScreenLayout.setVerticalGroup(
             mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(sideMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         mainPanel.add(mainScreen, "mainScreen");
@@ -1650,7 +1740,9 @@ public class Ventana extends javax.swing.JFrame {
 /*LOGICA
     DE LOGIN*/
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-        
+         btnLogin1.setFocusPainted(false); // Remove the focus border
+        btnLogin1.setBorder(BorderFactory.createEmptyBorder()); // Remove any border
+
         String user = txtUser1.getText();
         String pass = txtPassword2.getText();
 
@@ -1672,16 +1764,43 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
     private void txtUser1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUser1FocusGained
+        if(txtUser1.getText().equals("Ingrese su nombre de usuario")){
+            txtUser1.setText("");
+            txtUser1.setForeground(Styles.fontDark);
+        }
         
     }//GEN-LAST:event_txtUser1FocusGained
 
     private void txtUser1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUser1FocusLost
-        // TODO add your handling code here:
+       if (txtUser1.getText().isEmpty()){
+           txtUser1.setText("Ingrese su nombre de usuario");
+           txtUser1.setForeground(Styles.fontGreyDark);
+       }
     }//GEN-LAST:event_txtUser1FocusLost
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         //
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtPassword2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassword2FocusGained
+        if(txtPassword2.getText().equals("contraseña")){
+            txtPassword2.setText("");
+            txtPassword2.setForeground(Styles.fontDark);
+        }
+    }//GEN-LAST:event_txtPassword2FocusGained
+
+    private void txtPassword2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassword2FocusLost
+        if (txtPassword2.getText().isEmpty()){
+           txtPassword2.setText("contraseña");
+           txtPassword2.setForeground(Styles.fontGreyLight);
+       }
+    }//GEN-LAST:event_txtPassword2FocusLost
+
+    private void btnLogin1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnLogin1FocusGained
+        btnLogin1.setFocusPainted(false); // Remove the focus border
+        btnLogin1.setBorder(BorderFactory.createEmptyBorder()); // Remove any border
+
+    }//GEN-LAST:event_btnLogin1FocusGained
  
     /**
      * @param args the command line arguments
@@ -1818,13 +1937,22 @@ public class Ventana extends javax.swing.JFrame {
                     String fechaParte = partesFecha[0];  // The date part (e.g., "06-11-2024")
                     String horaParte = partesFecha[1];
                     
+                    Servicio serv = tur.getServicio();
+                    String nombreServ;
+                    if (serv != null){
+                    
+                        nombreServ = serv.getNombre();
+                    }else{
+                        nombreServ = "";
+                    }
+                    
                     
                     if (cli != null) {
                         nombreCliente = cli.getNombre() + " " + cli.getApellido();
                     } else {
                         nombreCliente = "No asignado"; // Or any default message when cliente is null
                     }
-                    Object[] objeto = { tur.getId(),nombreCliente, tur.getServicio(), fechaParte, horaParte, tur.getEstado(), tur.getDetalle()};
+                    Object[] objeto = { tur.getId(),nombreCliente, nombreServ, fechaParte, horaParte, tur.getEstado(), tur.getDetalle()};
                     modeloTurnos.addRow(objeto); // Add new data to the model
                 }
             }
@@ -1856,7 +1984,12 @@ public class Ventana extends javax.swing.JFrame {
 
             if (listaServicios != null) {
                 for (Servicio ser : listaServicios) {
-                    Object[] objeto = {ser.getId(),ser.getNombre(), ser.getPrecio(), ser.getIdEmpleado()};
+                    
+                    Usuario emp = ser.getEmpleado();
+                    
+                    String nombre = emp.getNombre() + " " + emp.getApellido();
+                    
+                    Object[] objeto = {ser.getId(),ser.getNombre(), ser.getPrecio(), nombre};
                     modeloServicios.addRow(objeto); // Add new data to the model
                 }
             }

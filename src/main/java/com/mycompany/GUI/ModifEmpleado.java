@@ -73,7 +73,6 @@ public class ModifEmpleado extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         btnCerrarEmp = new javax.swing.JButton();
         btnLimpiarEmp = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("frameAltaEmp"); // NOI18N
@@ -81,7 +80,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
         panelAltaEmp.setBackground(new java.awt.Color(250, 250, 250));
 
         lblCargaEmp.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblCargaEmp.setText("Carga de Empleados");
+        lblCargaEmp.setText("Modificación de Empleados");
 
         panelDataEmp.setBackground(new java.awt.Color(250, 250, 250));
 
@@ -94,7 +93,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
         txtEmpUser.setSelectionColor(new java.awt.Color(204, 204, 255));
 
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Contraseña");
+        jLabel3.setText("Contraseña*");
 
         btnAltaEmp.setBackground(new java.awt.Color(112, 80, 175));
         btnAltaEmp.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,7 +114,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Nombre");
+        jLabel4.setText("Nombre*");
 
         txtEmpNombre.setBackground(new java.awt.Color(240, 240, 240));
         txtEmpNombre.setForeground(new java.awt.Color(51, 51, 51));
@@ -123,7 +122,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
         txtEmpNombre.setBorder(null);
         txtEmpNombre.setPreferredSize(new java.awt.Dimension(64, 28));
 
-        jLabel5.setText("Apellido");
+        jLabel5.setText("Apellido*");
 
         txtEmpApe.setBackground(new java.awt.Color(240, 240, 240));
         txtEmpApe.setForeground(new java.awt.Color(51, 51, 51));
@@ -131,7 +130,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
         txtEmpApe.setBorder(null);
         txtEmpApe.setPreferredSize(new java.awt.Dimension(64, 28));
 
-        jLabel6.setText("Rol");
+        jLabel6.setText("Rol*");
 
         jLabel7.setText("Nº Teléfono");
 
@@ -163,7 +162,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
         });
 
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel8.setText("Nombre de Usuario");
+        jLabel8.setText("Nombre de Usuario*");
 
         btnCerrarEmp.setForeground(new java.awt.Color(51, 51, 51));
         btnCerrarEmp.setText("Cerrar");
@@ -199,9 +198,6 @@ public class ModifEmpleado extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setText("Opcional");
-
         javax.swing.GroupLayout panelDataEmpLayout = new javax.swing.GroupLayout(panelDataEmp);
         panelDataEmp.setLayout(panelDataEmpLayout);
         panelDataEmpLayout.setHorizontalGroup(
@@ -222,7 +218,6 @@ public class ModifEmpleado extends javax.swing.JFrame {
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -260,9 +255,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(jLabel6))
                     .addComponent(cboEmpRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(79, 79, 79)
-                .addComponent(jLabel1)
-                .addGap(22, 22, 22)
+                .addGap(33, 33, 33)
                 .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelDataEmpLayout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -276,7 +269,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
                         .addComponent(txtEmpApe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(txtEmpTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCerrarEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiarEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,10 +282,10 @@ public class ModifEmpleado extends javax.swing.JFrame {
         panelAltaEmpLayout.setHorizontalGroup(
             panelAltaEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelDataEmp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelAltaEmpLayout.createSequentialGroup()
-                .addGap(236, 236, 236)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAltaEmpLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblCargaEmp)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(201, 201, 201))
         );
         panelAltaEmpLayout.setVerticalGroup(
             panelAltaEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,9 +319,13 @@ public class ModifEmpleado extends javax.swing.JFrame {
         
         String rol = (String) cboEmpRol.getSelectedItem();
         
-        control.modificarUsuario(usu,user, pass, nombre, apellido, tel, rol);
-        JOptionPane.showMessageDialog(null, "Usuario modificado correctamente.", "Usuario actualizado.", JOptionPane.INFORMATION_MESSAGE);
-        dispose();
+        if(validarCampos()){
+            control.modificarUsuario(usu,user, pass, nombre, apellido, tel, rol);
+            JOptionPane.showMessageDialog(null, "Usuario modificado correctamente.", "Usuario actualizado.", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }
+        
+        
         
     }//GEN-LAST:event_btnAltaEmpActionPerformed
 
@@ -384,7 +381,6 @@ public class ModifEmpleado extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpiarEmp;
     private javax.swing.JComboBox<String> cboEmpRol;
     private javax.swing.JCheckBox checkPass;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -411,7 +407,24 @@ public class ModifEmpleado extends javax.swing.JFrame {
         txtEmpApe.setText(usu.getApellido());
         txtEmpTel.setText(usu.getTelefono());
         
+        String rol = usu.getRol();
+        
+        if(rol.equals("Administrador")){
+            cboEmpRol.setSelectedIndex(0);
+        }else if(rol.equals("Empleado")){
+            cboEmpRol.setSelectedIndex(1);
+        }
         
         
+        
+    }
+    private boolean validarCampos() {
+        if (txtEmpUser.getText().isEmpty() || cboEmpRol.getSelectedItem() == null || 
+           txtEmpNombre.getText().isEmpty() || txtEmpApe.getText().isEmpty() || txtEmpPass.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
     }
 }

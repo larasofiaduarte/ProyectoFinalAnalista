@@ -6,9 +6,12 @@ package com.mycompany.GUI;
 
 import com.mycompany.proyectofinal.Controladora;
 import com.mycompany.proyectofinal.Servicio;
+import com.mycompany.proyectofinal.Usuario;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,6 +42,16 @@ public class ModifServicio extends javax.swing.JFrame {
         ButtonSec btnCerrar = new ButtonSec("Cerrar");
         btnPanel.add(btnCerrar);
         
+        txtEmpleado.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
+        
         btnLimpiar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -60,12 +73,22 @@ public class ModifServicio extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     String nombre = txtNombre.getText();
                     String precio = txtPrecio.getText();
-                    String emp = txtEmpleado.getText();
+                    int emp = Integer.parseInt(txtEmpleado.getText());
                     
+                    Usuario user = control.findUsuario(emp);
                     
-                    control.modificarServicio(ser, nombre, precio, emp);
-                    JOptionPane.showMessageDialog(null, "Servicio guardado correctamente.", "Servicio guardado.", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    if (user == null) {
+                        JOptionPane.showMessageDialog(null, "Empleado no encontrado. Por favor, ingrese un ID de empleado válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return; // Exit the action if client does not exist
+                    }else{
+                    
+                        if (validarCampos()){
+                            control.modificarServicio(ser,nombre, precio, user);
+                            JOptionPane.showMessageDialog(null, "Servicio guardado correctamente.", "Servicio guardado.", JOptionPane.INFORMATION_MESSAGE);
+                            dispose();
+
+                        }
+                    }
                 }
         });
         
@@ -102,16 +125,16 @@ public class ModifServicio extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(250, 250, 250));
 
         lblCargaEmp.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblCargaEmp.setText("Carga de Servicios");
+        lblCargaEmp.setText("Modificación de Servicios");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(238, 238, 238)
+                .addGap(188, 188, 188)
                 .addComponent(lblCargaEmp)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,13 +151,13 @@ public class ModifServicio extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre*");
 
-        jLabel2.setText("Precio");
+        jLabel2.setText("Precio*");
 
         txtPrecio.setBackground(new java.awt.Color(242, 242, 242));
         txtPrecio.setForeground(new java.awt.Color(102, 102, 102));
-        txtPrecio.setText("10.000");
+        txtPrecio.setText("10000");
         txtPrecio.setBorder(null);
         txtPrecio.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -149,7 +172,7 @@ public class ModifServicio extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("ID Empleado");
+        jLabel6.setText("ID Empleado*");
 
         txtEmpleado.setBackground(new java.awt.Color(242, 242, 242));
         txtEmpleado.setForeground(new java.awt.Color(102, 102, 102));
@@ -162,7 +185,7 @@ public class ModifServicio extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addGap(113, 113, 113)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -172,7 +195,7 @@ public class ModifServicio extends javax.swing.JFrame {
                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +221,7 @@ public class ModifServicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,8 +290,22 @@ public class ModifServicio extends javax.swing.JFrame {
         
         txtNombre.setText(ser.getNombre());
         txtPrecio.setText(ser.getPrecio());
-        txtEmpleado.setText(ser.getIdEmpleado());
+        
+        int id = ser.getEmpleado().getId();
+        String stringId = String.valueOf(id);
+        txtEmpleado.setText(stringId);
     
         
+    }
+    
+    private boolean validarCampos() {
+        if (txtEmpleado.getText().isEmpty() || 
+            txtNombre.getText().isEmpty() || 
+            txtPrecio.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
     }
 }

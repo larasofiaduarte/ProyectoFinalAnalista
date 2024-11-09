@@ -6,6 +6,7 @@ package com.mycompany.GUI;
 
 import com.mycompany.proyectofinal.Cliente;
 import com.mycompany.proyectofinal.Controladora;
+import com.mycompany.proyectofinal.Servicio;
 import com.mycompany.proyectofinal.Turno;
 import java.awt.*;
 import java.awt.FlowLayout;
@@ -13,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -65,7 +68,7 @@ public class HistorialCliente extends javax.swing.JFrame {
             };
             //INICIALIZAR TABLA
             
-            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha", "Estado"}; //modelo
+            String titulosTur[] = {"ID","Cliente", "Servicio", "Fecha","Horario", "Estado", "Detalle"}; //modelo
             modeloTurnos.setColumnIdentifiers(titulosTur); 
             
             
@@ -144,8 +147,21 @@ public class HistorialCliente extends javax.swing.JFrame {
             // Only add rows where Cliente ID matches numCliente
             if (cli != null && cli.getId() == idCliente) {
                 String nombreCliente = cli.getNombre() + " " + cli.getApellido();
-                
-                Object[] objeto = {tur.getId(), nombreCliente, tur.getServicio(), tur.getFecha(), tur.getEstado()};
+                    LocalDateTime fecha = tur.getFecha();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                    
+                    String fechaformateada = fecha.format(formatter);
+                    
+                    // Split the formatted date-time string into date and time parts
+                    String[] partesFecha = fechaformateada.split(" ");
+                    
+                    Servicio serv = tur.getServicio();
+                    String nombreServ = serv.getNombre();
+
+                    // Assign the date and time to separate variables
+                    String fechaParte = partesFecha[0];  // The date part (e.g., "06-11-2024")
+                    String horaParte = partesFecha[1];
+                Object[] objeto = {tur.getId(), nombreCliente, nombreServ,fechaParte,horaParte, tur.getEstado(), tur.getDetalle()};
                 modeloTurnos.addRow(objeto); // Add new data to the model if it matches
             }
         }

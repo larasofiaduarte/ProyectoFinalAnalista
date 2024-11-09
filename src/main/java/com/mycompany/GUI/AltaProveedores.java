@@ -34,6 +34,17 @@ public class AltaProveedores extends javax.swing.JFrame {
         ButtonSec btnCerrar = new ButtonSec("Cerrar");
         panelSouth.add(btnCerrar);
         
+        txtCorreo.setInputVerifier(new EmailVerifier());
+        
+        txtTelefono.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
         
         btnCerrar.addActionListener(new ActionListener() {
                 @Override
@@ -57,10 +68,16 @@ public class AltaProveedores extends javax.swing.JFrame {
                     String nombre = txtNombre.getText();
                     String telefono = txtTelefono.getText();
                     String email = txtCorreo.getText();
+                    if(txtNombre.getText() != null && !txtNombre.getText().isEmpty()){
+                        control.guardarProveedor(nombre, telefono, email);
+                        JOptionPane.showMessageDialog(null, "Proveedor guardado correctamente.", "Proveedor guardado.", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
                     
-                    control.guardarProveedor(nombre, telefono, email);
-                    JOptionPane.showMessageDialog(null, "Proveedor guardado correctamente.", "Proveedor guardado.", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    }else{
+                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+                        
+                    }
+                    
                     
                 }
         });

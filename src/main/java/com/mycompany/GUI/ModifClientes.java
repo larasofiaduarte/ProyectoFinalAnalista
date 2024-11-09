@@ -29,6 +29,16 @@ public class ModifClientes extends javax.swing.JFrame {
         ButtonSec btnCerrar = new ButtonSec("Cerrar");
         panelBtns.add(btnCerrar);
         
+        txtTelCli.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
+        
         btnLimpiar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -63,9 +73,12 @@ public class ModifClientes extends javax.swing.JFrame {
                         genero= "";
                     }
                     
-                    control.modificarCliente(cli, nombre,apellido,telefono,genero);
-                    JOptionPane.showMessageDialog(null, "Cliente modificado correctamente.", "Cliente actualizado.", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    if(validarCampos()){
+                        control.modificarCliente(cli, nombre,apellido,telefono,genero);
+                        JOptionPane.showMessageDialog(null, "Cliente modificado correctamente.", "Cliente actualizado.", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
+                    }
+                    
                 }
         });
         
@@ -98,9 +111,9 @@ public class ModifClientes extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre*");
 
-        jLabel2.setText("Apellido");
+        jLabel2.setText("Apellido*");
 
         jLabel3.setText("Teléfono");
 
@@ -172,7 +185,7 @@ public class ModifClientes extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(RadioBtnF)
                     .addComponent(RadioBtnM))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         panelBtns.setBackground(new java.awt.Color(250, 250, 250));
@@ -194,9 +207,9 @@ public class ModifClientes extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(lblCargaEmp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelBtns, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelBtns, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,8 +297,15 @@ public class ModifClientes extends javax.swing.JFrame {
         }
         
         
-        
-        
-        
+    }
+    
+    private boolean validarCampos() {
+        if (txtNombreCli.getText().isEmpty() || 
+            txtApellidoCli.getText().isEmpty() ) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
     }
 }

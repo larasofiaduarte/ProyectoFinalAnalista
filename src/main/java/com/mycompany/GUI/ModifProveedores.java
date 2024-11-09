@@ -18,14 +18,26 @@ public class ModifProveedores extends javax.swing.JFrame {
     int numProv;
     Proveedor prov;
 
-    public ModifProveedores() {
+    public ModifProveedores(int numProv) {
         initComponents();
         panelNorth.setBorder(Styles.paddingTop);
         panelSouth.setBorder(Styles.paddingBottom);
         
         cargarDatos(numProv);
         
-        JLabel lblTitle = new JLabel("Carga de Proveedores");
+        txtCorreo.setInputVerifier(new EmailVerifier());
+        
+        txtTelefono.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
+        
+        JLabel lblTitle = new JLabel("Modificación de Proveedores");
         lblTitle.setFont(Styles.fontTitle);
         lblTitle.setForeground(Styles.fontDark);
         panelNorth.add(lblTitle);
@@ -62,10 +74,16 @@ public class ModifProveedores extends javax.swing.JFrame {
                     String nombre = txtNombre.getText();
                     String telefono = txtTelefono.getText();
                     String email = txtCorreo.getText();
+                    if(txtNombre.getText() != null && !txtNombre.getText().isEmpty()){
+                        control.modificarProveedor(prov, nombre, telefono, email);
+                        JOptionPane.showMessageDialog(null, "Proveedor modificado correctamente.", "Proveedor actualizado.", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
                     
-                    control.modificarProveedor(prov, nombre, telefono, email);
-                    JOptionPane.showMessageDialog(null, "Producto guardado correctamente.", "Producto guardado.", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    }else{
+                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+                        
+                    }
+                    
                     
                 }
         });
@@ -100,7 +118,7 @@ public class ModifProveedores extends javax.swing.JFrame {
 
         panelCenter.setBackground(new java.awt.Color(250, 250, 250));
 
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Nombre*");
 
         jLabel2.setText("Teléfono");
 
@@ -178,7 +196,7 @@ public class ModifProveedores extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
+    public void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -206,7 +224,7 @@ public class ModifProveedores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModifProveedores().setVisible(true);
+                new ModifProveedores(numProv).setVisible(true);
             }
         });
     }
@@ -227,9 +245,9 @@ public class ModifProveedores extends javax.swing.JFrame {
     private void cargarDatos(int numProv) {
         this.prov = control.findProveedor(numProv);
         
-        txtNombre.setText("");
-        txtTelefono.setText("");
-        txtCorreo.setText("");
+        txtNombre.setText(prov.getNombre());
+        txtTelefono.setText(prov.getTelefono());
+        txtCorreo.setText(prov.getEmail());
     
     }
 }

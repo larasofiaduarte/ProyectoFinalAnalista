@@ -17,7 +17,8 @@ public class Servicio implements Serializable {
     private int id;
     private String nombre;
     private String precio;
-    private String idEmpleado; //idUsuario
+    @JoinColumn(name="idEmpleado")
+    private Usuario empleado; //idUsuario
 
     public int getId() {
         return id;
@@ -43,12 +44,12 @@ public class Servicio implements Serializable {
         this.precio = precio;
     }
 
-    public String getIdEmpleado() {
-        return idEmpleado;
+    public Usuario getEmpleado() {
+        return empleado;
     }
 
-    public void setIdEmpleado(String idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setEmpleado(Usuario emp) {
+        this.empleado = emp;
     }
     
     

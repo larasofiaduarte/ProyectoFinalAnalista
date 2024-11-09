@@ -11,8 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import com.mycompany.proyectofinal.Controladora;
+import com.mycompany.proyectofinal.Servicio;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -24,11 +27,12 @@ import java.util.*;
 public class AltaTurnos extends javax.swing.JFrame {
 
     Controladora control = new Controladora();
+    Servicio servicioSeleccionado;
     
     public AltaTurnos() {
         initComponents();
         
-        panelBtns.setBorder(Styles.padding);
+        panelBtns.setBorder(Styles.paddingBottom);
         
         Button btnAlta = new Button("Guardar");
         panelBtns.add(btnAlta);
@@ -38,6 +42,8 @@ public class AltaTurnos extends javax.swing.JFrame {
         
         ButtonSec btnCerrar = new ButtonSec("Cerrar");
         panelBtns.add(btnCerrar);
+        
+        obtenerServicios();
         
         txtCliente.addKeyListener(new KeyAdapter() {
             @Override
@@ -49,6 +55,21 @@ public class AltaTurnos extends javax.swing.JFrame {
             }
         });
         
+        calendar.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if ("date".equals(evt.getPropertyName())) {
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.setTime(calendar.getDate());
+                    
+                    // Check if the selected day is a Sunday (Sunday = 7)
+                    if (selectedDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                        JOptionPane.showMessageDialog(null, "No se pueden seleccionar los domingos. Por favor, elija otro día.", "Error", JOptionPane.ERROR_MESSAGE);
+                        calendar.setDate(null); // Reset the selected date
+                    }
+                }
+            }
+        });
         
         
         btnLimpiar.addActionListener(new ActionListener() {
@@ -79,43 +100,40 @@ public class AltaTurnos extends javax.swing.JFrame {
 
                     // Check if client exists in the database
                     Cliente clienteEnt = control.findCliente(idCliente);
-                    if (clienteEnt == null) {
-                        JOptionPane.showMessageDialog(null, "Cliente no encontrado. Por favor, ingrese un ID de cliente válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                        return; // Exit the action if client does not exist
-                    }
+                    
 
                     // Gather other details for the Turno
                     String servicio = (String) cboServicio.getSelectedItem();
+                    servicioSeleccionado = guardarServicio(servicio);
                     String hora = (String) cboHora.getSelectedItem();
                     String estado = (String) cboEstado.getSelectedItem();
                     String detalle = txtDetalle.getText();
                     
                     Date fecha = calendar.getDate();
                     
-                    LocalDateTime fechafinal = obtenerFecha(hora,fecha);
                     
-                    
-                    
-                    Boolean turnoYaExiste = control.turnoYaExiste(servicio, fechafinal);
-                    
-                    if(turnoYaExiste){
-                        JOptionPane.showMessageDialog(null, "Ya existe un turno para el servicio seleccionado en esa fecha y horario."
-                                + "", "No se puede guardar el turno.", JOptionPane.ERROR_MESSAGE);
-                    
-                    }else{
-                        // Save the Turno
-                        control.guardarTurno(servicio, fechafinal, clienteEnt, estado, detalle);
-                        JOptionPane.showMessageDialog(null, "Turno guardado correctamente.", "Turno guardado.", JOptionPane.INFORMATION_MESSAGE);
-                        dispose();
+                    if (validarCampos()){
+                        LocalDateTime fechafinal = obtenerFecha(hora,fecha);
+                        Boolean turnoYaExiste = control.turnoYaExiste(servicioSeleccionado, fechafinal);
+                        
+                        if (clienteEnt == null) {
+                        JOptionPane.showMessageDialog(null, "Cliente no encontrado. Por favor, ingrese un ID de cliente válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return; // Exit the action if client does not exist
+                        }
+                        
+                        
+                        if(turnoYaExiste){
+                            JOptionPane.showMessageDialog(null, "Ya existe un turno para el servicio seleccionado en esa fecha y horario.", "No se puede guardar el turno.", JOptionPane.ERROR_MESSAGE);
+                        
+                        }else{
+                            control.guardarTurno(servicioSeleccionado, fechafinal, clienteEnt, estado, detalle);
+                            JOptionPane.showMessageDialog(null, "Turno guardado correctamente.", "Turno guardado.", JOptionPane.INFORMATION_MESSAGE);
+                            dispose();
+                        }
                     }
                     
-                    
-                    
-                    
-                    
-
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un ID de cliente válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Error de entrada", JOptionPane.WARNING_MESSAGE);
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(null, "Error al procesar la fecha. Por favor, revise la entrada.", "Error de fecha", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
@@ -194,8 +212,6 @@ public class AltaTurnos extends javax.swing.JFrame {
 
         jLabel3.setText("Fecha*");
 
-        cboServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Corte Masculino", "Corte Femenino", "Colorista", "Estética" }));
-
         txtCliente.setBackground(new java.awt.Color(242, 242, 242));
         txtCliente.setForeground(new java.awt.Color(102, 102, 102));
         txtCliente.setText("1");
@@ -204,7 +220,7 @@ public class AltaTurnos extends javax.swing.JFrame {
 
         jLabel4.setText("Horario*");
 
-        cboHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", " " }));
+        cboHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30" }));
 
         jLabel5.setText("Estado*");
 
@@ -222,11 +238,11 @@ public class AltaTurnos extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(51, 51, 51)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -331,6 +347,45 @@ public class AltaTurnos extends javax.swing.JFrame {
     
     }
     
+    private boolean validarCampos() {
+        if (txtCliente.getText().isEmpty() || 
+            servicioSeleccionado == null || 
+            cboHora.getSelectedItem() == null || 
+            cboEstado.getSelectedItem() == null || 
+            calendar.getDate() == null ) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos obligatorios.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return false; // Indicate validation failure
+        }
+        return true; // Indicate validation success
+    }
+    
+    public void obtenerServicios(){
+        List<Servicio> servicios = control.traerServicios();
+        for (Servicio servicio : servicios) {
+            String nombreServicio = servicio.getNombre();
+            cboServicio.addItem(nombreServicio);  // Assuming the toString method is implemented in Servicio
+        }
+    }
+    public Servicio guardarServicio(String ser){
+        List<Servicio> servicios = control.traerServicios();
+        Servicio servicioSeleccionado = null;
+
+        // Loop through the list to find the Servicio object with the matching name
+        for (Servicio servicio : servicios) {
+            if (servicio.getNombre().equals(ser)) {  // Compare the name of the service
+                servicioSeleccionado = servicio;
+                break;  // Stop the loop once the match is found
+            }
+        }
+
+        // If the service is found, you can now use 'servicioSeleccionado' for further operations
+        if (servicioSeleccionado != null) {
+            return servicioSeleccionado;
+        } else {
+            return null;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser calendar;

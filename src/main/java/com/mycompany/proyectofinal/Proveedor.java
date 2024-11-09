@@ -11,7 +11,10 @@ public class Proveedor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    private String nombre;
+    private String telefono;
+    private String email;
+    
     public int getId() {
         return id;
     }
@@ -43,7 +46,5 @@ public class Proveedor implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    private String nombre;
-    private String telefono;
-    private String email;
+    
 }
