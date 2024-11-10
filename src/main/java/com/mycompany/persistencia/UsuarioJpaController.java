@@ -145,4 +145,19 @@ public class UsuarioJpaController implements Serializable {
             }
         }
     }
+    
+    
+    public boolean checkIfReferenced(int usuId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            // JPQL to count how many Servicio entries reference the given Usuario
+            String query = "SELECT COUNT(s) FROM Servicio s WHERE s.empleado.id = :usuarioId";  
+            Long count = (Long) em.createQuery(query)
+                                  .setParameter("usuarioId", usuId)
+                                  .getSingleResult();
+            return count > 0; // Returns true if any Servicio references this Usuario
+        } finally {
+            em.close();
+        }
+    }
 }

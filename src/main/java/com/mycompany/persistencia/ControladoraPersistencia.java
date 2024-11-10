@@ -36,7 +36,10 @@ public class ControladoraPersistencia {
         }
         public boolean doesUsernameExist(String username) {
             return usuJpa.doesUsernameExist(username);
-    }
+        }
+        public boolean checkIfUsuReferenced(int id){
+            return usuJpa.checkIfReferenced(id);
+        }
     
     //CLIENTE
     ClienteJpaController cliJpa = new ClienteJpaController();
@@ -123,6 +126,10 @@ public class ControladoraPersistencia {
         public void borrarServicio(int numServicios) {
 
                 serJpa.destroy(numServicios);
+        }
+        
+        public boolean checkIfReferenced(int servicioId){
+            return serJpa.checkIfReferenced(servicioId);
         }
         
         

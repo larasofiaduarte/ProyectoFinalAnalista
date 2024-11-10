@@ -6,6 +6,10 @@ package com.mycompany.persistencia;
 
 import com.mycompany.proyectofinal.Servicio;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.*;
 import javax.persistence.EntityManagerFactory;
@@ -127,5 +131,20 @@ public class ServicioJpaController implements Serializable {
             }
         }
     }
+    
+    public boolean checkIfReferenced(int servicioId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            // JPQL to count how many Turno entries reference the given Servicio
+            String query = "SELECT COUNT(t) FROM Turno t WHERE t.servicio.id = :servicioId";
+            Long count = (Long) em.createQuery(query)
+                                  .setParameter("servicioId", servicioId)
+                                  .getSingleResult();
+            return count > 0; // Returns true if any Turno references this Servicio
+        } finally {
+            em.close();
+        }
+    }
+    
     
 }

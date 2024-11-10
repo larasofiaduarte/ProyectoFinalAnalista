@@ -196,8 +196,6 @@ public class ModifTurnos extends javax.swing.JFrame {
 
         jLabel3.setText("Fecha*");
 
-        cboServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Corte Masculino", "Corte Femenino", "Colorista", "Estética" }));
-
         txtCliente.setBackground(new java.awt.Color(242, 242, 242));
         txtCliente.setForeground(new java.awt.Color(102, 102, 102));
         txtCliente.setText("1");
@@ -233,14 +231,14 @@ public class ModifTurnos extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(calendar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cboServicio, javax.swing.GroupLayout.Alignment.LEADING, 0, 122, Short.MAX_VALUE)))
+                        .addComponent(calendar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                        .addComponent(cboServicio, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -354,13 +352,33 @@ public class ModifTurnos extends javax.swing.JFrame {
         String serv = servicio.getNombre();
         
         if (serv.equals("Corte Masculino")){
-            cboServicio.setSelectedIndex(0);
-        }else if(serv.equals("Corte Femenino")){
+            try{
             cboServicio.setSelectedIndex(1);
+            }catch(IndexOutOfBoundsException ex){
+                System.err.println("Error: Index out of bounds.");
+                throw new RuntimeException("Invalid index value for JComboBox", ex); 
+            }
+        }else if(serv.equals("Corte Femenino")){
+            try{
+                cboServicio.setSelectedIndex(0);
+            }catch(IndexOutOfBoundsException ex){
+                System.err.println("Error: Index out of bounds.");
+                throw new RuntimeException("Invalid index value for JComboBox", ex); 
+            }
         }else if(serv.equals("Colorista")){
-            cboServicio.setSelectedIndex(2);
-        }else{
-            cboServicio.setSelectedIndex(3);
+            try{
+                cboServicio.setSelectedIndex(2);
+            }catch(IndexOutOfBoundsException ex){
+                System.err.println("Error: Index out of bounds.");
+                throw new RuntimeException("Invalid index value for JComboBox", ex); 
+            }    
+        }else if (serv.equals("Estética")){
+            try{
+                cboServicio.setSelectedIndex(3);
+            }catch(IndexOutOfBoundsException ex){
+                System.err.println("Error: Index out of bounds.");
+                throw new RuntimeException("Invalid index value for JComboBox", ex); 
+            } 
         }
         
         LocalDateTime fecha = tur.getFecha();

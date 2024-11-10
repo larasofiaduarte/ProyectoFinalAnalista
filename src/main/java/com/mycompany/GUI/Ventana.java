@@ -4,6 +4,7 @@
  */
 package com.mycompany.GUI;
 
+import com.formdev.flatlaf.FlatLaf;
 import com.mycompany.proyectofinal.Controladora;
 import com.mycompany.GUI.Button;
 import com.mycompany.GUI.TitlePanel;
@@ -71,40 +72,6 @@ public class Ventana extends javax.swing.JFrame {
         
         
         
-        int padding = 20;
-        JButton btnLogout = new JButton ("CERRAR SESIÓN");
-        btnLogout.setBounds(5, sideMenu.getHeight() - btnLogout.getHeight() , 170, 30);
-
-        sideMenu.add(btnLogout);
-        sideMenu.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                 btnLogout.setLocation(5, sideMenu.getHeight() - btnLogout.getHeight() - padding);
-                }
-        });
-        btnLogout.setBackground(Styles.bgDark2);
-        btnLogout.setForeground(Styles.fontLight);
-        btnLogout.setBorderPainted(false);
-        btnLogout.setFont(Styles.fontBtn);
-        
-        
-        
-        
-        
-        btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                // Action to perform on hover (e.g., change background color)
-                btnLogout.setForeground(Styles.fontLightHover);
-            }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                // Action to perform when hover ends (e.g., revert background color)
-                btnLogout.setForeground(Styles.fontLight);
-            }
-        });
-        
         
         control = new Controladora();
         
@@ -113,18 +80,9 @@ public class Ventana extends javax.swing.JFrame {
         card.show(mainPanel, "Login1");
         //card.show(mainPanel, "mainScreen");
         
-        btnLogout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
-                cardLayout.show(mainPanel, "Login1");  // Switch to "Login1" card
-                mainPanel.revalidate();
-                mainPanel.repaint();
-            }
-        });
         
         /*PANEL LOGIN 1*/
-/*
+
         btnLogin1.setBackground(Styles.accentDark);
         btnLogin1.setContentAreaFilled(false);
         btnLogin1.setBorderPainted(false);
@@ -559,12 +517,19 @@ public class Ventana extends javax.swing.JFrame {
                     if (modeloServicios.getRowCount()>0){
                         if (tableServicios.getSelectedRow()!=-1){
                             int numServicio = Integer.parseInt(String.valueOf(tableServicios.getValueAt(tableServicios.getSelectedRow(),0)));
+                            
+                            if(control.checkIfReferenced(numServicio)){
+                                JOptionPane.showMessageDialog(null, "No se puede eliminar el servicio porque tiene turnos asociados.", "No se puede eliminar", JOptionPane.ERROR_MESSAGE);
                         
-                            control.borrarServicio(numServicio);
-                            cargarTablaServicios(panelCenterSer);
+                            }else{
+                               
+                                control.borrarServicio(numServicio);
+                                cargarTablaServicios(panelCenterSer); 
+                                // Show success message only if a record is deleted
+                                JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
                         
-                        // Show success message only if a record is deleted
-                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        
                         } else {
                             JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -1110,11 +1075,17 @@ public class Ventana extends javax.swing.JFrame {
                                     JOptionPane.showMessageDialog(null, "No se puede eliminar el usuario porque la sesión está iniciada.", "Error", JOptionPane.ERROR_MESSAGE);
 
                                 } else {
-                                    control.borrarUsuario(numEmpleado);
-                                    cargarTablaEmpleados(panelCentral);
-                                    // Show success message only if a record is deleted
-                                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                                    if(control.checkIfUsuReferenced(numEmpleado)){
+                                    JOptionPane.showMessageDialog(null, "No se puede eliminar el usuario porque tiene un servicio asignado.", "Error", JOptionPane.ERROR_MESSAGE);
 
+                                    
+                                    }else{
+                                        control.borrarUsuario(numEmpleado);
+                                        cargarTablaEmpleados(panelCentral);
+                                        // Show success message only if a record is deleted
+                                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
                                 }
                             } else {
                                 JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
@@ -1852,28 +1823,6 @@ public class Ventana extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ventana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

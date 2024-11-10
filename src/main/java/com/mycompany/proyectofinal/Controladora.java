@@ -53,6 +53,10 @@ public class Controladora {
         return idUser;
     }
     
+    public boolean checkIfUsuReferenced(int id){
+        return controlPersis.checkIfUsuReferenced(id);
+    }
+    
     
     
     //LOGICA DE ALTA DE USUARIO
@@ -285,6 +289,12 @@ public class Controladora {
         controlPersis.modificarServicio(ser);
     
     }
+    
+    public boolean checkIfReferenced(int id){
+        return controlPersis.checkIfReferenced(id);
+    }
+    
+    //usuario
 
      public void setLoggedInUserId(int userId) {
         this.loggedInUserId = userId;

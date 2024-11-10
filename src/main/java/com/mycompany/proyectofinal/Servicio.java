@@ -6,6 +6,8 @@ package com.mycompany.proyectofinal;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -17,11 +19,22 @@ public class Servicio implements Serializable {
     private int id;
     private String nombre;
     private String precio;
+    @OneToOne
     @JoinColumn(name="idEmpleado")
     private Usuario empleado; //idUsuario
+    @OneToMany(mappedBy = "servicio")
+    private List<Turno> turnos = new ArrayList<>();
 
     public int getId() {
         return id;
+    }
+
+    public List<Turno> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(List<Turno> turnos) {
+        this.turnos = turnos;
     }
 
     public void setId(int id) {

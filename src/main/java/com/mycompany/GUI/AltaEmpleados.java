@@ -160,6 +160,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
 
         btnCerrarEmp.setForeground(new java.awt.Color(51, 51, 51));
         btnCerrarEmp.setText("Cerrar");
+        btnCerrarEmp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         btnCerrarEmp.setName("btnAltaEmp"); // NOI18N
         btnCerrarEmp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -177,6 +178,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
 
         btnLimpiarEmp.setForeground(new java.awt.Color(51, 51, 51));
         btnLimpiarEmp.setText("Limpiar");
+        btnLimpiarEmp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         btnLimpiarEmp.setName("btnAltaEmp"); // NOI18N
         btnLimpiarEmp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -262,7 +264,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
                 .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtEmpTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
                 .addGroup(panelDataEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCerrarEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiarEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)

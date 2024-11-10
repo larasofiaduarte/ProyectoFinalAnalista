@@ -17,6 +17,12 @@
             <version>2.7.12</version>
         </dependency>
         <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.5.2</version> <!-- Use the latest version -->
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.asm</artifactId>
             <version>9.4.0</version>
