@@ -245,6 +245,8 @@ public class Ventana extends javax.swing.JFrame {
             
             JTable tableClientes = tablaClientes2.getTable(); //useful para eliminar
             
+            titleCli.setTable(tableClientes);
+            
             //ELIMINAR
             btnElimCli.addActionListener(new ActionListener() {
                 @Override
@@ -429,6 +431,7 @@ public class Ventana extends javax.swing.JFrame {
             
             //ELIMINAR
             JTable tableTurnos = tablaTurnos.getTable();
+            titleTur.setTable(tableTurnos);
             btnElimTur.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -696,6 +699,7 @@ public class Ventana extends javax.swing.JFrame {
             tablaCaja = new Tabla(modeloCaja);
             panelCenterCaja.add(tablaCaja, BorderLayout.CENTER);
             JTable tableCaja = tablaCaja.getTable(); //useful para eliminar
+            titleCaja.setTable(tableCaja);
             
             //ELIMINAR
             btnElimCaja.addActionListener(new ActionListener() {
@@ -828,6 +832,7 @@ public class Ventana extends javax.swing.JFrame {
             
             
             JTable tableProveedores = tablaProveedores.getTable(); //useful para eliminar
+            titleProv.setTable(tableProveedores);
             
             btnElimProv.addActionListener(new ActionListener() {
                 @Override
@@ -960,6 +965,7 @@ public class Ventana extends javax.swing.JFrame {
             
             
             JTable tableProductos = tablaProductos.getTable(); //useful para eliminar
+            titleInv.setTable(tableProductos);
             //eliminar
             btnElimInv.addActionListener(new ActionListener() {
                 @Override
@@ -1101,7 +1107,7 @@ public class Ventana extends javax.swing.JFrame {
             
             JTable tableEmpleados = tablaEmpleados.getTable(); //useful para eliminar
             
-            
+            titleEmp.setTable(tableEmpleados);
             
             
             //ELIMINAR USUARIO

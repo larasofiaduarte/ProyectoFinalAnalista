@@ -116,6 +116,7 @@ com\mycompany\GUI\AltaServicios$5.class
 com\mycompany\GUI\Ventana$44.class
 com\mycompany\GUI\Ventana$47.class
 com\mycompany\GUI\Login$11.class
+com\mycompany\GUI\TitlePanel$2.class
 com\mycompany\GUI\Ventana1$32.class
 com\mycompany\GUI\ModifTurnos.class
 com\mycompany\GUI\ModifProducto$3.class
@@ -155,6 +156,7 @@ com\mycompany\GUI\AltaServicios$3.class
 com\mycompany\GUI\Ventana$45.class
 com\mycompany\GUI\AltaEmpleados$1.class
 com\mycompany\GUI\ModifProveedores$3.class
+com\mycompany\GUI\TitlePanel$1.class
 com\mycompany\GUI\Ventana$25.class
 com\mycompany\GUI\Login$5.class
 com\mycompany\GUI\Ventana$12.class
