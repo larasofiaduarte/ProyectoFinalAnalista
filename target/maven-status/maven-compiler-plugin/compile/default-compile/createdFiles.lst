@@ -53,6 +53,7 @@ com\mycompany\persistencia\ControladoraPersistencia.class
 com\mycompany\GUI\Ventana1$35.class
 com\mycompany\GUI\Login$8.class
 com\mycompany\proyectofinal\Proveedor_.class
+com\mycompany\GUI\Login$1$1.class
 com\mycompany\proyectofinal\Servicio_.class
 com\mycompany\GUI\ModifProveedores$1.class
 com\mycompany\GUI\Ventana$14.class
@@ -78,6 +79,7 @@ com\mycompany\GUI\AltaTurnos.class
 com\mycompany\GUI\exceptions\NonexistentEntityException.class
 com\mycompany\GUI\ModifProducto$1.class
 com\mycompany\GUI\exceptions\PreexistingEntityException.class
+com\mycompany\GUI\Login$9.class
 com\mycompany\proyectofinal\Cliente_.class
 com\mycompany\GUI\ModifServicio$5.class
 com\mycompany\GUI\Ventana$7.class
@@ -113,6 +115,7 @@ com\mycompany\GUI\AltaServicios$2.class
 com\mycompany\GUI\AltaServicios$5.class
 com\mycompany\GUI\Ventana$44.class
 com\mycompany\GUI\Ventana$47.class
+com\mycompany\GUI\Login$11.class
 com\mycompany\GUI\Ventana1$32.class
 com\mycompany\GUI\ModifTurnos.class
 com\mycompany\GUI\ModifProducto$3.class
@@ -124,6 +127,7 @@ com\mycompany\GUI\Login.class
 com\mycompany\GUI\Ventana$23.class
 com\mycompany\GUI\Ventana1$1.class
 com\mycompany\GUI\AltaProductos$5.class
+com\mycompany\GUI\Login$10.class
 com\mycompany\GUI\Ventana$5.class
 com\mycompany\GUI\Ventana1$25.class
 com\mycompany\GUI\Ventana1$55.class
@@ -213,6 +217,7 @@ com\mycompany\proyectofinal\Proveedor.class
 com\mycompany\GUI\AltaCaja$3.class
 com\mycompany\GUI\HistorialCliente.class
 com\mycompany\persistencia\ProductoJpaController.class
+com\mycompany\GUI\AltaEmpleados$8.class
 com\mycompany\GUI\ModifServicio$2.class
 com\mycompany\GUI\AltaEmpleados$5.class
 com\mycompany\GUI\Ventana1$20.class
@@ -247,6 +252,7 @@ com\mycompany\GUI\AltaClientes$4.class
 com\mycompany\GUI\AltaTurnos$5.class
 com\mycompany\GUI\Ventana1$39.class
 com\mycompany\GUI\Ventana$1.class
+com\mycompany\GUI\ModifEmpleado$8.class
 com\mycompany\GUI\ModifProducto$7.class
 com\mycompany\GUI\Login$7.class
 com\mycompany\GUI\AltaEmpleados$6.class

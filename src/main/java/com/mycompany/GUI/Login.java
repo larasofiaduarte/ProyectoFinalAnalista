@@ -88,11 +88,58 @@ public class Login extends javax.swing.JFrame {
         btnLogin1.setBorderPainted(false);
         btnLogin1.setOpaque(true);
         
+        ButtonSec btnRegister = new ButtonSec("Registrarse");
+        jPanel3.add(btnRegister);
         
+        btnRegister.setBounds(53, jPanel3.getHeight() - 130, 150, 30);
+        btnRegister.setSize(251,30);
         
+        btnRegister.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Code to execute when the button is clicked
+                System.out.println("Logout button clicked");
+                AltaEmpleados form = new AltaEmpleados();
+                 form.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            Login newLog = new Login();
+                            newLog.setVisible(true);
+                            newLog.setLocationRelativeTo(null);
+                        }
+                    });
+                form.setVisible(true);
+                form.setLocationRelativeTo(null);
+                dispose();
+            }
+        });
         
         
         setupLoginPanel();
+        
+        JCheckBox check = new JCheckBox("Mostrar Contraseña");
+        jPanel3.add(check);
+        
+        check.setBounds(180, jPanel3.getHeight() - 220, 150, 30);
+        check.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 if (check.isSelected()){
+                    txtPassword2.setEchoChar((char) 0);
+                }else{
+                    txtPassword2.setEchoChar('*');
+                }
+            }
+        });
+        jPanel3.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                btnRegister.setBounds(53, jPanel3.getHeight() - 130, 150, 30);
+                btnRegister.setSize(251,30);
+                
+                check.setBounds(180, jPanel3.getHeight() - 220, 150, 30);
+            }
+        });
     }
 
     /**
