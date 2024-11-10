@@ -159,6 +159,10 @@ public class Controladora {
         controlPersis.borrarCliente(numCliente);
     }
     
+    public boolean checkIfClientReferenced(int id){
+        return controlPersis.checkIfClientReferenced(id);
+    }
+    
     
     
     

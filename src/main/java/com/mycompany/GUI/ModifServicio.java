@@ -118,7 +118,7 @@ public class ModifServicio extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtEmpleado = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 

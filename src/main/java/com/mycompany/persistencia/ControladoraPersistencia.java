@@ -71,6 +71,10 @@ public class ControladoraPersistencia {
             
         }
         
+        public boolean checkIfClientReferenced(int clienteId){
+            return cliJpa.checkIfClientReferenced(clienteId);
+        }
+        
     //PROVEEDOR
         
     ProveedorJpaController provJpa = new ProveedorJpaController();

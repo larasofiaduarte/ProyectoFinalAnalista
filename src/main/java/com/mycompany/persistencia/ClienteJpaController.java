@@ -127,4 +127,19 @@ public class ClienteJpaController implements Serializable {
         }
     }
     
+    
+    public boolean checkIfClientReferenced(int clienteId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            // JPQL to count how many Turno entries reference the given Servicio
+            String query = "SELECT COUNT(t) FROM Turno t WHERE t.cliente.id = :clienteId";
+            Long count = (Long) em.createQuery(query)
+                                  .setParameter("clienteId", clienteId)
+                                  .getSingleResult();
+            return count > 0; // Returns true if any Turno references this Cliente
+        } finally {
+            em.close();
+        }
+    }
+    
 }

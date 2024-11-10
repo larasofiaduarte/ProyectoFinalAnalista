@@ -252,12 +252,19 @@ public class Ventana extends javax.swing.JFrame {
                     if (modeloClientes2.getRowCount()>0){
                         if (tableClientes.getSelectedRow()!=-1){
                             int numCliente = Integer.parseInt(String.valueOf(tableClientes.getValueAt(tableClientes.getSelectedRow(),0)));
+                            
+                            if(control.checkIfClientReferenced(numCliente)){
+                            JOptionPane.showMessageDialog(null, "No se puede eliminar el cliente porque tiene un turno asociado.", "No se puede eliminar.", JOptionPane.INFORMATION_MESSAGE);
                         
-                            control.borrarCliente(numCliente);
-                            cargarTablaClientes(panelCenterCli);
+                            
+                            }else{
+                                control.borrarCliente(numCliente);
+                                cargarTablaClientes(panelCenterCli);
+                                // Show success message only if a record is deleted
+                                JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
                         
-                        // Show success message only if a record is deleted
-                        JOptionPane.showMessageDialog(null, "Registro eliminado correctamente.", "Registro eliminado", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        
                         } else {
                             JOptionPane.showMessageDialog(null, "Seleccione el registro que desea eliminar.", "Ninguna fila seleccionada", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -1118,9 +1125,8 @@ public class Ventana extends javax.swing.JFrame {
 
                                 } else {
                                     if(control.checkIfUsuReferenced(numEmpleado)){
-                                    JOptionPane.showMessageDialog(null, "No se puede eliminar el usuario porque tiene un servicio asignado.", "Error", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "No se puede eliminar el usuario porque tiene un servicio asignado.", "Error", JOptionPane.ERROR_MESSAGE);
 
-                                    
                                     }else{
                                         control.borrarUsuario(numEmpleado);
                                         cargarTablaEmpleados(panelCentral);
