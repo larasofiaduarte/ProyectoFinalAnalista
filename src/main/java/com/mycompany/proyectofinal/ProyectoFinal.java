@@ -4,6 +4,7 @@
 
 package com.mycompany.proyectofinal;
 
+import com.mycompany.GUI.Login;
 import com.mycompany.GUI.Ventana;
 
 /**
@@ -14,7 +15,7 @@ public class ProyectoFinal {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-        Ventana ventana = new Ventana();
+        Login ventana = new Login();
         ventana.setVisible(true);
         ventana.setLocationRelativeTo(null);
         

@@ -297,7 +297,7 @@ public class Login extends javax.swing.JFrame {
 /*LOGICA
     DE LOGIN*/
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-         btnLogin1.setFocusPainted(false); // Remove the focus border
+        btnLogin1.setFocusPainted(false); // Remove the focus border
         btnLogin1.setBorder(BorderFactory.createEmptyBorder()); // Remove any border
 
         String user = txtUser1.getText();
@@ -310,9 +310,12 @@ public class Login extends javax.swing.JFrame {
             //store the current users role
             String role = control.getUserRole(userId); // Retrieve and store user role
             control.setLoggedInUserRole(role);
+            
+            System.out.println(role);
+            System.out.println(userId);
 
             // Switch to the main screen
-            Ventana form = new Ventana();
+            Ventana form = new Ventana(role, userId);
             form.setVisible(true);
             dispose();
             form.setLocationRelativeTo(null);

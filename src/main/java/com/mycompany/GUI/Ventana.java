@@ -50,6 +50,9 @@ public class Ventana extends javax.swing.JFrame {
     private DefaultTableModel modeloProveedores;
     private Tabla tablaCaja;
     private DefaultTableModel modeloCaja;
+    String currentUserRole2;
+    int currentUserId2;
+    
     
     /**
      * Creates new form Ventana
@@ -57,7 +60,7 @@ public class Ventana extends javax.swing.JFrame {
     
     
     
-    public Ventana() {
+    public Ventana(String role, int id) {
         initComponents();
         this.setVisible(true);
         this.setTitle("HY Peluquería");
@@ -76,9 +79,48 @@ public class Ventana extends javax.swing.JFrame {
         control = new Controladora();
         
         
+        this.currentUserRole2 = role;
+        this.currentUserId2 = id;
+        System.out.println(currentUserRole2);
+        System.out.println(currentUserId2);
         
-        card.show(mainPanel, "Login1");
-        //card.show(mainPanel, "mainScreen");
+        //card.show(mainPanel, "Login1");
+        card.show(mainPanel, "mainScreen");
+        
+        JButton btnlogout = new JButton("CERRAR SESIÓN");
+        btnlogout.setBounds(11, sideMenu.getHeight() - 50, 150, 30);
+        sideMenu.add(btnlogout);
+        btnlogout.setContentAreaFilled(false);
+        btnlogout.setBackground(Styles.bgDark2);
+        btnlogout.setForeground(Styles.fontLight);
+        btnlogout.setBorderPainted(false);
+        btnlogout.setFont(Styles.fontBtn);
+        
+        
+        btnlogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Code to execute when the button is clicked
+                System.out.println("Logout button clicked");
+                Login form = new Login();
+                form.setVisible(true);
+                form.setLocationRelativeTo(null);
+                dispose();
+            }
+        });
+        btnlogout.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Code to execute when the mouse enters the button
+                btnlogout.setForeground(Styles.fontLightHover);  // Example: Change the button's background color
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Code to execute when the mouse exits the button
+                btnlogout.setForeground(Styles.fontLight);  // Reset the button's background color
+            }
+        });
         
         
         /*PANEL LOGIN 1*/
@@ -996,7 +1038,7 @@ public class Ventana extends javax.swing.JFrame {
                     
                     String currentRol = control.getLoggedInUserRole();
                     
-                    if ("Administrador".equalsIgnoreCase(currentRol)) {
+                    if ("Administrador".equalsIgnoreCase(currentUserRole2)) {
                         
                         AltaEmpleados form = new AltaEmpleados();
                         // Add a window listener to listen for close events
@@ -1063,14 +1105,14 @@ public class Ventana extends javax.swing.JFrame {
                     
                     String currentRol = control.getLoggedInUserRole();
                     
-                    if ("Administrador".equalsIgnoreCase(currentRol)) {
+                    if ("Administrador".equalsIgnoreCase(currentUserRole2)) {
                         
                         if (modeloEmpleados.getRowCount()>0){
                             if (tableEmpleados.getSelectedRow()!=-1){
                                 int numEmpleado = Integer.parseInt(String.valueOf(tableEmpleados.getValueAt(tableEmpleados.getSelectedRow(),0)));
                                 int currentUserId = control.getLoggedInUserId();
 
-                                if (numEmpleado == currentUserId) {
+                                if (numEmpleado == currentUserId2) {
                                     //chequear que el num a elminar no coincida con el user loggeado
                                     JOptionPane.showMessageDialog(null, "No se puede eliminar el usuario porque la sesión está iniciada.", "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -1112,7 +1154,7 @@ public class Ventana extends javax.swing.JFrame {
                     
                     String currentRol = control.getLoggedInUserRole();
                     
-                    if ("Administrador".equalsIgnoreCase(currentRol)) {
+                    if ("Administrador".equalsIgnoreCase(currentUserRole2)) {
                         
                         if (modeloEmpleados.getRowCount()>0){
                             if (tableEmpleados.getSelectedRow()!=-1){
@@ -1822,12 +1864,12 @@ public class Ventana extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void main(String args[]) {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ventana().setVisible(true);
+                new Ventana(currentUserRole2, currentUserId2).setVisible(true);
             }
         });
     }
