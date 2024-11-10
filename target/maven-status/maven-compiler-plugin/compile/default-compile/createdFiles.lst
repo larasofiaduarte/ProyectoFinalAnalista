@@ -24,7 +24,6 @@ com\mycompany\GUI\AltaServicios$6.class
 com\mycompany\GUI\Ventana$48.class
 com\mycompany\GUI\Ventana1$41.class
 com\mycompany\GUI\Ventana$8.class
-com\mycompany\GUI\AltaProductos$2.class
 com\mycompany\GUI\Ventana1$7$1.class
 com\mycompany\proyectofinal\Turno_.class
 com\mycompany\GUI\Ventana.class
@@ -159,7 +158,6 @@ com\mycompany\GUI\Ventana1$17.class
 com\mycompany\GUI\ModifClientes$1.class
 com\mycompany\GUI\ModifProducto$5.class
 com\mycompany\GUI\Ventana1$37.class
-com\mycompany\GUI\AltaProveedores$3.class
 com\mycompany\GUI\AltaClientes$2.class
 com\mycompany\GUI\Ventana$58.class
 com\mycompany\GUI\Ventana1$6.class
@@ -279,7 +277,6 @@ com\mycompany\GUI\ModifProveedores$4.class
 com\mycompany\GUI\AltaTurnos$4.class
 com\mycompany\GUI\Ventana$11.class
 com\mycompany\GUI\Ventana1$38.class
-com\mycompany\GUI\Login$6.class
 com\mycompany\GUI\Ventana$23$1.class
 com\mycompany\GUI\Ventana1$43.class
 com\mycompany\GUI\Ventana1$9.class

@@ -133,7 +133,7 @@ public class ModifClientes extends javax.swing.JFrame {
 
         txtTelCli.setBackground(new java.awt.Color(242, 242, 242));
         txtTelCli.setForeground(new java.awt.Color(102, 102, 102));
-        txtTelCli.setText("1234 567890");
+        txtTelCli.setText("1234567890");
         txtTelCli.setBorder(null);
         txtTelCli.setPreferredSize(new java.awt.Dimension(73, 30));
 

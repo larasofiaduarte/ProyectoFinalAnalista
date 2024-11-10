@@ -4,6 +4,8 @@ package com.mycompany.GUI;
 import com.mycompany.proyectofinal.Controladora;
 import java.awt.Font;
 import com.mycompany.GUI.Styles;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class AltaEmpleados extends javax.swing.JFrame {
@@ -38,6 +40,16 @@ public class AltaEmpleados extends javax.swing.JFrame {
         btnCerrarEmp.setOpaque(true);
         btnCerrarEmp.setFont(Styles.fontBtn);
         btnCerrarEmp.setForeground(Styles.fontDark);
+        
+        txtEmpTel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
     }
 
     
@@ -130,7 +142,7 @@ public class AltaEmpleados extends javax.swing.JFrame {
 
         txtEmpTel.setBackground(new java.awt.Color(240, 240, 240));
         txtEmpTel.setForeground(new java.awt.Color(51, 51, 51));
-        txtEmpTel.setText("1234-567890");
+        txtEmpTel.setText("1234567890");
         txtEmpTel.setBorder(null);
         txtEmpTel.setPreferredSize(new java.awt.Dimension(84, 28));
 

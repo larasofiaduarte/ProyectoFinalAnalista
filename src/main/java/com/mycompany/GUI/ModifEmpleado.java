@@ -5,6 +5,8 @@ import com.mycompany.proyectofinal.Controladora;
 import java.awt.Font;
 import com.mycompany.GUI.Styles;
 import com.mycompany.proyectofinal.Usuario;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class ModifEmpleado extends javax.swing.JFrame {
@@ -43,6 +45,15 @@ public class ModifEmpleado extends javax.swing.JFrame {
         
         cargarDatos(numEmpleado);
         
+        txtEmpTel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume(); // Consume the event if the character is not a digit
+                }
+            }
+        });
         
     }
 
@@ -136,7 +147,7 @@ public class ModifEmpleado extends javax.swing.JFrame {
 
         txtEmpTel.setBackground(new java.awt.Color(240, 240, 240));
         txtEmpTel.setForeground(new java.awt.Color(51, 51, 51));
-        txtEmpTel.setText("1234-567890");
+        txtEmpTel.setText("1234567890");
         txtEmpTel.setBorder(null);
         txtEmpTel.setPreferredSize(new java.awt.Dimension(84, 28));
 
@@ -323,6 +334,8 @@ public class ModifEmpleado extends javax.swing.JFrame {
         
         if(validarCampos()){
             control.modificarUsuario(usu,user, pass, nombre, apellido, tel, rol);
+            control.setLoggedInUserRole(rol);
+            System.out.println(control.getLoggedInUserRole());
             JOptionPane.showMessageDialog(null, "Usuario modificado correctamente.", "Usuario actualizado.", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         }
@@ -412,9 +425,9 @@ public class ModifEmpleado extends javax.swing.JFrame {
         String rol = usu.getRol();
         
         if(rol.equals("Administrador")){
-            cboEmpRol.setSelectedIndex(0);
-        }else if(rol.equals("Empleado")){
             cboEmpRol.setSelectedIndex(1);
+        }else if(rol.equals("Empleado")){
+            cboEmpRol.setSelectedIndex(0);
         }
         
         
@@ -428,5 +441,11 @@ public class ModifEmpleado extends javax.swing.JFrame {
             return false; // Indicate validation failure
         }
         return true; // Indicate validation success
+    }
+    
+    public String updateRole(String rol){
+        control.setLoggedInUserRole(rol);
+        String currentRole = control.getLoggedInUserRole();
+        return currentRole;
     }
 }
